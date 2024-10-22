@@ -1,0 +1,46 @@
+Fonctionnement des Menus
+
+    Tableau de bord
+        Lien : href="../page/tableau_de_bord.php"
+        Fonctionnement : Cette page présente un aperçu général des activités récentes, des statistiques de livraison, des commandes en cours, et d'autres informations essentielles. Elle permet à l'utilisateur de visualiser rapidement l'état de son service.
+
+    Repas
+        Sous-menu :
+            Liste des repas : Affiche tous les repas disponibles avec des options pour les modifier ou les supprimer.
+            Ajouter un repas : Permet à l'utilisateur d'ajouter de nouveaux repas à la base de données via un formulaire.
+            Catégories de repas : Affiche les différentes catégories de repas (par exemple, entrées, plats principaux, desserts) et permet d'ajouter ou de modifier des catégories.
+
+    Commandes
+        Sous-menu :
+            Toutes les commandes : Affiche une liste de toutes les commandes passées avec des détails tels que le statut, la date et le montant.
+            Commandes en attente : Filtre les commandes qui n'ont pas encore été traitées ou confirmées.
+            Commandes livrées : Affiche les commandes qui ont déjà été livrées, permettant à l'utilisateur de suivre l'historique des livraisons.
+
+    Livraisons
+        Sous-menu :
+            Livreurs disponibles : Affiche la liste des livreurs qui sont actuellement disponibles pour prendre des commandes.
+            Livraisons en cours : Montre les livraisons qui sont actuellement en cours, avec des informations sur les livreurs et les commandes.
+            Livraisons terminées : Affiche les livraisons qui ont été complétées avec succès.
+            Affecter un livreur : Permet à l'utilisateur d'assigner un livreur à une commande spécifique.
+
+    Livreurs
+        Sous-menu :
+            Liste des livreurs : Affiche tous les livreurs inscrits dans le système, avec des options pour voir les détails ou les supprimer.
+            Ajouter un livreur : Permet d'ajouter de nouveaux livreurs au système via un formulaire.
+            Statut des livreurs : Montre l'état actuel des livreurs (actif, inactif, en pause) pour une gestion efficace.
+
+    Paiements
+        Sous-menu :
+            Historique des paiements : Affiche un registre de tous les paiements effectués, avec des détails sur les montants et les méthodes.
+            Statut des paiements : Permet de vérifier l'état des paiements (en attente, confirmés, échoués).
+            Méthodes de paiement : Affiche les différentes méthodes de paiement acceptées et permet d'en ajouter ou d'en modifier.
+
+    Paramètres
+        Sous-menu :
+            Mon compte : Permet à l'utilisateur de gérer ses informations personnelles et de mettre à jour ses préférences.
+            Paramètres du site : Permet de configurer des options générales pour le site, telles que les préférences de notification ou les paramètres d'affichage.
+            Notifications : Permet à l'utilisateur de gérer ses préférences en matière de notifications (email, SMS, etc.).
+
+Résumé :
+
+Chaque élément du menu a une fonction précise qui facilite la gestion des repas, des commandes, des livreurs, des paiements, et des paramètres de l'application. En organisant ces fonctionnalités de manière intuitive, tu permettras aux utilisateurs de naviguer facilement dans ton application, d'accomplir des tâches rapidement, et de rester informés sur l'état de leur service.

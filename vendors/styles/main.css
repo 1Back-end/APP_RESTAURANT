@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+body {
+  font-family: "Rubik", system-ui;
+  font-weight: 300;
+  font-style: normal;
+}
+.sidebar-menu .dropdown-toggle {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: .03em;
+    font-family: "Rubik", system-ui;
+}
+.sidebar-menu .submenu li a {
+    display: block;
+    padding: 18px 15px 18px 60px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: .03em;
+    position: relative;
+    font-family: "Rubik", system-ui;
+}
+.dropdown-item {
+    font-size: 16px;
+    font-weight: 400;
+    padding: .657rem 1rem;
+      padding-left: 1rem;
+    color: #444;
+    font-family: "Rubik", system-ui;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+  }
+  .user-info-dropdown .dropdown-toggle .user-name {
+    font-weight: 500;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    color: #131e22;
+    font-family: "Rubik", system-ui;
+  }
+h1,h2{
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  color: #1F4283;
+  font-family: "Rubik", system-ui;
+  font-size: 25px;
+
+}
+h3,h4{
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  color: #1F4283;
+  font-family: "Rubik", system-ui;
+  font-size: 22px;
+}
+h5,h6{
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+  color: #1F4283;
+  font-family: "Rubik", system-ui;
+  font-size: 18px;
+}
+
+input[type="text"], input[type="email"], input[type="date"], input[type="password"] input[type="tel"] {
+    font-family: "Rubik", system-ui;
+    font-size: 12px;
+}
+textarea{
+  font-family: "Rubik", system-ui;
+  font-size: 12px;
+}
+
+small{
+  font-size: 10px;
+}
+.btn{
+  font-family: "Rubik", system-ui;
+}
+
+label{
+  font-family: "Rubik", system-ui;
+  font-weight: 500;
+  font-size: 14px;
+
+}
+
+/* styles.css */
+.select-custom {
+  font-size: 12px;
+  font-family: "Rubik", system-ui;
+  cursor: pointer;
+  
+}
+
+.select-custom option {
+  font-size: 12px;
+  font-family: "Rubik", system-ui;
+  cursor: pointer;
+}
+
+.profile-image {
+  width:70px; /* Taille de l'image */
+  height: 60px; /* Taille de l'image */
+  border-radius: 50%; /* Pour arrondir l'image */
+  object-fit: cover; /* Pour que l'image conserve ses proportions et remplisse le conteneur */
+  cursor: pointer; /* Curseur pointer pour indiquer que l'image est cliquable */
+  text-align: center;
+}
+input[type="file"]{
+  border: none;
+  font-family: "Rubik", system-ui;
+
+}
+input[type="number"]{
+ font-size: 12px;
+  font-family: "Rubik", system-ui;
+
+}
+textarea.form-control {
+  height: auto;
+  font-family: "Rubik", system-ui;
+  font-size: 12px;
+}
+.btn-icons {
+  padding: 0.25rem 0.5rem; /* Ajustez les valeurs en conséquence pour la taille souhaitée */
+  font-size: 12px; /* Ajustez la taille de la police en conséquence */
+}
+
+.btn-xs {
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  line-height: 1.5;
+  font-family: "Rubik", system-ui;
+}
+
+@media only screen and (max-width: 768px) {
+  .btn-responsive {
+      width: 100%; /* Réduire davantage la taille pour les écrans plus petits si nécessaire */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+.fa-2x {
+  font-size: 18px;
+}
+ /* Définition de la couleur personnalisée pour l'icône */
+ .icon-pending i {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+ /* Définition de la couleur personnalisée pour l'icône */
+ .logo {
+     border-radius:50%;
+    height: 40px;
+    width: 40px;
+    background-color:#1F4283;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+ }
+ .btn-customize{
+  background-color:#1F4283;
+  font-family: "Rubik", system-ui;
+ }
+
+
+
+.custom-pagination .page-item .page-link {
+  color: #1F4283; /* Couleur du texte */
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: #1F4283; /* Couleur de fond de l'élément actif */
+  border-color: #1F4283; /* Couleur de la bordure de l'élément actif */
+  color: white; /* Couleur du texte de l'élément actif */
+}
+
+.custom-pagination .page-item .page-link:hover {
+  background-color: #1F4283; /* Couleur de fond au survol */
+  color: white; /* Couleur du texte au survol */
+}
+.notification-list ul li a h3 {
+  font-size: 16px;
+  color: #202342;
+  font-weight: 700;
+  text-transform: capitalize;
+  font-family: "Rubik", system-ui;
+  padding-bottom: 5px;
+}
+.docs-buttons label, .notification-list ul li a p, .project-info-right p {
+  margin-bottom: 0;
+  font-family: "Rubik", system-ui;
+}
+.notification-list ul li a img {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  border-radius: 30px;
+}
+/* Media query pour les écrans plus petits */
+@media (max-width: 768px) {
+  .btn-icons {
+    padding: 0.5rem 0.3rem; /* Augmentez les valeurs pour les écrans plus petits */
+    font-size: 16px; /* Augmentez la taille de la police pour les écrans plus petits */
+  }
+}
+
+.text-uppercase-responsive {
+  text-transform: uppercase;
+}
+
+@media (max-width: 576px) {
+  .text-center-responsive {
+      text-align: center;
+  }
+}
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  border-color: #1F4283;
+  background-color: #1F4283;
+  overflow: hidden;
+  border: none;
+}
+
+.shadow-none {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.user-info-dropdown {
+  padding: 5px 10px 5px 0;
+  margin-right: 18px;
+}
+.logo-image {
+    width: 100px; /* Ajustez la largeur de l'image ici */
+    height: auto; /* Maintient les proportions de l'image */
+    max-width: 100%; /* S'assure que l'image ne dépasse pas la largeur du conteneur */
+    display: block; /* Assure que l'image est affichée comme un bloc pour un meilleur centrage */
+    margin: 0 auto; /* Centre l'image horizontalement dans le conteneur */
+}
+.form-inline input {
+  flex-grow: 1; /* Permet au champ de recherche de prendre toute la largeur disponible */
+  margin-right: 10px; /* Espacement entre le champ de recherche et le bouton */
+}
+@media (max-width: 767.98px) {
+  .form-inline {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+  }
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  border-color: #1F4283;
+  background-color: #1F4283;
+  overflow: hidden;
+  border: none;
+  border-radius: 20px;
+  width: 40px;
+  text-align: center;
+  justify-content: center;
+  height: auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+.page-link {
+  z-index: 3;
+  color: #fff;
+  border-color: #1F4283;
+  background-color: #1F4283;
+  overflow: hidden;
+  border: none;
+  border-radius: 20px;
+  width: 40px;
+  text-align: center;
+  justify-content: center;
+  height: auto;
+  font-size: 20px;
+  font-weight: bold;
+}
