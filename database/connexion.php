@@ -7,12 +7,12 @@ $password = '';
 
 try {
     // Créer une nouvelle instance de connexion
-    $connexion = new connexion("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $connexion = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     
     // Configurer connexion pour afficher les erreurs sous forme d'exceptions
-    $connexion->setAttribute(connexion::ATTR_ERRMODE, connexion::ERRMODE_EXCEPTION);
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Connexion réussie à la base de données!";
+    // echo "Connexion réussie à la base de données!";
 } catch (connexionException $e) {
     // En cas d'erreur de connexion, afficher un message d'erreur
     echo "Erreur de connexion : " . $e->getMessage();

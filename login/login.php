@@ -10,18 +10,27 @@
 	<link rel="stylesheet" type="text/css" href="css/my-login.css">
 </head>
 
+<?php include ("script_login.php")?>
 <body class="my-login-page">
 	<section class="h-100">
 		<div class="container h-100 mt-5 pb-5">
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
+                <?php if (!empty($erreur)) : ?>
+            <div class="alert alert-danger text-center" role="alert">
+                <?= $erreur ?>
+                    </div>
+                <?php endif; ?>
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Connectez vous à votre compte</h4>
 							<form method="POST">
 								<div class="form-group">
 									<label for="email">Adresse Email</label>
-									<input id="email" type="email" class="form-control shadow-none" name="email"  autofocus>
+									<input id="email" type="email" class="form-control shadow-none" value="<?= htmlspecialchars($emailOrUsername ?? '') ?>" name="email">
+                                    <?php if(isset($erreur_champ) && empty($_POST['email'])): ?>
+                                        <small class="text-danger"><?= htmlspecialchars($erreur_champ) ?></small>
+                                    <?php endif; ?>
 								</div>
 
 								<div class="form-group">
@@ -31,6 +40,9 @@
 										</a>
 									</label>
 									<input id="password" type="password" class="form-control shadow-none" name="password" data-eye>
+                                    <?php if(isset($erreur_champ) && empty($_POST['password'])): ?>
+                                        <small class="text-danger"><?= htmlspecialchars($erreur_champ) ?></small>
+                                    <?php endif; ?>
 								</div>
 
 								<div class="form-group">
@@ -41,7 +53,7 @@
 								</div>
 
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block shadow-none">
+									<button type="submit" name="submit" class="btn btn-primary btn-block shadow-none">
 										Se connecter
 									</button>
 								</div>

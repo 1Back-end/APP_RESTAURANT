@@ -1,0 +1,27 @@
+[
+    {
+        "category_uuid": "b97b8d42-36b0-4e8e-aeb0-ef18b2b87c38",
+        "name": "Entrées",
+        "description": "Une sélection d'entrées délicieuses pour commencer votre repas."
+    },
+    {
+        "category_uuid": "d213ed12-94e1-4b83-8d7a-843f3b4a3e3e",
+        "name": "Plats Principaux",
+        "description": "Des plats principaux savoureux qui satisferont votre appétit."
+    },
+    {
+        "category_uuid": "f1e5c08c-15e6-4b5c-b1e4-0d07e00d50dc",
+        "name": "Desserts",
+        "description": "Une variété de desserts sucrés pour terminer votre repas en beauté."
+    },
+    {
+        "category_uuid": "e5cf0b8f-45c7-47b7-b445-08c3db5aa502",
+        "name": "Boissons",
+        "description": "Un choix rafraîchissant de boissons pour accompagner votre repas."
+    },
+    {
+        "category_uuid": "0d29c1e5-8ed4-4697-8313-3a8e47a048f1",
+        "name": "Spécialités",
+        "description": "Des spécialités uniques qui mettent en valeur notre cuisine."
+    }
+]

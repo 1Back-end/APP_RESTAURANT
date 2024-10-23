@@ -1,5 +1,30 @@
 <?php
 
+include_once("../database/connexion.php"); // Assurez-vous d'utiliser une connexion PDO
+
+
+function get_category_meals($connexion, $currentPage = 1, $itemsPerPage = 5) {
+    // Calculer l'offset
+    $offset = ($currentPage - 1) * $itemsPerPage;
+
+    // Récupérer la liste des catégories de repas avec pagination
+    $query = "SELECT * FROM meal_categories WHERE is_deleted = 0 LIMIT :offset, :itemsPerPage";
+    $stmt = $connexion->prepare($query);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':itemsPerPage', $itemsPerPage, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Compter le total des catégories pour la pagination
+function get_category_count($connexion) {
+    $query = "SELECT COUNT(*) as total FROM meal_categories WHERE is_deleted = 0";
+    $result = $connexion->query($query);
+    return $result->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+
 function generateUUID() {
     // Générer un UUID v4
     $data = random_bytes(16);

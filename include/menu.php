@@ -23,6 +23,7 @@
 <body>
 
 
+
 	<div class="header">
 		<div class="header-left">
 			<div class="menu-icon dw dw-menu"></div>
@@ -44,17 +45,31 @@
 					</div>
 				</div>
 			</div>
+			<?php include("../login/session_user.php");?>
 			<div class="user-info-dropdown">
 				<div class="dropdown">
 					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-						<span class="user-icon shadow-none">
-							<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrjrXnLvJ2VkA85Q0EX5MRRIV1jhfnITpryg&s" alt="">
-						</span>
-						<span class="user-name">Ross C. Lopez</span>
+					<span class="user-icon shadow-none">
+					<?php
+					$avatar_path = "../uploads/";
+					$default_avatar = "https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg";
+					$avatar = isset($_SESSION['photo']) && !empty($_SESSION['photo']) && file_exists($avatar_path . $_SESSION['photo'])
+							? $avatar_path . $_SESSION['photo'] 
+							: $default_avatar;
+
+					echo "<img src='$avatar' width='50' height='50' class='rounded-circle' style='border-radius: 50%; object-fit: cover; aspect-ratio: 1/1;'>";
+					?>
+					<!-- <span class="online-indicator"></span> -->
+				</span>
+
+				<small class="user-name fw-bold font-14" style="color: #28a745;">
+					<?php echo ucfirst(strtolower($_SESSION['email'])); ?>
+				</small>
+
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="../page/profil.php"><i class="fas fa-user"></i> Profil</a>
-						<a class="dropdown-item" href="../page/deconnexion.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+						<a class="dropdown-item" href="../login/logout.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
 					</div>
 
 				</div>
