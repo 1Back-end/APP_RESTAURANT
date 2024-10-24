@@ -466,3 +466,9 @@
     padding-right: 0;
     border-right: none;
 }
+/* Styles pour les images des repas */
+.card-img-top {
+    width: 100%; /* Prend toute la largeur de la carte */
+    height: 200px; /* Maintient le ratio d'aspect */
+    border-bottom: 1px solid #e0e0e0; /* Bordure en bas de l'image */
+}

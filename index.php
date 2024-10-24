@@ -83,7 +83,7 @@
                             <div class="p-4">
                                 <i class="fa fa-3x fa-headset text-primary mb-4"></i>
                                 <h5>Service 24/7</h5>
-                                <p>Profitez d'un service disponible à tout moment, jour et nuit, pour satisfaire toutes vos envies culinaires./p>
+                                <p>Profitez d'un service disponible à tout moment, jour et nuit, pour satisfaire toutes vos envies culinaires.</p>
                             </div>
                         </div>
                     </div>
@@ -211,20 +211,8 @@
             </div>
         </div>
         <!-- Team End -->
-
         <?php include_once("menu/footer.php");?>
-
-
-
-
-
-
-   
-
-        
         <!-- Footer End -->
-
-
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top shadow-none"><i class="bi bi-arrow-up"></i></a>
     </div>

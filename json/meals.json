@@ -1,0 +1,57 @@
+[
+    {
+        "meal_uuid": "1f75bc53-54b0-4d5c-bf61-5d2c4f5c2cb4",
+        "name": "Salade César",
+        "description": "Salade avec poulet grillé, parmesan, croûtons et sauce César.",
+        "price": 7500.00,
+        "image": "salade_cesar.jpg",
+        "available": true,
+        "added_at": "2024-10-01",
+        "category_uuid": "d2e9186e-0e70-45d6-bf71-0c5cf9d76f23",
+        "added_by": "admin123"
+    },
+    {
+        "meal_uuid": "e1cb6910-c84c-4451-a158-0b1b4f3b75b8",
+        "name": "Pizza Margherita",
+        "description": "Pizza avec sauce tomate, mozzarella et basilic frais.",
+        "price": 12000.00,
+        "image": "pizza_margherita.jpg",
+        "available": true,
+        "added_at": "2024-10-02",
+        "category_uuid": "c4b90a1f-5e58-4329-9f2c-feb26e7aa896",
+        "added_by": "admin123"
+    },
+    {
+        "meal_uuid": "2b7408ae-1f66-4174-bd8a-dc92ecbba8e5",
+        "name": "Pâtes à la Bolognaise",
+        "description": "Pâtes servies avec une sauce à la viande savoureuse.",
+        "price": 8500.00,
+        "image": "pates_bolognaise.jpg",
+        "available": true,
+        "added_at": "2024-10-03",
+        "category_uuid": "e450d8e8-bd5c-4a4f-9f76-5a23c2b17c73",
+        "added_by": "admin123"
+    },
+    {
+        "meal_uuid": "aa1c2c79-25b0-4e26-a1a2-e7f5e9c9e2b8",
+        "name": "Tacos",
+        "description": "Tacos avec viande hachée, salade, fromage et sauce salsa.",
+        "price": 9500.00,
+        "image": "tacos.jpg",
+        "available": true,
+        "added_at": "2024-10-04",
+        "category_uuid": "dabeaf1e-4a68-4041-9b7f-bf8f246285d6",
+        "added_by": "admin123"
+    },
+    {
+        "meal_uuid": "95f4e6b7-80e4-4c06-9c51-e0455481d13b",
+        "name": "Dessert au Chocolat",
+        "description": "Un délicieux dessert au chocolat avec crème glacée.",
+        "price": 5000.00,
+        "image": "dessert_chocolat.jpg",
+        "available": true,
+        "added_at": "2024-10-05",
+        "category_uuid": "5f09d99e-f8f5-4e6c-ae44-85b67cd9d113",
+        "added_by": "admin123"
+    }
+]

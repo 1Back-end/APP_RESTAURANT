@@ -4,7 +4,7 @@
 
 <?php               // Initialiser la page actuelle
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$itemsPerPage = 5;
+$itemsPerPage = 3;
 
 // Récupérer les catégories et le total
 $categories = get_category_meals($connexion, $currentPage, $itemsPerPage);
@@ -129,7 +129,7 @@ $error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                            <li class="page-item mx-1 <?= $i === $currentPage ? 'active' : '' ?>">
                                 <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
