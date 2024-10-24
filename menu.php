@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +23,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -57,7 +59,7 @@
             // Appeler la fonction pour obtenir les repas avec pagination
             $meals = getMealsWithPagination($page, $limit);
             foreach ($meals as $meal): ?>
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="col-lg-3 col-sm-6 mb-4">
                     <div class="card shadow-sm border-light h-100 text-center p-3">
                         <!-- Affichage de la première image ou une image par défaut -->
                         <?php if (!empty($meal['image'])): ?>
@@ -66,16 +68,22 @@
                             $images = explode(',', $meal['image']);
                             $firstImage = $images[0]; // Sélectionner la première image
                             ?>
-                            <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="card-img-top img-thumbnail">
+                            <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail card-img-top">
                         <?php else: ?>
-                            <img src="../uploads/default.jpg" alt="Aucune image disponible" class="card-img-top img-thumbnail">
+                            <img src="../uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail card-img-top">
                         <?php endif; ?>
 
                         <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($meal['meal_name']); ?></h5>
-                            <p class="card-text"><?= number_format($meal['price'], 2, ',', ' ') . ' FCFA'; ?></p>
-                            <a href="commander.php?id=<?= htmlspecialchars($meal['meal_uuid']); ?>" class="btn btn-primary shadow-none">Commander</a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="card-title mb-0"><?= htmlspecialchars($meal['meal_name']); ?></h6>
+                            <p class="card-text mb-0"><?= number_format($meal['price'], 2, ',', ' ') . ' FCFA'; ?></p>
                         </div>
+                        <p class="card-text text-truncate"><?= htmlspecialchars($meal['description']); ?></p> <!-- Assurez-vous d'avoir une colonne 'description' dans votre base de données -->
+                        <a href="#" class="btn btn-primary shadow-none orderButton" data-meal-id="<?= htmlspecialchars($meal['meal_uuid']); ?>">
+                            <i class="fa fa-shopping-cart mx-1" aria-hidden="true"></i>
+                            Commander
+                        </a>
+                    </div>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -122,3 +130,17 @@
 </body>
 
 </html>
+
+<script>
+    document.querySelectorAll('.orderButton').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêcher le lien de fonctionner
+            <?php if (!isset($_SESSION['user_name'])): ?>
+                $('#loginModal').modal('show'); // Afficher la modale si l'utilisateur n'est pas connecté
+            <?php else: ?>
+                // Rediriger vers commander.php si l'utilisateur est connecté
+                window.location.href = 'cart.php?id=' + this.getAttribute('data-meal-id');
+            <?php endif; ?>
+        });
+    });
+</script>

@@ -16,12 +16,13 @@ function getMealsWithPagination($page = 1, $limit = 10) {
             meals.added_at,
             meals.image,  -- Inclure le champ image
             meals.available,
+            meals.description,
             meal_categories.name AS category_name,
             admin_users.username AS added_by
         FROM meals
         JOIN meal_categories ON meals.category_uuid = meal_categories.category_uuid
         JOIN admin_users ON meals.added_by = admin_users.admin_uuid
-        WHERE meals.is_deleted = 0
+        WHERE meals.is_deleted = 0 AND meals.available = 1
         ORDER BY meals.created_at DESC
         LIMIT :limit OFFSET :offset
     ";
