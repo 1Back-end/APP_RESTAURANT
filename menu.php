@@ -169,9 +169,9 @@
                 cartItemsList.style.display = 'block';
                 cart.forEach((item, index) => {
                     const listItem = document.createElement('li');
-                    listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                    listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center','text-uppercase','fw-bold');
                     listItem.innerHTML = `
-                        ${item.name} - <span class="item-price">${parseInt(item.price)} FCFA</span>
+                        ${item.name}  <span class="item-price">${parseInt(item.price)} FCFA</span>
                         <button class="btn btn-danger btn-sm removeItemButton" data-meal-index="${index}" style="margin-left: 10px;">
                             Supprimer
                         </button>

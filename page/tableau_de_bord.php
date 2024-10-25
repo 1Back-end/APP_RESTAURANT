@@ -87,7 +87,7 @@
                     <i class="fas fa-users fs-3"></i> <!-- Icône d'ustensiles -->
                 </span>
             </div>
-            <h6 class="fs-3">
+            <h6 class="fs-3" id="customerCount">
                 <?php echo $total_customer;?> <!-- Récupération du nombre de clients -->
             </h6>
         </div>
