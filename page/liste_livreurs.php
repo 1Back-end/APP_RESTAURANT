@@ -63,11 +63,11 @@ $total_pages = ceil($total_livreurs / $limit);
                                     <?php if (!empty($livreur['photo'])): ?>
                                         <img src="../uploads/<?php echo htmlspecialchars($livreur['photo']); ?>" 
                                             alt="Photo de <?php echo htmlspecialchars($livreur['firstname'] . ' ' . $livreur['lastname']); ?>" 
-                                            class='rounded-circle img-fluid me-2' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
+                                            class='rounded-circle me-2 img-thumbnail' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
                                     <?php else: ?>
                                         <img src="https://i.pinimg.com/736x/77/44/9b/77449b6a5b56eafbfb2166b2b67516a8.jpg" 
                                             alt="Photo par défaut" 
-                                            class='rounded-circle img-fluid me-2' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
+                                            class='rounded-circle  me-2 img-thumbnail' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
                                     <?php endif; ?>
                                 </td>
 
@@ -90,11 +90,15 @@ $total_pages = ceil($total_livreurs / $limit);
                                             Actions
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton<?php echo $livreur['agent_uuid']; ?>">
-                                            <a class="dropdown-item text-danger" 
-                                               href="delete.php?id=<?php echo $livreur['agent_uuid']; ?>" 
-                                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livreur ?');">
-                                                <i class="fas fa-trash-alt"></i> Supprimer
-                                            </a>
+                                        <li>
+                                                <a class="dropdown-item text-danger" href="#" 
+                                                data-toggle="modal" 
+                                                data-target="#modalSupprimerLivreur" 
+                                                data-meal-id="<?php echo $livreur['agent_uuid']; ?>">
+                                                    <i class="fa fa-trash-o"></i> Supprimer
+                                                </a>
+                                            </li>
+
                                             <?php if ($livreur['available'] == 1): ?>
                                                 <a class="dropdown-item text-success" 
                                                    href="assign_delivery.php?id=<?php echo $livreur['agent_uuid']; ?>">
@@ -132,6 +136,47 @@ $total_pages = ceil($total_livreurs / $limit);
         </div>
     </div>
 </div>
+
+
+<!-- Boîte modale pour la suppression du repas -->
+<div class="modal fade" id="modalSupprimerRepas" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Supprimer le livreur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer ce livreur ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-xs btn-sm shadow-none" data-dismiss="modal">Annuler</button>
+                <!-- Lien de confirmation de la suppression -->
+                <a href="#" id="confirmDelete" class="btn btn-danger btn-xs btn-sm shadow-none">Confirmer</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        // Événement d'ouverture de la modale
+        $('#modalSupprimerLivreur').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Bouton qui a déclenché la modale
+            var mealId = button.data('meal-id'); // Récupérer l'ID du repas
+
+            // Mettre à jour le lien de confirmation de suppression
+            var deleteUrl = 'process_delete_delivery.php?id=' + mealId;
+            $('#confirmDelete').attr('href', deleteUrl);
+        });
+    });
+</script>
+
+
+
+
+
 
 <script>
 function rechercherLivreur() {
