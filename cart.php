@@ -45,7 +45,7 @@
         <h1 class="text-center">Mon Panier</h1>
         <ul class="list-group" id="cartItemsList"></ul>
         <div class="mt-3 text-right">
-            <strong>Total : <span id="totalPrice">0</span> FCFA</strong>
+            <strong>Total : <span id="totalPrice">0</span></strong>
         </div>
         <button class="btn btn-primary mt-3" id="checkoutButton">Passer à la commande</button>
         </div>
@@ -90,7 +90,7 @@
 
                 listItem.innerHTML = `
                     <span>${item.name}</span>
-                    <input type="number" class="form-control shadow-none w-25 mx-2" min="1" value="1" data-price="${itemPrice}" data-meal-index="${index}" onchange="updateTotalPrice()">
+                    <input type="number" class="form-control shadow-none w-25 mx-2" min="1" value="1" size="2" data-price="${itemPrice}" data-meal-index="${index}" onchange="updateTotalPrice()">
                     <span class="item-price" data-meal-index="${index}">${itemPrice} FCFA</span>
                     <button class="btn btn-danger btn-sm removeItemButton" data-meal-index="${index}" style="margin-left: 10px;">Supprimer</button>
                 `;

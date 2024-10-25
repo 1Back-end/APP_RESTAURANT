@@ -6,3 +6,33 @@
     cursor: pointer;
     border-bottom: 1px solid #e0e0e0; /* Bordure en bas de l'image */
 }
+.cart-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.cart-icon i {
+    font-size: 20px;
+}
+
+.cart-icon span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 14px;
+    width: 20px;
+    height:20px;
+    text-align:center;
+    font-weight:bold;
+}

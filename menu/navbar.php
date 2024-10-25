@@ -21,9 +21,10 @@ session_start(); // S'assurer que la session est démarrée
         <!-- Vérifier si l'utilisateur est connecté -->
         <?php if (isset($_SESSION['user_name'])): ?>
             <span class="nav-item nav-link text-white">Bonjour, <?= htmlspecialchars($_SESSION['user_name']); ?></span>
-            <a href="users/logout.php" class="btn btn-primary py-2 px-4">Se déconnecter</a>
+            <a href="users/logout.php" class="btn btn-primary py-2 px-4 shadow-none">Se déconnecter</a>
         <?php else: ?>
-            <a href="#" class="btn btn-primary py-2 px-4" data-bs-toggle="modal" data-bs-target="#loginModal">Mon compte</a>
+            <a href="#" class="btn btn-primary py-2 px-4 shadow-none" data-bs-toggle="modal" data-bs-target="#loginModal">Mon compte</a>
+            
         <?php endif; ?>
     </div>
 </nav>

@@ -4,3 +4,9 @@
 body {
     font-family: 'Rubik', sans-serif;
 }
+.card-box {
+    background-color: #fff;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 28px rgba(0,0,0,.08);
+    box-shadow: 0 0 28px rgba(0,0,0,.08);
+  }

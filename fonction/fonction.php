@@ -106,6 +106,42 @@ function search_delivery_agents($connexion, $searchTerm) {
     $stmt->execute([':searchTerm' => '%' . $searchTerm . '%']);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+function get_count_meals($connexion){
+    $query = "SELECT COUNT(*) as total FROM meals WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_meals = get_count_meals($connexion);
+
+
+function get_count_meals_categories($connexion){
+    $query = "SELECT COUNT(*) as total FROM meal_categories WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_category = get_count_meals_categories($connexion);
+
+function get_count_delivery($connexion){
+    $query = "SELECT COUNT(*) as total FROM delivery_agents WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_delivery = get_count_delivery($connexion);
+
+
+function get_count_customer($connexion){
+    $query = "SELECT COUNT(*) as total FROM users WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_customer = get_count_customer($connexion);
+
+
+
 
 
 function generateUUID() {

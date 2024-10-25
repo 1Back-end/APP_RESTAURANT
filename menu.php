@@ -133,7 +133,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cartModalLabel">Votre Panier</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <ul id="cartItemsList" class="list-group mb-3"></ul>
@@ -252,10 +252,10 @@
     color: white;
     border-radius: 50%;
     padding: 2px 6px;
-    font-size: 12px;
+    font-size: 14px;
     width: 20px;
     height:20px;
     text-align:center;
-    font-weight:700;
+    font-weight:bold;
 }
 </style>
