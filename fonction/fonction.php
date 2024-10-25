@@ -77,6 +77,35 @@ function countMeals() {
     return $result['total'];
 }
 
+function get_agency_delivery($connexion, $limit, $offset) {
+    $query = "SELECT * FROM delivery_agents WHERE is_deleted = 0 ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+    $stmt = $connexion->prepare($query);
+    
+    // Liaison des valeurs pour la pagination
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function count_agency_delivery($connexion) {
+    $query = "SELECT COUNT(*) FROM delivery_agents WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+function search_delivery_agents($connexion, $searchTerm) {
+    $query = "SELECT * FROM delivery_agents WHERE is_deleted = 0 
+              AND (firstname LIKE :searchTerm OR 
+                   lastname LIKE :searchTerm OR 
+                   phone LIKE :searchTerm OR 
+                   cni_number LIKE :searchTerm) 
+              ORDER BY created_at DESC";
+
+    $stmt = $connexion->prepare($query);
+    $stmt->execute([':searchTerm' => '%' . $searchTerm . '%']);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 function generateUUID() {
@@ -165,3 +194,46 @@ function getCurrentDateTimeInFrench() {
     // Obtenir la date et l'heure actuelles
     return strftime("%A %d %B %Y, %H:%M:%S"); // Ex : "lundi 22 octobre 2024, 14:30:45"
 }
+// function generateAgentCode() {
+//     // Obtient la date et l'heure actuelles pour le code
+//     $dateTime = date('YmdHis'); // Format : AAAAMMJJHHMMSS
+    
+//     // Génère une partie aléatoire de 4 chiffres
+//     $randomPart = rand(1000, 9999); // Génère un nombre aléatoire entre 1000 et 9999
+    
+//     // Construit le code unique de livreur
+//     return 'AGT-' . $dateTime . '-' . $randomPart; // Exemple : AGT-20231025123000-1234
+// }
+
+function generateAvailabilityOptions($selectedValue = null) {
+    $options = [
+        '24h/24',
+        '12h/24',
+        '8h/24',
+        '6h/24',
+        '4h/24',
+        '2h/24',
+        '1h/24',
+    ];
+    
+    $output = '';
+    foreach ($options as $option) {
+        $selected = ($option === $selectedValue) ? 'selected' : '';
+        $output .= "<option value=\"{$option}\" {$selected}>{$option}</option>";
+    }
+    return $output;
+}
+function generateAgentCode() {
+    // Récupérer l'année actuelle
+    $year = date('Y'); // Obtenir l'année en cours (ex: 2024)
+    
+    // Générer un nombre aléatoire à deux chiffres
+    $randomNumber = mt_rand(0, 99); // Générer un nombre aléatoire entre 0 et 99
+    $formattedRandomNumber = str_pad($randomNumber, 2, '0', STR_PAD_LEFT); // Formater le nombre pour qu'il ait toujours deux chiffres
+    
+    // Combiner le préfixe, l'année, et le nombre aléatoire
+    $AgencyCode = 'AGT-' . $year . $formattedRandomNumber;
+    
+    return $AgencyCode;
+}
+

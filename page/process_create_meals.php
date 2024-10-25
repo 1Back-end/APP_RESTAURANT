@@ -1,16 +1,16 @@
 <?php
-include_once("../database/connexion.php"); // Connexion à la base de données
-include_once("../fonction/fonction.php");
+    include_once("../database/connexion.php"); // Connexion à la base de données
+    include_once("../fonction/fonction.php");
 
-// Initialisation des variables
-$erreur_champ = "";
-$erreur = "";
-$success = "";
-$nom = ""; 
-$date = ""; 
-$description = ""; 
-$prix = ""; 
-$categorie = "";
+    // Initialisation des variables
+    $erreur_champ = "";
+    $erreur = "";
+    $success = "";
+    $nom = ""; 
+    $date = ""; 
+    $description = ""; 
+    $prix = ""; 
+    $categorie = "";
 
 // Vérifier si le formulaire a été soumis
 if (isset($_POST["submit"])) {

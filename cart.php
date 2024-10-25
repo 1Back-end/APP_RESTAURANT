@@ -27,8 +27,6 @@
 </head>
 
 <body>
-
-
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
         <?php include("menu/navbar.php");?>
@@ -42,44 +40,16 @@
         </div>
 
         
-       
-        <div class="container-xxl py-5">
-    <div class="container">
-    <?php if (empty($_SESSION['cart'])): ?>
-            <p>Votre panier est vide. <a href="menu.php">Commander des repas</a></p>
-        <?php else: ?>
-            <form action="process_order.php" method="POST">
-                <h3>Résumé de la Commande</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Repas</th>
-                            <th>Prix</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $total = 0; // Initialiser le total
-                        foreach ($_SESSION['cart'] as $meal): 
-                            $total += $meal['price'];
-                        ?>
-                            <tr>
-                                <td><?= htmlspecialchars($meal['meal_name']); ?></td>
-                                <td><?= number_format($meal['price'], 2, ',', ' ') . ' FCFA'; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <h4>Total: <?= number_format($total, 2, ',', ' ') . ' FCFA'; ?></h4>
-                <button type="submit" class="btn btn-success">Confirmer la Commande</button>
-            </form>
-        <?php endif; ?>
-    </div>
-        
-        
-    </div>
-</div>
-
+       <div class="container-xxl py-5">
+        <div class="col-md-6 card shadow-sm border-light h-100 text-center p-3 mx-auto text-center">
+        <h1 class="text-center">Mon Panier</h1>
+        <ul class="list-group" id="cartItemsList"></ul>
+        <div class="mt-3 text-right">
+            <strong>Total : <span id="totalPrice">0</span> FCFA</strong>
+        </div>
+        <button class="btn btn-primary mt-3" id="checkoutButton">Passer à la commande</button>
+        </div>
+        </div>
         <!-- Menu End -->
         <?php include_once("menu/footer.php");?>
         <!-- Back to Top -->
@@ -102,3 +72,77 @@
 </body>
 
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartItemsList = document.getElementById('cartItemsList');
+        const totalPriceElement = document.getElementById('totalPrice');
+
+        function displayCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItemsList.innerHTML = '';
+            let totalPrice = 0;
+
+            cart.forEach((item, index) => {
+                const itemPrice = parseInt(item.price); // Récupère le prix sans symbole et comme entier
+
+                const listItem = document.createElement('li');
+                listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                listItem.innerHTML = `
+                    <span>${item.name}</span>
+                    <input type="number" class="form-control shadow-none w-25 mx-2" min="1" value="1" data-price="${itemPrice}" data-meal-index="${index}" onchange="updateTotalPrice()">
+                    <span class="item-price" data-meal-index="${index}">${itemPrice} FCFA</span>
+                    <button class="btn btn-danger btn-sm removeItemButton" data-meal-index="${index}" style="margin-left: 10px;">Supprimer</button>
+                `;
+                cartItemsList.appendChild(listItem);
+                totalPrice += itemPrice; // Calcule le prix total initial
+            });
+
+            totalPriceElement.textContent = totalPrice + ' FCFA'; // Met à jour le prix total
+        }
+
+        window.updateTotalPrice = function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalPrice = 0;
+
+            cart.forEach((item, index) => {
+                const quantityInput = document.querySelector(`input[data-meal-index="${index}"]`);
+                const quantity = parseInt(quantityInput.value);
+                const itemPrice = parseInt(item.price); // Utilise le prix sans symbole
+                const totalItemPrice = itemPrice * quantity; // Calcule le prix total pour cet article
+
+                // Met à jour l'affichage du prix de l'article
+                document.querySelector(`.item-price[data-meal-index="${index}"]`).textContent = totalItemPrice + ' FCFA';
+
+                totalPrice += totalItemPrice; // Calcule le prix total
+            });
+
+            totalPriceElement.textContent = totalPrice + ' FCFA'; // Met à jour le prix total
+        }
+
+        cartItemsList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('removeItemButton')) {
+                const itemIndex = event.target.getAttribute('data-meal-index');
+                removeItemFromCart(itemIndex);
+            }
+        });
+
+        function removeItemFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCartItems();
+        }
+
+        document.getElementById('checkoutButton').addEventListener('click', () => {
+            if (JSON.parse(localStorage.getItem('cart')).length === 0) {
+                alert('Votre panier est vide.');
+            } else {
+                // Rediriger vers une page de commande (ajustez l'URL si nécessaire)
+                window.location.href = 'checkout.php';
+            }
+        });
+
+        displayCartItems();
+    });
+</script>

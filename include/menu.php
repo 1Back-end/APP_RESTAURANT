@@ -141,7 +141,7 @@
 					<ul class="submenu">
 						<li><a href="../page/liste_livreurs.php">Liste des livreurs</a></li>
 						<li><a href="../page/ajouter_livreur.php">Ajouter un livreur</a></li>
-						<li><a href="../page/statut_livreurs.php">Statut des livreurs</a></li>
+						<!-- <li><a href="../page/statut_livreurs.php">Statut des livreurs</a></li> -->
 					</ul>
 				</li>
 
