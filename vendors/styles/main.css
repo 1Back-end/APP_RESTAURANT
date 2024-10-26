@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-body {
-  font-family: "Rubik", system-ui;
-  font-weight: 300;
-  font-style: normal;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+  body {
+    font-family: "Rubik", system-ui;
+    font-weight: 300;
+    font-style: normal;
+  }
 .sidebar-menu .dropdown-toggle {
     font-size: 16px;
     color: #fff;

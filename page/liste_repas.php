@@ -3,12 +3,23 @@
 
 <div class="main-container mt-3 pb-5">
 
-    <div class="col-md-12 col-sm-12  mb-3">
-      <div class="card-box text-center text-uppercase p-3">
-            <h4>Liste des repas</h4>
-      </div>
+<div class="col-md-12 col-sm-12 mb-3">
+    <div class="card-box text-center text-uppercase p-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="mr-auto">
+                <h3 class="text-uppercase">Liste des repas</h3>
+            </div>
+            <div class="ml-auto">
+                <div class="form-inline">
+                    <input type="text" class="form-control shadow-none mr-2" id="searchRepas" placeholder="Rechercher un repas...">
+                    <button type="button" class="btn btn-customize text-white shadow-none" onclick="rechercherRepas()">
+                        Rechercher
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-
+</div>
 
     <?php
 // Récupérer la page courante depuis l'URL ou définir à 1 par défaut
@@ -69,7 +80,7 @@ $totalPages = ceil($totalMeals / $limit);
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box p-3">
         <div class="table-responsive">
-            <table class="table table-striped table-bordered text-center">
+            <table id="repasTable" class="table table-striped table-bordered text-center">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -276,4 +287,31 @@ $totalPages = ceil($totalMeals / $limit);
             $(".alert").alert('close');
         }, 2000); // 2000 millisecondes = 2 secondes
     });
+</script>
+
+
+<script>
+function rechercherRepas() {
+    // Récupérer la valeur de recherche
+    const searchInput = document.getElementById('searchRepas').value.toLowerCase();
+    const table = document.getElementById('repasTable');
+    const rows = table.getElementsByTagName('tr');
+
+    // Boucle à travers toutes les lignes du tableau
+    for (let i = 1; i < rows.length; i++) { // commencer à 1 pour ignorer l'en-tête
+        const cells = rows[i].getElementsByTagName('td');
+        let match = false;
+
+        // Vérifier si une cellule correspond à la valeur de recherche
+        for (let j = 1; j < cells.length; j++) { // commencer à 1 pour ignorer le numéro
+            if (cells[j].textContent.toLowerCase().includes(searchInput)) {
+                match = true;
+                break;
+            }
+        }
+
+        // Afficher ou masquer la ligne en fonction de la correspondance
+        rows[i].style.display = match ? '' : 'none';
+    }
+}
 </script>

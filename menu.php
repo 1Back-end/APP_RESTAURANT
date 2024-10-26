@@ -46,6 +46,25 @@
                 </div>
             </div>
         </div>
+        <div class="container-xxl">
+            <div class="container">
+                <!-- Affichage des messages d'erreur -->
+                <?php if (isset($_GET['error'])): ?>
+                    <div id="error-message" class="alert alert-danger text-center" role="alert">
+                        <?= htmlspecialchars($_GET['error']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Affichage des messages de succès -->
+                <?php if (isset($_GET['success'])): ?>
+                    <div id="success-message" class="alert alert-success text-center" role="alert">
+                        <?= htmlspecialchars($_GET['success']); ?>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </div>
+        
         <!-- Navbar & Hero End -->
         <?php include_once("controllers.php");?>
         <!-- Menu Start -->
@@ -79,7 +98,7 @@
                         <a href="#" class="btn btn-primary shadow-none orderButton" data-meal-id="<?= htmlspecialchars($meal['meal_uuid']); ?>">
                             <i class="fa fa-shopping-cart mx-1" aria-hidden="true"></i>
                             Commander
-                        </a>
+                        </a> 
                     </div>
                 </div>
             </div>
@@ -98,12 +117,6 @@
             <?php endfor; ?>
         </ul>
     </nav>
-
-    <!-- Icone panier en bas de la pagination -->
-    <div id="cartIcon" class="cart-icon" data-bs-toggle="modal" data-bs-target="#cartModal">
-        <i class="fa fa-shopping-cart"></i>
-        <span id="cartCount">0</span>
-    </div>
 </div>
 </div>
 
@@ -127,135 +140,40 @@
 </body>
 
 </html>
-<!-- Modal de panier -->
-<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cartModalLabel">Votre Panier</h5>
-                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <ul id="cartItemsList" class="list-group mb-3"></ul>
-                <p id="emptyCartMessage" class="text-center">Votre panier est vide.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <a href="cart.php" class="btn btn-primary">Aller au panier</a>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const cartCountElement = document.getElementById('cartCount');
-        const cartItemsList = document.getElementById('cartItemsList');
-        const emptyCartMessage = document.getElementById('emptyCartMessage');
-
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartCountElement.textContent = cart.length;
-        }
-
-        // Affichage des articles dans le panier
-        function displayCartItems() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartItemsList.innerHTML = '';
-            if (cart.length === 0) {
-                emptyCartMessage.style.display = 'block';
-                cartItemsList.style.display = 'none';
-            } else {
-                emptyCartMessage.style.display = 'none';
-                cartItemsList.style.display = 'block';
-                cart.forEach((item, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center','text-uppercase','fw-bold');
-                    listItem.innerHTML = `
-                        ${item.name}  <span class="item-price">${parseInt(item.price)} FCFA</span>
-                        <button class="btn btn-danger btn-sm removeItemButton" data-meal-index="${index}" style="margin-left: 10px;">
-                            Supprimer
-                        </button>
-                    `;
-                    cartItemsList.appendChild(listItem);
-                });
-            }
-        }
-
-        function removeItemFromCart(index) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.splice(index, 1); // Retirer l'article du tableau
-            localStorage.setItem('cart', JSON.stringify(cart)); // Sauvegarder le panier mis à jour
-            updateCartCount();
-            displayCartItems();
-        }
-
         document.querySelectorAll('.orderButton').forEach(button => {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
+
+                // Vérifiez si l'utilisateur est connecté
                 <?php if (!isset($_SESSION['user_name'])): ?>
+                    // Ouvrir la modale si l'utilisateur n'est pas connecté
                     $('#loginModal').modal('show');
                 <?php else: ?>
                     const mealId = this.getAttribute('data-meal-id');
-                    const mealName = this.parentElement.querySelector('.card-title').textContent;
-                    const mealPrice = parseInt(this.parentElement.querySelector('.card-text').textContent); // Convertir en entier
+                    const userId = '<?= $_SESSION['user_uuid']; ?>'; // ID utilisateur
 
-                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                    cart.push({ id: mealId, name: mealName, price: mealPrice });
-                    localStorage.setItem('cart', JSON.stringify(cart));
-
-                    updateCartCount();
-                    alert(`${mealName} a été ajouté au panier.`);
+                    // Redirection vers le script de traitement de commande
+                    window.location.href = `process_order.php?user_uuid=${userId}&meal_uuid=${mealId}`;
                 <?php endif; ?>
             });
         });
-
-        // Afficher le contenu du panier en cliquant sur l'icône
-        const cartIcon = document.getElementById('cartIcon');
-        cartIcon.addEventListener('click', displayCartItems);
-
-        // Suppression d'un article dans le panier en cliquant sur le bouton
-        cartItemsList.addEventListener('click', (event) => {
-            if (event.target.classList.contains('removeItemButton')) {
-                const itemIndex = event.target.getAttribute('data-meal-index');
-                removeItemFromCart(itemIndex);
-            }
-        });
-
-        updateCartCount();
     });
 </script>
 
-
-
-<style>
-.cart-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 50%;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-}
-
-.cart-icon i {
-    font-size: 20px;
-}
-
-.cart-icon span {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 14px;
-    width: 20px;
-    height:20px;
-    text-align:center;
-    font-weight:bold;
-}
-</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Faire disparaître les messages après 2 secondes
+        setTimeout(() => {
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+            if (errorMessage) {
+                errorMessage.style.display = 'none'; // Cacher le message d'erreur
+            }
+            if (successMessage) {
+                successMessage.style.display = 'none'; // Cacher le message de succès
+            }
+        }, 2000); // 2000 ms = 2 secondes
+    });
+</script>

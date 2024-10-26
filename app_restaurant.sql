@@ -168,6 +168,7 @@ INSERT INTO `meal_categories` (`category_uuid`, `name`, `description`, `added_by
 CREATE TABLE `orders` (
   `order_uuid` char(36) NOT NULL,
   `user_uuid` char(36) NOT NULL,
+  `meal_uuid` char(36) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `status` varchar(20) DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

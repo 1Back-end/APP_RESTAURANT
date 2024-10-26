@@ -26,7 +26,7 @@
     <div class="row">
         
     <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
-    <div class="card-box p-3 text-center">
+    <div class="card-box p-3 text-center h-100">
         <h6 class="mb-3 font-16 text-uppercase">Total des repas</h6>
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
@@ -44,7 +44,7 @@
 
 
 <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
-    <div class="card-box p-3 text-center">
+    <div class="card-box p-3 text-center h-100">
         <h6 class="mb-3 font-14 text-uppercase">Total des catégories</h6>
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
@@ -61,7 +61,7 @@
 
 
 <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
-    <div class="card-box p-3 text-center">
+    <div class="card-box p-3 text-center h-100">
         <h6 class="mb-3 font-14 text-uppercase">Total des livreurs</h6>
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
@@ -79,7 +79,7 @@
 
 
 <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
-    <div class="card-box p-3 text-center">
+    <div class="card-box p-3 text-center h-100">
         <h6 class="mb-3 font-14 text-uppercase">Total des clients</h6>
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
