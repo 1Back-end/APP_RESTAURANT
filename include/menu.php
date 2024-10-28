@@ -122,7 +122,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<!-- <li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
 					</a>
@@ -132,18 +132,18 @@
 						<li><a href="../page/livraisons_terminees.php">Livraisons terminées</a></li>
 						<li><a href="../page/affecter_livreur.php">Affecter un livreur</a></li>
 					</ul>
-				</li>
+				</li> -->
 
-				<li class="dropdown">
+				<!-- <li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-users"></span><span class="mtext">Livreurs</span>
 					</a>
 					<ul class="submenu">
 						<li><a href="../page/liste_livreurs.php">Liste des livreurs</a></li>
 						<li><a href="../page/ajouter_livreur.php">Ajouter un livreur</a></li>
-						<!-- <li><a href="../page/statut_livreurs.php">Statut des livreurs</a></li> -->
+						<li><a href="../page/statut_livreurs.php">Statut des livreurs</a></li>
 					</ul>
-				</li>
+				</li> -->
 
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">

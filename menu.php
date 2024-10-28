@@ -95,10 +95,17 @@
                             <p class="card-text mb-0"><?= htmlspecialchars($meal['price']); ?></p>
                         </div>
                         <p class="card-text text-truncate"><?= htmlspecialchars($meal['description']); ?></p>
-                        <a href="#" class="btn btn-primary shadow-none orderButton" data-meal-id="<?= htmlspecialchars($meal['meal_uuid']); ?>">
-                            <i class="fa fa-shopping-cart mx-1" aria-hidden="true"></i>
-                            Commander
-                        </a> 
+                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="mr-auto">
+                            <input type="number" class="form-control shadow-none quantity-input" min="1" value="1" size="3">
+                        </div>
+                        <div class="ml-auto">
+                            <a href="#" class="btn btn-primary shadow-none orderButton" data-meal-id="<?= htmlspecialchars($meal['meal_uuid']); ?>">
+                                Commander
+                            </a>
+                        </div>
+                    </div>
+
                     </div>
                 </div>
             </div>
@@ -141,26 +148,30 @@
 
 </html>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.orderButton').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.orderButton').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
 
-                // Vérifiez si l'utilisateur est connecté
-                <?php if (!isset($_SESSION['user_name'])): ?>
-                    // Ouvrir la modale si l'utilisateur n'est pas connecté
-                    $('#loginModal').modal('show');
-                <?php else: ?>
-                    const mealId = this.getAttribute('data-meal-id');
-                    const userId = '<?= $_SESSION['user_uuid']; ?>'; // ID utilisateur
+            // Vérifiez si l'utilisateur est connecté
+            <?php if (!isset($_SESSION['user_name'])): ?>
+                // Ouvrir la modale si l'utilisateur n'est pas connecté
+                $('#loginModal').modal('show');
+            <?php else: ?>
+                const mealId = this.getAttribute('data-meal-id');
+                const userId = '<?= $_SESSION['user_uuid']; ?>'; // ID utilisateur
+                const quantityInput = this.closest('.d-flex').querySelector('.quantity-input');
+                const quantity = quantityInput ? quantityInput.value : 1; // Valeur par défaut à 1 si non spécifiée
 
-                    // Redirection vers le script de traitement de commande
-                    window.location.href = `process_order.php?user_uuid=${userId}&meal_uuid=${mealId}`;
-                <?php endif; ?>
-            });
+                // Redirection vers le script de traitement de commande avec la quantité
+                window.location.href = `process_order.php?user_uuid=${userId}&meal_uuid=${mealId}&quantity=${quantity}`;
+            <?php endif; ?>
         });
     });
+});
 </script>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

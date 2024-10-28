@@ -11,6 +11,10 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         array (
             'Twilio\\' => 7,
         ),
+        'S' => 
+        array (
+            'Stripe\\' => 7,
+        ),
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
@@ -21,6 +25,10 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         'Twilio\\' => 
         array (
             0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',
+        ),
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (

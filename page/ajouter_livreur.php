@@ -22,7 +22,7 @@
     </div>
 <?php endif; ?>
 
-
+</div>
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box p-3">
         <form action="" method="POST" enctype="multipart/form-data">

@@ -1,7 +1,7 @@
 /* Styles pour les images des repas */
 .card-img-top {
     width: 100%; /* Prend toute la largeur de la carte */
-    height: 250px; /* Maintient le ratio d'aspect */
+    height: 200px; /* Maintient le ratio d'aspect */
     filter: brightness(1.1);
     cursor: pointer;
     border-bottom: 1px solid #e0e0e0; /* Bordure en bas de l'image */

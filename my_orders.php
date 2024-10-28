@@ -8,10 +8,11 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
+    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Libraries Stylesheet -->
@@ -22,50 +23,44 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="assets/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     
 </head>
-<style>
-    * {
-  font-family: "Rubik", system-ui;
 
-}
-.btn{
-    font-family: "Rubik", system-ui;
-
-}
-</style>
 
 <body>
 
+<!-- Navbar & Hero Start -->
+<div class="container-xxl position-relative p-0">
+    <?php include("menu/navbar.php"); ?>
 
-        <!-- Navbar & Hero Start -->
-        <div class="container-xxl position-relative p-0">
-        <?php include("menu/navbar.php");?>
-
-            <div class="container-xxl py-5 bg-dark hero-header mb-5">
-                <div class="container text-center my-5 pt-5 pb-4">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">Commandé maintenant</h1>
-                </div>
-            </div>
+    <div class="container-xxl py-5 bg-dark hero-header mb-5">
+        <div class="container text-center my-5 pt-5 pb-4">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Mon panier</h1>
         </div>
+    </div>
+</div>
+<!-- Navbar & Hero End -->
 
-        <div class="container-xxl">
-            <div class="container">
-                <?php
-                // Vérifiez si un message est présent dans l'URL
-                if (isset($_GET['message'])): ?>
-                    <div id="message" class="alert alert-success text-center" role="alert">
-                        <?= htmlspecialchars($_GET['message']); ?>
-                    </div>
-                <?php endif; ?>
-                
-                <!-- Votre code pour afficher les commandes ici -->
-
+<!-- Main Content Start -->
+<div class="container-xxl">
+    <div class="container">
+        <?php
+        // Vérifiez si un message est présent dans l'URL
+        if (isset($_GET['message'])): ?>
+            <div id="message" class="alert alert-success text-center" role="alert">
+                <?= htmlspecialchars($_GET['message']); ?>
             </div>
-        </div>
+        <?php endif; ?>
+        
+        <!-- Votre code pour afficher les commandes ici -->
 
-        <div class="container-xxl position-relative p-0">
+    </div>
+</div>
+<!-- Main Content End -->
+
+
+<!-- Container principal -->
+<div class="container-xxl position-relative p-0">
     <div class="container">
         <?php
         include_once("database/connexion.php");
@@ -80,7 +75,8 @@
                 m.name, 
                 m.price, 
                 m.image, 
-                o.order_date
+                o.order_date,
+                o.quantity
             FROM 
                 orders o
             JOIN 
@@ -88,86 +84,85 @@
             WHERE 
                 o.user_uuid = :user_uuid 
                 AND DATE(o.order_date) = CURDATE() 
-                AND o.is_deleted = 0
+                AND o.is_deleted = 0 ORDER BY o.order_date DESC
         ");
         
-            
             $stmt->bindValue(':user_uuid', $user_uuid);
             $stmt->execute();
         
             $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $grandTotal = 0; // Initialiser le prix total général ici
         }
         ?>
-            <div class="table-responsive">
-                <div class="card shadow-sm border-light h-100 text-center p-3">
-                    <table class="table table-striped text-center table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Image</th>
-                                <th>Repas</th>
-                                <th>Prix Unitaire (FCFA)</th>
-                                <th>Quantité</th>
-                                <th>Prix Total (FCFA)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (!empty($orders)): ?>
-                                <?php $counter = 1; // Compteur pour les numéros ?>
-                                <?php $grandTotal = 0; // Initialiser le prix total général ?>
-                                <?php foreach ($orders as $order): ?>
-                                    <tr>
-                                        <td><?= $counter++; ?></td> <!-- Affiche le numéro de la commande -->
-                                        <td>
-                                            <?php 
-                                            // Récupérer la première image
-                                            if (!empty($order['image'])): 
-                                                $images = explode(',', $order['image']);
-                                                $firstImage = $images[0]; 
-                                            ?>
-                                                <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail" style="width: 50px; height: auto;">
-                                            <?php else: ?>
-                                                <img src="../uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail" style="width: 50px; height: auto;">
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?= htmlspecialchars($order['name']); ?></td>
-                                        <td class="unit-price"><?= htmlspecialchars($order['price']); ?></td>
-                                        <td>
-                                            <input type="number" class="form-control shadow-none quantity" value="1" min="1" size="2" data-price="<?= htmlspecialchars($order['price']); ?>">
-                                        </td>
-                                        <td class="total-price"><?= htmlspecialchars($order['price']); ?> FCFA</td>
-                                        <td>
-                                            <a href="delete_meal.php?order_uuid=<?= htmlspecialchars($order['order_uuid']); ?>" class="btn btn-danger btn-sm shadow-none" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce repas ?');">Supprimer</a>
-                                        </td>
-
-
-                                    </tr>
-                                    <?php 
-                                    // Calculer le prix total général
-                                    $grandTotal += htmlspecialchars($order['price']); 
-                                    ?>
-                                <?php endforeach; ?>
-                            <?php else: ?>
+        
+        <!-- Table des commandes -->
+        <div class="table-responsive">
+            <div class="card shadow-sm border-light h-100 text-center p-3">
+                <table class="table table-striped text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Repas</th>
+                            <th>Prix Unitaire (FCFA)</th>
+                            <th>Quantité</th>
+                            <th>Prix Total (FCFA)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($orders)): ?>
+                            <?php $counter = 1; // Compteur pour les numéros ?>
+                            <?php foreach ($orders as $order): ?>
                                 <tr>
-                                    <td colspan="6" class="text-center">Aucune commande trouvée.</td>
+                                    <td><?= $counter++; ?></td>
+                                    <td>
+                                        <?php 
+                                        if (!empty($order['image'])): 
+                                            $images = explode(',', $order['image']);
+                                            $firstImage = $images[0]; 
+                                        ?>
+                                            <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail" style="width: 50px; height: auto;">
+                                        <?php else: ?>
+                                            <img src="../uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail" style="width: 50px; height: auto;">
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= htmlspecialchars($order['name']); ?></td>
+                                    <td class="unit-price"><?= htmlspecialchars($order['price']); ?></td>
+                                    <td class="quantity text-center"><?= htmlspecialchars($order['quantity']);?></td>
+                                    <td class="total-price"><?= htmlspecialchars($order['price']); ?> FCFA</td>
+                                    <td>
+                                        <a href="delete_meal.php?order_uuid=<?= htmlspecialchars($order['order_uuid']); ?>" class="btn btn-danger btn-sm shadow-none" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce repas ?');">Supprimer</a>
+                                    </td>
                                 </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                    <div class="mt-3">
-                        <strong>Prix Total : </strong>
-                        <span id="grand-total"><?= $grandTotal; ?> FCFA</span>
+                                <?php 
+                                $grandTotal += $order['price']; 
+                                ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="10" class="text-center">Aucune commande trouvée.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+                
+                <!-- Prix total -->
+                <div class="mt-3">
+                    <strong>Prix Total : </strong>
+                    <span id="grand-total"><?= $grandTotal; ?> FCFA</span>
+                </div>
+                
+                <!-- Bouton Payer avec modale -->
+                <div class="container mt-4">
+                    <div class="text-center">
+                        <a href="checkout.php" class="btn btn-primary">Passer à la caisse</a>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
-
-
 
         
         <!-- Menu End -->
