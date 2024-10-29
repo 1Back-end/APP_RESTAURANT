@@ -17,34 +17,52 @@ session_start(); // S'assurer que la session est démarrée
             <a href="menu.php" class="nav-item nav-link active">Menu</a>
             <a href="contact.php" class="nav-item nav-link">Contact</a>
         </div>
+                <?php 
+                    // Vérifier si les variables de session existent
+                    if (isset($_SESSION['user_uuid']) && isset($_SESSION['user_name'])) {
+                        // Lors de la création du lien
+                        $token = base64_encode($_SESSION['user_uuid'] . ':' . $_SESSION['user_name']); // Encode les données
+                    ?>
 
-        <!-- Vérifier si l'utilisateur est connecté -->
-<?php if (isset($_SESSION['user_name'])): ?>
-    <div class="d-flex align-items-center">
-        <button class="btn btn-primary dropdown-toggle py-2 px-4 shadow-none" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            Hello, <?= htmlspecialchars($_SESSION['user_name']); ?>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li>
-                <a class="dropdown-item" href="my_orders.php">
-                    <i class="fa fa-shopping-cart"></i> Mes commandes
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="profile.php">
-                    <i class="fas fa-user"></i> Mon profil
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="users/logout.php">
-                    <i class="fas fa-sign-out-alt"></i> Déconnexion
-                </a>
-            </li>
-        </ul>
-    </div>
-<?php else: ?>
-    <a href="#" class="btn btn-primary py-2 px-4 shadow-none" data-bs-toggle="modal" data-bs-target="#loginModal">Mon compte</a>
-<?php endif; ?>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-primary dropdown-toggle py-2 px-4 shadow-none" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Bonjour, <?= htmlspecialchars($_SESSION['user_name']); ?>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item" href="clients/menu.php?token=<?= urlencode($token); ?>"> <!-- Lien avec token -->
+                            <i class="fas fa-tachometer"></i> Tableau de Bord
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="my_orders.php">
+                            <i class="fa fa-shopping-cart"></i> Mes commandes
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="profile.php">
+                            <i class="fas fa-user"></i> Mon profil
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="users/logout.php">
+                            <i class="fas fa-sign-out-alt"></i> Déconnexion
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        <?php 
+        } else {
+        ?>
+
+            <a href="#" class="btn btn-primary py-2 px-4 shadow-none" data-bs-toggle="modal" data-bs-target="#loginModal">Mon compte</a>
+
+        <?php 
+        }
+        ?>
+
+
 
 
 
