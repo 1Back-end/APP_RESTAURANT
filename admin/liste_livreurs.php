@@ -21,6 +21,19 @@
     </div>
 </div>
 
+<div class="col-md-12 col-sm-12 mb-3">
+<?php
+if (isset($_GET['success']) && !empty($_GET['success'])) {
+    echo '<div class="alert alert-success text-center">' . htmlspecialchars($_GET['success']) . '</div>';
+}
+
+if (isset($_GET['error']) && !empty($_GET['error'])) {
+    echo '<div class="alert alert-danger text-center">' . htmlspecialchars($_GET['error']) . '</div>';
+}
+?>
+
+</div>
+
 <?php
 // Nombre d'éléments à afficher par page
 $limit = 5;
@@ -35,6 +48,13 @@ $livreurs = get_agency_delivery($connexion, $limit, $offset);
 // Compter le total des livreurs pour la pagination
 $total_livreurs = count_agency_delivery($connexion);
 $total_pages = ceil($total_livreurs / $limit);
+?>
+<?php
+// Inclure votre connexion à la base de données
+include_once("../database/connexion.php");
+// Récupérer les commandes en attente
+$orders = get_order_pending($connexion); // Appel de la fonction
+
 ?>
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box p-3">
@@ -82,7 +102,7 @@ $total_pages = ceil($total_livreurs / $limit);
                                 <td><?php echo htmlspecialchars($livreur['availability_schedule']); ?></td>
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" 
+                                        <button class="btn btn-customize text-white btn-rounded btn-sm dropdown-toggle" type="button" 
                                                 id="dropdownMenuButton<?php echo $livreur['agent_uuid']; ?>" 
                                                 data-toggle="dropdown" 
                                                 aria-haspopup="true" 
@@ -98,12 +118,14 @@ $total_pages = ceil($total_livreurs / $limit);
                                                     <i class="fa fa-trash-o"></i> Supprimer
                                                 </a>
                                             </li>
-
                                             <?php if ($livreur['available'] == 1): ?>
                                                 <a class="dropdown-item text-success" 
-                                                   href="assign_delivery.php?id=<?php echo $livreur['agent_uuid']; ?>">
-                                                    <i class="fas fa-truck"></i> Affecter à une livraison
-                                                </a>
+                                                    href="#" 
+                                                    data-toggle="modal" 
+                                                    data-target="#assignDeliveryModal" 
+                                                    data-agent-uuid="<?php echo $livreur['agent_uuid']; ?>"> <!-- Vérifiez ici -->
+                                                        <i class="fas fa-truck"></i> Affecter à une livraison
+                                                    </a>
                                             <?php endif; ?>
                                             <?php if ($livreur['available'] == 0): ?>
                                                 <a class="dropdown-item text-success" 
@@ -159,6 +181,69 @@ $total_pages = ceil($total_livreurs / $limit);
         </div>
     </div>
 </div>
+<!-- Boîte Modale -->
+<div class="modal fade" id="assignDeliveryModal" tabindex="-1" role="dialog" aria-labelledby="assignDeliveryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignDeliveryModalLabel">Sélectionnez une commande</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="assignDeliveryForm" method="POST" action="assign_delivery.php">
+                    <!-- Champ caché pour agent_uuid -->
+                    <input type="hidden" name="agent_uuid" id="hidden_agent_uuid" value="">
+                    <div class="form-group">
+                        <label for="order_uuid">Choisissez une commande :</label>
+                        <select class="form-control select-custom shadow-none" name="order_uuid" id="order_uuid" required>
+                            <option value="" disabled selected>Sélectionnez une commande</option>
+                            <?php
+                                $i = 1; // Compteur pour le numéro auto-incrémenté
+                                foreach ($orders as $order) {
+                                    // Afficher les informations nécessaires dans l'option
+                                    echo '<option value="' . $order['order_uuid'] . '">' . 
+                                        $i . '. ' . $order['username'] . ' - ' . $order['order_date'] . ' - ' . 
+                                        $order['total_amount'] . ' FCFA</option>';
+                                    $i++; // Incrémenter le compteur
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm btn-xs shadow-none" data-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-customize text-white btn-sm btn-xs shadow-none">Assigner Livraison</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Script pour mettre à jour l'agent_uuid caché lorsque le modal s'ouvre
+        $('#assignDeliveryModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            var agentUuid = button.data('agent-uuid'); // Assurez-vous que cet attribut est correct
+            $('#hidden_agent_uuid').val(agentUuid); // Mettre à jour le champ caché
+        });
+    });
+</script>
+<script>
+    // Script pour mettre à jour l'agent_uuid caché lorsque le modal s'ouvre
+    $('#assignDeliveryModal').on('show.bs.modal', function (event) {
+        // Récupérer l'élément qui a déclenché le modal (ex: un bouton)
+        var button = $(event.relatedTarget); 
+        var agentUuid = button.data('agent-uuid'); // Assurez-vous d'avoir cet attribut dans votre bouton
+
+        // Mettre à jour la valeur du champ caché
+        $('#hidden_agent_uuid').val(agentUuid);
+    });
+</script>
+
+
 <script>
     $(document).ready(function() {
         // Événement d'ouverture de la modale

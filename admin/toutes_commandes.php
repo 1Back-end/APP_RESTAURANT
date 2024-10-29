@@ -76,18 +76,21 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                                         <span class="badge badge-danger">Annulé</span>
                                     <?php elseif ($order['status'] === 'Delivered'): ?>
                                         <span class="badge badge-success">Livré</span>
+                                    <?php elseif ($order['status'] === 'en cours'): ?> <!-- Ajout du statut "En cours" -->
+                                        <span class="badge badge-info">En Cours</span>
                                     <?php else: ?>
                                         <span class="badge badge-light">Inconnu</span>
                                     <?php endif; ?>
                                 </td>
+
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton<?= htmlspecialchars($order['order_uuid']); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button class="btn btn-customize text-white btn-rounded btn-sm dropdown-toggle" type="button" id="dropdownMenuButton<?= htmlspecialchars($order['order_uuid']); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Actions
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton<?= htmlspecialchars($order['order_uuid']); ?>">
-                                            <a class="dropdown-item text-success" href="details_commande.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
-                                                <i class="fas fa-eye"></i> Voir Détails
+                                            <a class="dropdown-item text-info" href="details_commande.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
+                                                <i class="fas fa-eye"></i> Détails
                                             </a>
                                             <a class="dropdown-item text-warning text-white" href="cancel.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
                                                 <i class="fas fa-ban"></i> Annuler

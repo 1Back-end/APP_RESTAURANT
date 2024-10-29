@@ -125,7 +125,7 @@
 						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../admin/livreurs_disponibles.php">Livraisons disponibles</a></li>
+						<li><a href="../admin/livraisons_disponibles.php">Livraisons disponibles</a></li>
 					</ul>
 				</li>
 

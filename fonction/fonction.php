@@ -146,8 +146,8 @@ function get_orders_with_usernames($connexion, $offset, $limit) {
     $stmt = $connexion->prepare("
         SELECT o.order_uuid , o.user_uuid , o.order_date, o.total_amount, o.status, u.username
         FROM orders o
-        JOIN users u ON o.user_uuid = u.user_uuid
-        LIMIT :limit OFFSET :offset
+        JOIN users u ON o.user_uuid = u.user_uuid ORDER BY o.order_date DESC
+        LIMIT :limit OFFSET :offset 
     ");
 
     // Lier les paramètres de pagination
@@ -166,6 +166,45 @@ function count_total_orders($connexion) {
     return $stmt->fetchColumn();
 }
 
+function get_order_pending($connexion) {
+    // Récupérer les commandes en attente
+    $query = "SELECT o.order_uuid, o.order_date, o.total_amount, u.username 
+              FROM orders o
+              JOIN users u ON o.user_uuid = u.user_uuid
+              WHERE o.status = 'pending' 
+              ORDER BY o.order_date DESC"; // Vous pouvez ajouter la pagination ici si nécessaire
+              
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner les résultats
+}
+function getDeliveries($connexion) {
+    $query = "
+        SELECT 
+            d.delivery_uuid,
+            d.delivery_status,
+            d.delivery_time,
+            o.order_date,
+            o.total_amount,
+            u.firstname,
+            u.lastname
+        FROM 
+            deliveries d
+        JOIN 
+            orders o ON d.order_uuid = o.order_uuid
+        JOIN 
+            delivery_agents u ON d.agent_uuid = u.agent_uuid 
+        WHERE 
+            d.is_deleted = 0
+    ";
+
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Appel de la fonction pour récupérer les livraisons
+$deliveries = getDeliveries($connexion);
 
 
 function generateUUID() {

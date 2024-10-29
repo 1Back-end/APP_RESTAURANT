@@ -59,16 +59,18 @@ function get_order_details($connexion, $order_id) {
                         <td><?= htmlspecialchars($detail['quantity'] * $detail['price']); ?> FCFA</td>
                         <td><?= htmlspecialchars($detail['order_date']); ?></td>
                         <td>
-                        <?php if ($detail['status'] === 'pending'): ?>
-                            <span class="badge badge-warning text-white">En Attente</span>
-                            <?php elseif ($detail['status'] === 'Canceled'): ?>
-                            <span class="badge badge-danger">Annulé</span>
-                            <?php elseif ($detail['status'] === 'Delivered'): ?>
-                            <span class="badge badge-success">Livré</span>
-                            <?php else: ?>
-                            <span class="badge badge-light">Inconnu</span>
-                            <?php endif; ?>
-                        </td>
+                                    <?php if ($detail['status'] === 'pending'): ?>
+                                        <span class="badge badge-warning text-white">En Attente</span>
+                                    <?php elseif ($detail['status'] === 'Canceled'): ?>
+                                        <span class="badge badge-danger">Annulé</span>
+                                    <?php elseif ($detail['status'] === 'Delivered'): ?>
+                                        <span class="badge badge-success">Livré</span>
+                                    <?php elseif ($detail['status'] === 'en cours'): ?> <!-- Ajout du statut "En cours" -->
+                                        <span class="badge badge-info">En Cours</span>
+                                    <?php else: ?>
+                                        <span class="badge badge-light">Inconnu</span>
+                                    <?php endif; ?>
+                                </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

@@ -53,7 +53,7 @@ $user_uuid = $_SESSION['user_uuid'];
 
 // Récupération des informations utilisateur
 $user_stmt = $connexion->prepare("
-    SELECT username, email, address, phone_number
+    SELECT username, email, address,phone_number
     FROM users
     WHERE user_uuid = :user_uuid 
     AND is_deleted = 0

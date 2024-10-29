@@ -96,7 +96,7 @@
                         </div>
                         <p class="card-text text-truncate"><?= htmlspecialchars($meal['description']); ?></p>
                         <div class="d-flex align-items-center justify-content-between">
-                        <div class="mr-auto">
+                        <div class="mr-auto mx-2">
                             <input type="number" class="form-control shadow-none quantity-input" min="1" value="1" size="3">
                         </div>
                         <div class="ml-auto">
