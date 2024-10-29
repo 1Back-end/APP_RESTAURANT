@@ -18,7 +18,7 @@ if (isset($_GET['order_id'])) {
 // Fonction pour récupérer les détails de la commande
 function get_order_details($connexion, $order_id) {
     $query = "SELECT o.order_uuid, o.user_uuid, o.order_date, o.total_amount, o.status,o.order_date,
-                     m.meal_uuid, m.name, m.price, oi.quantity
+                     m.meal_uuid, m.name, m.price, oi.quantity,m.image
               FROM orders o
               JOIN order_items oi ON o.order_uuid = oi.order_uuid
               JOIN meals m ON oi.meal_uuid = m.meal_uuid
@@ -37,7 +37,7 @@ function get_order_details($connexion, $order_id) {
 <div class="main-container mt-5 pb-5">
     <div class="card-box p-3">
     <?php if (!empty($orderDetails)): ?>
-        <table class="table table-striped table-bordered text-center">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
@@ -53,7 +53,22 @@ function get_order_details($connexion, $order_id) {
                 <?php foreach ($orderDetails as $index =>$detail): ?>
                     <tr>
                         <td><?php echo ($index + 1); ?></td>
-                        <td><?= htmlspecialchars($detail['name']); ?></td>
+                        <td>
+                        <div class="d-flex align-items-center">
+                            <?php 
+                            if (!empty($detail['image'])): 
+                                $images = explode(',', $detail['image']);
+                                $firstImage = $images[0]; 
+                            ?>
+                                <img src="../uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                            <?php else: ?>
+                                <img src="uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
+                            <?php endif; ?>
+                            <div style="margin-left: 10px;"><?= htmlspecialchars($detail['name']); ?></div>
+                        </div>
+                    </td>
+
+
                         <td><?= htmlspecialchars($detail['quantity']); ?></td>
                         <td><?= htmlspecialchars($detail['price']); ?> FCFA</td>
                         <td><?= htmlspecialchars($detail['quantity'] * $detail['price']); ?> FCFA</td>

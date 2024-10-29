@@ -3,5 +3,11 @@
     "email":"admin@example.com",
     "username": "admin",
     "password": "$x2rfZDeT*!W9r?"
-}
+},
 
+{
+    "name": "Laurent Etoudi",
+    "email": "laurent.etoudi@example.com",
+    "password": "securePassword123"
+  }
+  
