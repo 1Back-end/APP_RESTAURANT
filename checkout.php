@@ -26,31 +26,6 @@
     <script src="https://js.stripe.com/v3/"></script>
     
 </head>
-<style>
-    #card-element {
-        border: 1px solid #ccc; /* Bordure légère */
-        border-radius: 4px; /* Coins arrondis */
-        padding: 10px; /* Espacement interne */
-        margin-top: 10px; /* Espacement supérieur */
-        height: 40px; /* Hauteur fixe pour uniformité */
-        font-size: 16px; /* Taille de police plus grande */
-        color: #333; /* Couleur du texte */
-        transition: border-color 0.3s; /* Transition pour un effet doux */
-    }
-
-    /* Style lorsque le champ de carte est au focus */
-    #card-element:focus {
-        border-color: #1F4283; /* Changer la couleur de la bordure au focus */
-        outline: none; /* Supprimer le contour par défaut */
-    }
-
-    /* Style pour les messages d'erreur */
-    .error-message {
-        color: #d9534f; /* Couleur rouge pour les messages d'erreur */
-        font-size: 14px; /* Taille de police pour le message */
-        margin-top: 5px; /* Espacement supérieur */
-    }
-</style>
 
 <body>
 
@@ -64,19 +39,21 @@
         </div>
     </div>
 </div>
+
 <?php
 include_once("database/connexion.php");
 
+// Redirige l'utilisateur s'il n'est pas connecté
 if (!isset($_SESSION['user_uuid'])) {
-    header("Location: login.php"); // Rediriger si l'utilisateur n'est pas connecté
+    header("Location: login.php");
     exit;
 }
 
 $user_uuid = $_SESSION['user_uuid'];
 
-// Récupérer les informations de l'utilisateur
+// Récupération des informations utilisateur
 $user_stmt = $connexion->prepare("
-    SELECT username, email
+    SELECT username, email, address, phone_number
     FROM users
     WHERE user_uuid = :user_uuid 
     AND is_deleted = 0
@@ -87,36 +64,35 @@ $user = $user_stmt->fetch(PDO::FETCH_ASSOC);
 
 $username = htmlspecialchars($user['username'] ?? '');
 $email = htmlspecialchars($user['email'] ?? '');
+$address = htmlspecialchars($user['address'] ?? '');
+$phone_number = htmlspecialchars($user['phone_number'] ?? '');
 
-// Récupérer les informations de la commande de l'utilisateur
-$order_stmt = $connexion->prepare("
-    SELECT 
-        o.order_uuid, 
-        m.name, 
-        m.price, 
-        m.image, 
-        o.order_date, 
-        o.quantity
-    FROM 
-        orders o
-    JOIN 
-        meals m ON o.meal_uuid = m.meal_uuid
-    WHERE 
-        o.user_uuid = :user_uuid 
-        AND o.is_deleted = 0 ORDER BY order_date DESC
-");
-$order_stmt->bindValue(':user_uuid', $user_uuid);
-$order_stmt->execute();
-$orders = $order_stmt->fetchAll(PDO::FETCH_ASSOC);
+// Vérifie si le panier existe dans la session
+if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    $meal_uuids = array_column($_SESSION['cart'], 'meal_uuid');
+    $placeholders = implode(',', array_fill(0, count($meal_uuids), '?'));
+
+    // Prépare la requête pour récupérer les détails des repas
+    $stmt = $connexion->prepare("
+        SELECT meal_uuid, name, price, image 
+        FROM meals 
+        WHERE meal_uuid IN ($placeholders)
+    ");
+    $stmt->execute($meal_uuids);
+    $meals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $meals = []; // Panier vide
+}
 $grandTotal = 0;
 ?>
 
 <div class="container-xxl position-relative p-0">
     <div class="container">
         <div class="row">
+            <!-- Section Informations Personnelles -->
             <div class="col-lg-6 col-sm-12 mb-3">
                <div class="card shadow-sm border-light h-100 p-3">
-               <h3 class="my-2">Informations Personnelles</h3>
+                    <h3 class="my-2">Informations Personnelles</h3>
                     <form action="process_checkout.php" method="POST" id="payment-form">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nom Complet</label>
@@ -128,75 +104,82 @@ $grandTotal = 0;
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Adresse</label>
-                            <input type="text" class="form-control shadow-none" id="address" name="address" required>
+                            <input type="text" class="form-control shadow-none" id="address" name="address" value="<?= $address; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Numéro de Téléphone</label>
-                            <input type="tel" class="form-control shadow-none" id="phone" name="phone" required>
+                            <input type="tel" class="form-control shadow-none" id="phone" name="phone" value="<?= $phone_number; ?>" required>
                         </div>
-
-                        <div id="card-element"><!-- Un élément de carte Stripe sera inséré ici --></div>
-                        <button type="submit" class="btn btn-primary mt-3">Payer</button>
-                        <div id="payment-result"></div>
+                        <!-- Hidden field for grand total -->
+                        <input type="hidden" name="total_amount" value="<?= $grandTotal; ?>">
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Valider la commande</button> 
+                        </div>
                     </form>
                </div>
             </div>
 
+            <!-- Section Panier -->
             <div class="col-lg-6 col-sm-12 mb-3">
-               <div class="card shadow-sm border-light h-100 p-3">
-               <h3 class="my-2">Commandes</h3>
-               <?php if (empty($orders)): ?>
-                   <p>Aucune commande trouvée.</p>
-               <?php else: ?>
-                   <table class="table table-striped table-bordered">
-                       <thead>
-                           <tr>
-                               <th>Repas</th>
-                               <th>Prix</th>
-                               <th>Quantité</th>
-                               <th>Total</th>
-                           </tr>
-                       </thead>
-                       <tbody>
-                           <?php foreach ($orders as $order): 
-                               $total = $order['price'] * $order['quantity'];
-                               $grandTotal += $total; // Calculer le total général
-                           ?>
-                               <tr>
-                               <td>
+                <div class="card shadow-sm border-light p-3">
+                    <div class="table-responsive">
+                        <?php if (!empty($meals)): ?>
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Repas</th>
+                                        <th>Prix (FCFA)</th>
+                                        <th>Quantité</th>
+                                        <th>Total (FCFA)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php 
-                                    if (!empty($order['image'])): 
-                                        $images = explode(',', $order['image']);
-                                        $firstImage = $images[0]; 
+                                    $grandTotal = 0; // Initialisation du total général
+                                    foreach ($meals as $meal):
+                                        // Trouver la quantité du repas dans le panier
+                                        $mealInCart = array_filter($_SESSION['cart'], function($item) use ($meal) {
+                                            return $item['meal_uuid'] === $meal['meal_uuid'];
+                                        });
+                                        $quantity = !empty($mealInCart) ? reset($mealInCart)['quantity'] : 0;
+                                        $totalPrice = $meal['price'] * $quantity;
+                                        $grandTotal += $totalPrice;
                                     ?>
-                                        <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
-                                    <?php else: ?>
-                                        <img src="uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
-                                    <?php endif; ?>
-                                    <?= htmlspecialchars($order['name']); ?>
-                                </td>
-
-                                   <td><?= htmlspecialchars(number_format($order['price'])); ?> FCFA</td>
-                                   <td><?= htmlspecialchars($order['quantity']); ?></td>
-                                   <td><?= htmlspecialchars(number_format($total));?> FCFA</td>
-                               </tr>
-                           <?php endforeach; ?>
-                           <tr>
-                               <td colspan="2" class="text-end fw-bold">Total:</td>
-                               <td colspan="2" class="fw-bold"><?= htmlspecialchars(number_format($grandTotal)); ?> FCFA</td>
-                           </tr>
-                       </tbody>
-                   </table>
-               <?php endif; ?>
-               </div>
+                                        <tr>
+                                            <td>
+                                                <?php 
+                                                if (!empty($meal['image'])): 
+                                                    $images = explode(',', $meal['image']);
+                                                    $firstImage = $images[0]; 
+                                                ?>
+                                                    <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
+                                                <?php else: ?>
+                                                    <img src="uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
+                                                <?php endif; ?>
+                                                <?= htmlspecialchars($meal['name']); ?>
+                                            </td>
+                                            <td><?= htmlspecialchars($meal['price']); ?> FCFA</td>
+                                            <td><?= htmlspecialchars($quantity); ?></td>
+                                            <td><?= $totalPrice; ?> FCFA</td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    <tr>
+                                        <td colspan="3"><strong>Total Général :</strong></td>
+                                        <td><?= $grandTotal; ?> FCFA</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <p>Aucun article dans le panier.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-
-        
         <!-- Menu End -->
         <?php include_once("menu/footer.php");?>
 </div>
@@ -215,37 +198,3 @@ $grandTotal = 0;
 </body>
 
 </html>
-<script>
-    const stripe = Stripe('pk_test_51PvK3l08QILWwY1zAFbfSZ4SwTFbJJH0aAVsDZVIFZZyO5q2qIuwsY7I1Vbyfw1kq6pyrNivuy9DKpALw9L1bDWV00Cc2dxiGT'); // Remplacez par votre clé publique Stripe
-    const elements = stripe.elements();
-    const cardElement = elements.create('card');
-    cardElement.mount('#card-element');
-
-    const form = document.getElementById('payment-form');
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const { paymentMethod, error } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: cardElement,
-        });
-
-        if (error) {
-            document.getElementById('payment-result').innerText = error.message;
-        } else {
-            console.log("Payment Method ID:", paymentMethod.id); // Affichez l'ID pour déboguer
-
-            // Appel AJAX pour soumettre le formulaire avec le paymentMethod.id
-            const formData = new FormData(form);
-            formData.append('paymentMethodId', paymentMethod.id); // Vérifiez que cette ligne est bien exécutée
-
-            const response = await fetch('process_checkout.php', {
-                method: 'POST',
-                body: formData,
-            });
-
-            const result = await response.json();
-            document.getElementById('payment-result').innerText = result.message;
-        }
-    });
-</script>

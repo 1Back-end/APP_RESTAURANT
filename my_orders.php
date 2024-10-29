@@ -23,6 +23,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
 </head>
 
@@ -39,132 +40,117 @@
         </div>
     </div>
 </div>
-<!-- Navbar & Hero End -->
+<?php
+include_once("database/connexion.php");
 
-<!-- Main Content Start -->
-<div class="container-xxl">
-    <div class="container">
-        <?php
-        // Vérifiez si un message est présent dans l'URL
-        if (isset($_GET['message'])): ?>
-            <div id="message" class="alert alert-success text-center" role="alert">
-                <?= htmlspecialchars($_GET['message']); ?>
-            </div>
-        <?php endif; ?>
-        
-        <!-- Votre code pour afficher les commandes ici -->
+// Gérer la suppression d'un article
+if (isset($_GET['remove'])) {
+    $remove_uuid = $_GET['remove'];
 
-    </div>
-</div>
-<!-- Main Content End -->
+    // Filtrer le panier pour exclure l'article supprimé
+    $_SESSION['cart'] = array_filter($_SESSION['cart'], function($item) use ($remove_uuid) {
+        return $item['meal_uuid'] !== $remove_uuid; // Garder les articles qui ne correspondent pas à l'UUID supprimé
+    });
+    
+}
 
+// Vérifiez si le panier existe dans la session
+if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    // Récupérer les identifiants des repas du panier
+    $meal_uuids = array_column($_SESSION['cart'], 'meal_uuid');
+    
+    // Créer une chaîne d'identifiants pour la requête SQL
+    $placeholders = implode(',', array_fill(0, count($meal_uuids), '?'));
+    
+    // Préparer la requête pour récupérer les détails des repas
+    $stmt = $connexion->prepare("
+        SELECT meal_uuid, name, price, image 
+        FROM meals 
+        WHERE meal_uuid IN ($placeholders)
+    ");
+    
+    // Exécuter la requête avec les identifiants des repas
+    $stmt->execute($meal_uuids);
+    
+    // Récupérer les résultats
+    $meals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $meals = []; // Panier vide
+}
+?>
 
-<!-- Container principal -->
+<!-- Affichage du panier -->
 <div class="container-xxl position-relative p-0">
-    <div class="container">
-        <?php
-        include_once("database/connexion.php");
-        
-        if (isset($_SESSION['user_uuid'])) {
-            $user_uuid = $_SESSION['user_uuid'];
-        
-            // Requête pour récupérer les commandes de l'utilisateur passées aujourd'hui
-            $stmt = $connexion->prepare("
-            SELECT 
-                o.order_uuid, 
-                m.name, 
-                m.price, 
-                m.image, 
-                o.order_date,
-                o.quantity
-            FROM 
-                orders o
-            JOIN 
-                meals m ON o.meal_uuid = m.meal_uuid
-            WHERE 
-                o.user_uuid = :user_uuid 
-                AND DATE(o.order_date) = CURDATE() 
-                AND o.is_deleted = 0 ORDER BY o.order_date DESC
-        ");
-        
-            $stmt->bindValue(':user_uuid', $user_uuid);
-            $stmt->execute();
-        
-            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $grandTotal = 0; // Initialiser le prix total général ici
-        }
-        ?>
-        
-        <!-- Table des commandes -->
+    <div class="card shadow-sm border-light h-100 p-3">
         <div class="table-responsive">
-            <div class="card shadow-sm border-light h-100 text-center p-3">
-                <table class="table table-striped text-center table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Image</th>
-                            <th>Repas</th>
-                            <th>Prix Unitaire (FCFA)</th>
-                            <th>Quantité</th>
-                            <th>Prix Total (FCFA)</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($orders)): ?>
-                            <?php $counter = 1; // Compteur pour les numéros ?>
-                            <?php foreach ($orders as $order): ?>
-                                <tr>
-                                    <td><?= $counter++; ?></td>
-                                    <td>
-                                        <?php 
-                                        if (!empty($order['image'])): 
-                                            $images = explode(',', $order['image']);
-                                            $firstImage = $images[0]; 
-                                        ?>
-                                            <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail" style="width: 50px; height: auto;">
-                                        <?php else: ?>
-                                            <img src="../uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail" style="width: 50px; height: auto;">
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?= htmlspecialchars($order['name']); ?></td>
-                                    <td class="unit-price"><?= htmlspecialchars($order['price']); ?></td>
-                                    <td class="quantity text-center"><?= htmlspecialchars($order['quantity']);?></td>
-                                    <td class="total-price"><?= htmlspecialchars($order['price']); ?> FCFA</td>
-                                    <td>
-                                        <a href="delete_meal.php?order_uuid=<?= htmlspecialchars($order['order_uuid']); ?>" class="btn btn-danger btn-sm shadow-none" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce repas ?');">Supprimer</a>
-                                    </td>
-                                </tr>
-                                <?php 
-                                $grandTotal += $order['price']; 
-                                ?>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="10" class="text-center">Aucune commande trouvée.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-                
-                <!-- Prix total -->
-                <div class="mt-3">
-                    <strong>Prix Total : </strong>
-                    <span id="grand-total"><?= $grandTotal; ?> FCFA</span>
-                </div>
-                
-                <!-- Bouton Payer avec modale -->
-                <div class="container mt-4">
-                    <div class="text-center">
-                        <a href="checkout.php" class="btn btn-primary">Passer à la caisse</a>
-                    </div>
-                </div>
-            </div>
+    <?php if (!empty($meals)): ?>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Repas</th>
+                    <th>Prix (FCFA)</th>
+                    <th>Quantité</th>
+                    <th>Total (FCFA)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $grandTotal = 0; // Initialiser le prix total général
+                foreach ($meals as $meal):
+                    // Trouver la quantité correspondante dans le panier
+                    $mealInCart = array_filter($_SESSION['cart'], function($item) use ($meal) {
+                        return $item['meal_uuid'] === $meal['meal_uuid'];
+                    });
+                    
+                    // Vérifiez si $mealInCart n'est pas vide avant d'utiliser reset()
+                    $quantity = !empty($mealInCart) ? reset($mealInCart)['quantity'] : 0; // Récupérer la quantité, ou 0 si vide
+                    $totalPrice = $meal['price'] * $quantity; // Calcul du prix total
+                    $grandTotal += $totalPrice; // Ajouter au prix total général
+                ?>
+                    <tr>
+                        <td>
+                            <?php 
+                            if (!empty($meal['image'])): 
+                                $images = explode(',', $meal['image']);
+                                $firstImage = $images[0]; 
+                            ?>
+                                <img src="uploads/<?= htmlspecialchars($firstImage); ?>" alt="Image du repas" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
+                            <?php else: ?>
+                                <img src="uploads/default.jpg" alt="Aucune image disponible" class="img-fluid img-thumbnail me-2" style="width: 50px; height: auto;">
+                            <?php endif; ?>
+                            <?= htmlspecialchars($meal['name']); ?>
+                        </td>
+                        <td><?= htmlspecialchars($meal['price']); ?> FCFA</td>
+                        <td><?= htmlspecialchars($quantity); ?></td>
+                        <td><?= $totalPrice; ?> FCFA</td>
+                        <td>
+                            <a href="?remove=<?= htmlspecialchars($meal['meal_uuid']); ?>" class="btn btn-danger btn-sm btn-xs">
+                            <i class="bi bi-trash3-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td colspan="3"><strong>Total Général :</strong></td>
+                    <td><?= $grandTotal; ?> FCFA</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-end mt-3">
+            <!-- Bouton Aller à la caisse -->
+            <a href="checkout.php" class="btn btn-success">Aller à la caisse</a>
         </div>
-    </div>
+        </div>
+        </div>
+    <?php else: ?>
+        <p>Aucun article dans le panier.</p>
+    <?php endif; ?>
+</div>
 </div>
 
-        
+
         <!-- Menu End -->
         <?php include_once("menu/footer.php");?>
 </div>

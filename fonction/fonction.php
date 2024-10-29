@@ -141,6 +141,30 @@ function get_count_customer($connexion){
 $total_customer = get_count_customer($connexion);
 
 
+function get_orders_with_usernames($connexion, $offset, $limit) {
+    // Préparer la requête pour récupérer toutes les commandes avec les noms d'utilisateur
+    $stmt = $connexion->prepare("
+        SELECT o.order_uuid , o.user_uuid , o.order_date, o.total_amount, o.status, u.username
+        FROM orders o
+        JOIN users u ON o.user_uuid = u.user_uuid
+        LIMIT :limit OFFSET :offset
+    ");
+
+    // Lier les paramètres de pagination
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    
+    // Exécuter la requête
+    $stmt->execute();
+    
+    // Récupérer toutes les commandes
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function count_total_orders($connexion) {
+    $stmt = $connexion->prepare("SELECT COUNT(*) FROM orders");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
 
 
 

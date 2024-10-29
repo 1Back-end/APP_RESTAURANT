@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- Basic Page Info -->
+	<!-- Basic admin Info -->
 	<meta charset="utf-8">
 	<title><?php echo strtoupper(ucfirst(str_replace(".php", "", basename($_SERVER['PHP_SELF']))));?></title>
 
@@ -68,7 +68,7 @@
 
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="../page/profil.php"><i class="fas fa-user"></i> Profil</a>
+						<a class="dropdown-item" href="../admin/profil.php"><i class="fas fa-user"></i> Profil</a>
 						<a class="dropdown-item" href="../login/logout.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
 					</div>
 
@@ -94,7 +94,7 @@
 			<div class="sidebar-menu">
 			<ul  id="accordion-menu">
 				<li>
-					<a href="../page/tableau_de_bord.php" class="dropdown-toggle no-arrow">
+					<a href="../admin/tableau_de_bord.php" class="dropdown-toggle no-arrow">
 						<span class="micon fas fa-tachometer-alt"></span><span class="mtext">Tableau de bord</span>
 					</a>
 				</li>
@@ -105,9 +105,9 @@
 						<span class="micon fas fa-utensils"></span><span class="mtext">Repas</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../page/liste_repas.php">Liste des repas</a></li>
-						<li><a href="../page/ajouter_repas.php">Ajouter un repas</a></li>
-						<li><a href="../page/categorie_repas.php">Catégories de repas</a></li>
+						<li><a href="../admin/liste_repas.php">Liste des repas</a></li>
+						<li><a href="../admin/ajouter_repas.php">Ajouter un repas</a></li>
+						<li><a href="../admin/categorie_repas.php">Catégories de repas</a></li>
 					</ul>
 				</li>
 
@@ -116,43 +116,37 @@
 						<span class="micon fas fa-receipt"></span><span class="mtext">Commandes</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../page/toutes_commandes.php">Toutes les commandes</a></li>
-						<li><a href="../page/commandes_en_attente.php">Commandes en attente</a></li>
-						<li><a href="../page/commandes_livrees.php">Commandes livrées</a></li>
+						<li><a href="../admin/toutes_commandes.php">Toutes les commandes</a></li>
 					</ul>
 				</li>
 
-				<!-- <li class="dropdown">
+				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../page/livreurs_disponibles.php">Livreurs disponibles</a></li>
-						<li><a href="../page/livraisons_en_cours.php">Livraisons en cours</a></li>
-						<li><a href="../page/livraisons_terminees.php">Livraisons terminées</a></li>
-						<li><a href="../page/affecter_livreur.php">Affecter un livreur</a></li>
+						<li><a href="../admin/livreurs_disponibles.php">Livraisons disponibles</a></li>
 					</ul>
-				</li> -->
+				</li>
 
-				<!-- <li class="dropdown">
+				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-users"></span><span class="mtext">Livreurs</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../page/liste_livreurs.php">Liste des livreurs</a></li>
-						<li><a href="../page/ajouter_livreur.php">Ajouter un livreur</a></li>
-						<li><a href="../page/statut_livreurs.php">Statut des livreurs</a></li>
+						<li><a href="../admin/liste_livreurs.php">Liste des livreurs</a></li>
+						<li><a href="../admin/ajouter_livreur.php">Ajouter un livreur</a></li>
 					</ul>
-				</li> -->
+				</li>
 
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-credit-card"></span><span class="mtext">Paiements</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../page/historique_paiements.php">Historique des paiements</a></li>
-						<li><a href="../page/statut_paiements.php">Statut des paiements</a></li>
-						<li><a href="../page/methodes_paiement.php">Méthodes de paiement</a></li>
+						<li><a href="../admin/historique_paiements.php">Historique des paiements</a></li>
+						<li><a href="../admin/statut_paiements.php">Statut des paiements</a></li>
+						<li><a href="../admin/methodes_paiement.php">Méthodes de paiement</a></li>
 					</ul>
 				</li>
 
@@ -161,9 +155,9 @@
 						<span class="micon fas fa-cog"></span><span class="mtext">Paramètres</span>
 					</a>
 					<ul class="submenu">
-						<li><a href="../page/mon_compte.php">Mon compte</a></li>
-						<li><a href="../page/parametres_site.php">Paramètres du site</a></li>
-						<li><a href="../page/notificactions.php">Notifications</a></li>
+						<li><a href="../admin/mon_compte.php">Mon compte</a></li>
+						<li><a href="../admin/parametres_site.php">Paramètres du site</a></li>
+						<li><a href="../admin/notificactions.php">Notifications</a></li>
 					</ul>
 				</li>
 			</ul>

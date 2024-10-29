@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-xxl">
+        <div class="container-xxl position-relative p-0">
             <div class="container">
                 <!-- Affichage des messages d'erreur -->
                 <?php if (isset($_GET['error'])): ?>
@@ -56,9 +56,9 @@
                 <?php endif; ?>
 
                 <!-- Affichage des messages de succès -->
-                <?php if (isset($_GET['success'])): ?>
+                <?php if (isset($_GET['message'])): ?>
                     <div id="success-message" class="alert alert-success text-center" role="alert">
-                        <?= htmlspecialchars($_GET['success']); ?>
+                        <?= htmlspecialchars($_GET['message']); ?>
                     </div>
                 <?php endif; ?>
 
@@ -68,7 +68,7 @@
         <!-- Navbar & Hero End -->
         <?php include_once("controllers.php");?>
         <!-- Menu Start -->
-        <div class="container-xxl py-5">
+        <div class="container-xxl position-relative p-0">
         <div class="container">
     <div class="row">
         <?php
@@ -78,7 +78,7 @@
         $meals = getMealsWithPagination($page, $limit);
         foreach ($meals as $meal): ?>
             <div class="col-lg-3 col-sm-6 mb-4">
-                <div class="card shadow-sm border-light h-100 text-center p-3">
+                <div class="card shadow-sm border-light h-100 text-center p-2">
                     <?php if (!empty($meal['image'])): ?>
                         <?php
                         $images = explode(',', $meal['image']);
@@ -92,7 +92,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="card-title mb-0"><?= htmlspecialchars($meal['meal_name']); ?></h6>
-                            <p class="card-text mb-0"><?= htmlspecialchars($meal['price']); ?></p>
+                            <p class="card-text mb-0"><?= htmlspecialchars($meal['price']); ?> FCFA</p>
                         </div>
                         <p class="card-text text-truncate"><?= htmlspecialchars($meal['description']); ?></p>
                         <div class="d-flex align-items-center justify-content-between">
@@ -125,7 +125,7 @@
         </ul>
     </nav>
 </div>
-</div>
+
 
         <!-- Menu End -->
         <?php include_once("menu/footer.php");?>
@@ -162,14 +162,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userId = '<?= $_SESSION['user_uuid']; ?>'; // ID utilisateur
                 const quantityInput = this.closest('.d-flex').querySelector('.quantity-input');
                 const quantity = quantityInput ? quantityInput.value : 1; // Valeur par défaut à 1 si non spécifiée
+                
+                // Récupérer le prix affiché dans la carte
+                const priceElement = this.closest('.card-body').querySelector('.card-text.mb-0'); // Ajustez le sélecteur si nécessaire
+                const price = priceElement ? priceElement.textContent.replace(' FCFA', '').trim() : 0; // Extraire le prix, en enlevant ' FCFA' et les espaces
 
-                // Redirection vers le script de traitement de commande avec la quantité
-                window.location.href = `process_order.php?user_uuid=${userId}&meal_uuid=${mealId}&quantity=${quantity}`;
+                // Redirection vers le script de traitement de commande avec la quantité et le prix
+                window.location.href = `process_order.php?user_uuid=${userId}&meal_uuid=${mealId}&quantity=${quantity}&price=${price}`;
             <?php endif; ?>
         });
     });
 });
 </script>
+
 
 
 

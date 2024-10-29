@@ -32,7 +32,7 @@ if (isset($_POST["submit"])) {
                 $_SESSION['photo'] = $user['photo'];
 
                 // Rediriger vers le tableau de bord
-                header("Location: ../page/tableau_de_bord.php");
+                header("Location: ../admin/tableau_de_bord.php");
                 exit;
             } else {
                 $erreur = "Mot de passe incorrect";
