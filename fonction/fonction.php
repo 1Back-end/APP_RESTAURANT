@@ -206,6 +206,93 @@ function getDeliveries($connexion) {
 // Appel de la fonction pour récupérer les livraisons
 $deliveries = getDeliveries($connexion);
 
+function getDeliveryAgents($connexion) {
+    $query = "SELECT agent_uuid, firstname, lastname FROM delivery_agents WHERE is_deleted = 0 AND available = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+// Appel de la fonction pour récupérer les agents de livraison
+$agents = getDeliveryAgents($connexion);
+
+function getOrdersByDay($connexion) {
+    $query = "
+        SELECT 
+            DATE(order_date) AS order_date, 
+            COUNT(order_uuid) AS order_count 
+        FROM 
+            orders 
+        WHERE 
+            is_deleted = 0 
+        GROUP BY 
+            DATE(order_date)
+        ORDER BY 
+            order_date ASC
+    ";
+
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Formater les dates au format jour-mois-année
+    foreach ($results as &$data) {
+        $data['order_date'] = date('d-m-Y', strtotime($data['order_date']));
+    }
+
+    return $results;
+}
+// Récupérer les statistiques des commandes
+$ordersData = getOrdersByDay($connexion);
+
+// Préparer les labels et les données
+$labels = [];
+$orderCounts = [];
+
+foreach ($ordersData as $data) {
+    $labels[] = $data['order_date']; // Dates déjà formatées
+    $orderCounts[] = $data['order_count'];
+}
+
+function getTotalAmountByDay($connexion) {
+    $query = "
+        SELECT 
+            DATE(order_date) AS order_date, 
+            SUM(total_amount) AS total_amount 
+        FROM 
+            orders 
+        WHERE 
+            is_deleted = 0 
+        GROUP BY 
+            DATE(order_date)
+        ORDER BY 
+            order_date ASC
+    ";
+
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Formater les dates au format jour-mois-année
+    foreach ($results as &$data) {
+        $data['order_date'] = date('d-m-Y', strtotime($data['order_date']));
+    }
+
+    return $results;
+}
+// Récupérer les statistiques des montants des commandes
+$totalAmountData = getTotalAmountByDay($connexion);
+
+// Préparer les labels et les montants
+$totalLabels = [];
+$totalAmounts = [];
+
+foreach ($totalAmountData as $data) {
+    $totalLabels[] = $data['order_date']; // Dates déjà formatées
+    $totalAmounts[] = $data['total_amount'];
+}
+
+
+
 
 function generateUUID() {
     // Générer un UUID v4

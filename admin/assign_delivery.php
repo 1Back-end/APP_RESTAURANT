@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Mettre à jour le statut de la commande
             $stmt = $connexion->prepare("
                 UPDATE orders 
-                SET status = 'en cours' 
+                SET status = 'in_progress' 
                 WHERE order_uuid = :order_uuid
             ");
             $stmt->execute([':order_uuid' => $order_uuid]);
@@ -63,6 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Rediriger vers la page d'origine avec les messages
-header("Location: liste_livreurs.php?success=" . urlencode($success) . "&error=" . urlencode($error));
+header("Location: toutes_commandes.php?success=" . urlencode($success) . "&error=" . urlencode($error));
 exit;
 ?>

@@ -1,6 +1,7 @@
 <?php include_once('../fonction/fonction.php');?>
 <?php include_once('../include/menu.php');?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <div class="main-container mt-3 pb-5">
@@ -94,6 +95,22 @@
     </div>
 </div>
 
+
+<div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+    <div class="card-box p-3 h-100">
+        <h6 class="mb-3 font-14 text-uppercase">Nombre de commandes par jour</h6>
+        <canvas id="ordersChart"></canvas>
+    </div>
+</div>
+
+
+<div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+    <div class="card-box p-3 h-100">
+        <h6 class="mb-3 font-14 text-uppercase">Montant Total des Commandes par Jour</h6>
+        <canvas id="totalAmountChart"></canvas>
+    </div>
+</div>
+
         
     </div>
 </div>
@@ -108,3 +125,112 @@
 
 
 </div>
+
+
+<script>
+     Chart.defaults.font.family = 'Rubik';
+     const labels = <?= json_encode($labels); ?>;
+const data = {
+    labels: labels,
+    datasets: [{
+        label: 'Nombre de commandes par jour',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        data: <?= json_encode($orderCounts); ?>,
+        tension:1.5,
+    }]
+};
+
+const config = {
+    type: 'line', // Utiliser 'line' pour un graphique linéaire
+    data: data,
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw; // Affiche le nombre de commandes
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Nombre de Commandes'
+                },
+                beginAtZero: true
+            }
+        }
+    }
+};
+
+// Créer le graphique
+const ordersChart = new Chart(
+    document.getElementById('ordersChart'),
+    config
+);
+</script>
+
+<script>
+// Données passées par PHP
+const totalLabels = <?= json_encode($totalLabels); ?>;
+const totalData = {
+    labels: totalLabels,
+    datasets: [{
+        label: 'Montant Total des Commandes par Jour',
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 1,
+        data: <?= json_encode($totalAmounts); ?>,
+        tension:1.2,
+    }]
+};
+
+const totalConfig = {
+    type: 'line', // Utiliser 'line' pour un graphique linéaire
+    data: totalData,
+    options: {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' FCFA'; // Affiche le montant total
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Date'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Montant Total (FCFA)'
+                },
+                beginAtZero: true
+            }
+        }
+    }
+};
+
+// Créer le graphique
+const totalAmountChart = new Chart(
+    document.getElementById('totalAmountChart'),
+    totalConfig
+);
+</script>

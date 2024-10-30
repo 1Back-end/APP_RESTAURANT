@@ -48,22 +48,17 @@
             <?php include_once('check_session.php');?>
 			<div class="user-info-dropdown">
 				<div class="dropdown">
-					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+					<a class="dropdown-toggle">
 					<span class="user-icon shadow-none">
                         <span class="user-img">
                             <img src="https://divvia.ca/wp-content/uploads/2023/08/How-To-Ensure-Your-Restaurants-Guests-Are-Enjoying-Themselves-1024x768.jpg" alt="user-img" class="rounded-circle" width='50' height='50' class='rounded-circle' style='border-radius: 50%; object-fit: cover; aspect-ratio: 1/1;'>
                         </span>
 				    </span>
 
-				<small class="user-name fw-bold font-14 text-uppercase" style="color: #28a745;">
-                        <?= htmlspecialchars($_SESSION['user_name']); ?>
-				</small>
-
-					</a>
-					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="../clients/profil.php"><i class="fas fa-user"></i> Profil</a>
-						<a class="dropdown-item" href="../clients/logout.php"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-					</div>
+                        <small class="user-name fw-bold font-14 text-uppercase" style="color: #28a745;">
+                                <?= htmlspecialchars($_SESSION['user_name']); ?>
+                        </small>
+                </a>
 
 				</div>
 			</div>
@@ -74,7 +69,7 @@
 	
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="index.html">
+			<a href="dashboard.php">
 				<h3 class="text-uppercase text-white">
 					QuickMeal
 				</h3>
@@ -87,23 +82,28 @@
 			<div class="sidebar-menu">
 			<ul  id="accordion-menu">
             <li>
-					<a href="../admin/tableau_de_bord.php" class="dropdown-toggle no-arrow">
+					<a href="dashboard.php" class="dropdown-toggle no-arrow">
 						<span class="micon fas fa-tachometer-alt"></span><span class="mtext">Tableau de bord</span>
 					</a>
 			</li>
                 <li>
-					<a href="../admin/tableau_de_bord.php" class="dropdown-toggle no-arrow">
+					<a href="mes_commandes.php" class="dropdown-toggle no-arrow">
 						<span class="micon fas fa-receipt"></span><span class="mtext">Mes commandes</span>
 					</a>
 				</li>
                 <li>
-					<a href="../admin/tableau_de_bord.php" class="dropdown-toggle no-arrow">
+					<a href="mes_paiements.php" class="dropdown-toggle no-arrow">
 						<span class="micon fas fa-credit-card-alt"></span><span class="mtext">Mes paiements</span>
 					</a>
 				</li>
                 <li>
-					<a href="../admin/tableau_de_bord.php" class="dropdown-toggle no-arrow">
-						<span class="micon fas fa-id-card"></span><span class="mtext">Mon compte</span>
+					<a href="mon_compte.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-user"></span><span class="mtext">Mon compte</span>
+					</a>
+				</li>
+                <li>
+					<a href="../clients/logout.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-sign-out-alt"></span><span class="mtext">Déconnexion</span>
 					</a>
 				</li>
 			</ul>

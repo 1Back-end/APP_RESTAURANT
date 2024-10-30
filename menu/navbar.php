@@ -22,7 +22,7 @@ session_start(); // S'assurer que la session est démarrée
                     if (isset($_SESSION['user_uuid']) && isset($_SESSION['user_name'])) {
                         // Lors de la création du lien
                         $token = base64_encode($_SESSION['user_uuid'] . ':' . $_SESSION['user_name']); // Encode les données
-                    ?>
+                ?>
 
             <div class="d-flex align-items-center">
                 <button class="btn btn-primary dropdown-toggle py-2 px-4 shadow-none" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">

@@ -63,7 +63,7 @@
 				</span>
 
 				<small class="user-name fw-bold font-14" style="color: #28a745;">
-					<?php echo ucfirst(strtolower($_SESSION['email'])); ?>
+					<?php echo ucfirst(strtolower($_SESSION['username'])); ?>
 				</small>
 
 					</a>
@@ -81,7 +81,7 @@
 	
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="index.html">
+			<a href="../admin/tableau_de_bord.php">
 				<h3 class="text-uppercase text-white">
 					QuickMeal
 				</h3>
