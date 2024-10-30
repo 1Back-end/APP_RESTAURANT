@@ -133,7 +133,7 @@
 const data = {
     labels: labels,
     datasets: [{
-        label: 'Nombre de commandes par jour',
+        label: 'Nombre de commandes',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
@@ -187,7 +187,7 @@ const totalLabels = <?= json_encode($totalLabels); ?>;
 const totalData = {
     labels: totalLabels,
     datasets: [{
-        label: 'Montant Total des Commandes par Jour',
+        label: 'Montant Total',
         backgroundColor: 'rgba(153, 102, 255, 0.2)',
         borderColor: 'rgba(153, 102, 255, 1)',
         borderWidth: 1,
