@@ -36,5 +36,12 @@ function getDeliveries($connexion, $user_uuid) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+function get_info_users($connexion,$user_uuid){
+    $query = "SELECT * FROM users WHERE user_uuid = :user_uuid";
+    $stmt = $connexion->prepare($query);
+    $stmt->bindParam(':user_uuid', $user_uuid);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
 ?>

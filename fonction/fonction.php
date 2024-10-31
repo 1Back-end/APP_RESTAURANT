@@ -291,6 +291,18 @@ foreach ($totalAmountData as $data) {
     $totalAmounts[] = $data['total_amount'];
 }
 
+function recupererMenus($connexion) {
+    try {
+        $query = "SELECT * FROM menus ORDER BY sort_order ASC";
+        $stmt = $connexion->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner tous les résultats sous forme de tableau associatif
+    } catch (PDOException $e) {
+        echo 'Erreur de récupération des menus : ' . $e->getMessage();
+        return [];
+    }
+}
 
 
 

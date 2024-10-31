@@ -2,7 +2,7 @@
 include_once("database/connexion.php"); // Assurez-vous d'utiliser une connexion PDO
 
 
-function getMealsWithPagination($page = 1, $limit = 10) {
+function getMealsWithPagination($page = 1, $limit = 8) {
     global $connexion;
 
     $offset = ($page - 1) * $limit;

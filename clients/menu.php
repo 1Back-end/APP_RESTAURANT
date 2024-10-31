@@ -55,7 +55,7 @@
                         </span>
 				    </span>
 
-                        <small class="user-name fw-bold font-14 text-uppercase" style="color: #28a745;">
+                        <small class="user-name fw-bold font-14" style="color: #28a745;">
                                 <?= htmlspecialchars($_SESSION['user_name']); ?>
                         </small>
                 </a>
@@ -81,11 +81,6 @@
 		<div class="menu-block customscroll">
 			<div class="sidebar-menu">
 			<ul  id="accordion-menu">
-            <li>
-					<a href="dashboard.php" class="dropdown-toggle no-arrow">
-						<span class="micon fas fa-tachometer-alt"></span><span class="mtext">Tableau de bord</span>
-					</a>
-			</li>
                 <li>
 					<a href="mes_commandes.php" class="dropdown-toggle no-arrow">
 						<span class="micon fas fa-receipt"></span><span class="mtext">Mes commandes</span>

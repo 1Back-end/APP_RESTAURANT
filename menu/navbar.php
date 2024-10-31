@@ -36,7 +36,7 @@ session_start(); // S'assurer que la session est démarrée
                     </li>
                     <li>
                         <a class="dropdown-item" href="my_orders.php">
-                            <i class="fa fa-shopping-cart"></i> Mes commandes
+                            <i class="fa fa-shopping-cart"></i> Mon panier
                         </a>
                     </li>
                     <li>

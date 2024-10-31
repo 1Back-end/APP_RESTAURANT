@@ -73,7 +73,7 @@
     <div class="row">
         <?php
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = 10;
+        $limit = 8;
 
         $meals = getMealsWithPagination($page, $limit);
         foreach ($meals as $meal): ?>

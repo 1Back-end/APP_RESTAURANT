@@ -115,6 +115,11 @@ input[type="file"]{
   font-family: "Rubik", system-ui;
 
 }
+input[type="tel"]{
+  border: none;
+  font-family: "Rubik", system-ui;
+
+}
 input[type="number"]{
  font-size: 12px;
   font-family: "Rubik", system-ui;

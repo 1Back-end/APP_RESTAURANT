@@ -1,0 +1,37 @@
+[
+    {
+        "menu_uuid": "1e3b6c57-4e7e-4b95-9c5a-b2e7d3ec8487",
+        "menu_label": "Accueil",
+        "menu_link": "/accueil",
+        "sort_order": 1,
+        "is_active": 1
+    },
+    {
+        "menu_uuid": "5c6d1b90-7596-4b8e-a5ab-2d70a29c2c3d",
+        "menu_label": "À Propos",
+        "menu_link": "/a-propos",
+        "sort_order": 2,
+        "is_active": 1
+    },
+    {
+        "menu_uuid": "ac3f84e1-0ed7-4c66-b06e-1e8129d5f6b8",
+        "menu_label": "Services",
+        "menu_link": "/services",
+        "sort_order": 3,
+        "is_active": 1
+    },
+    {
+        "menu_uuid": "ffb16894-7a3e-4b90-83f3-0a6e12e3ff15",
+        "menu_label": "Contact",
+        "menu_link": "/contact",
+        "sort_order": 4,
+        "is_active": 1
+    },
+    {
+        "menu_uuid": "3fbc54c5-6354-40af-9b4a-37a9d9e4d9d2",
+        "menu_label": "Blog",
+        "menu_link": "/blog",
+        "sort_order": 5,
+        "is_active": 1
+    }
+]
