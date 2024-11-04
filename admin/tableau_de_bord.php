@@ -100,7 +100,7 @@
                 </span>
             </div>
             <h6 class="fs-3" id="customerCount">
-                0
+                <?php echo $total_deliveries;?>
             </h6>
         </div>
     </div>
@@ -117,7 +117,7 @@
                 </span>
             </div>
             <h6 class="fs-3" id="customerCount">
-                0
+                <?php echo $total_orders;?>
             </h6>
         </div>
     </div>
@@ -152,7 +152,7 @@
                 </span>
             </div>
             <h6 class="fs-3" id="customerCount">
-                0
+                <?php echo $total_users;?>
             </h6>
         </div>
     </div>

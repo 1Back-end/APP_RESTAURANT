@@ -137,6 +137,30 @@ function get_count_delivery($connexion){
 
 $total_delivery = get_count_delivery($connexion);
 
+function get_count_deliveries($connexion){
+    $query = "SELECT COUNT(*) as total FROM deliveries WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+
+}
+$total_deliveries = get_count_deliveries($connexion);
+
+function get_count_orders($connexion){
+    $query = "SELECT COUNT(*) as total FROM orders WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_orders = get_count_orders($connexion);
+
+function get_count_users($connexion){
+    $query="SELECT COUNT(*) as total FROM users WHERE is_deleted =0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_users = get_count_users($connexion);
 
 function get_count_customer($connexion){
     $query = "SELECT COUNT(*) as total FROM users WHERE is_deleted = 0";
