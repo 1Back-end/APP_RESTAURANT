@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 :root {
     --bs-blue: #0d6efd;
-    --bs-indigo: #6610f2;
+    --bs-indigo: #1F4283;
     --bs-purple: #6f42c1;
     --bs-pink: #d63384;
     --bs-red: #dc3545;
@@ -14,7 +14,7 @@
     --bs-white: #fff;
     --bs-gray: #6c757d;
     --bs-gray-dark: #343a40;
-    --bs-primary: #FEA116;
+    --bs-primary: #1F4283;
     --bs-secondary: #6c757d;
     --bs-success: #198754;
     --bs-info: #0dcaf0;
@@ -26,10 +26,14 @@
     --bs-font-monospace:  "Rubik", serif;;
     --bs-gradient: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0))
   }
+*{
+    font-family:"Rubik", serif;
+}
   *,
   *::before,
   *::after {
     box-sizing:border-box
+    
   }
   @media (prefers-reduced-motion: no-preference) {
     :root {
@@ -2491,7 +2495,7 @@
     display:inline-block;
     font-weight:400;
     line-height:1.5;
-    color:#666565;
+    color:#1F4283;
     text-align:center;
     vertical-align:middle;
     cursor:pointer;
@@ -2500,6 +2504,7 @@
     border:1px solid transparent;
     padding:.375rem .75rem;
     font-size:1rem;
+    text-transform: lowercase;
     border-radius:2px;
     transition:color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out
   }
@@ -2509,7 +2514,7 @@
     }
   }
   .btn:hover {
-    color:#666565
+    color:#1F4283
   }
   .btn-check:focus+.btn,
   .btn:focus {
@@ -2524,19 +2529,19 @@
   }
   .btn-primary {
     color:#000;
-    background-color:#FEA116;
-    border-color:#FEA116
+    background-color:#1F4283;
+    border-color:#1F4283
   }
   .btn-primary:hover {
     color:#000;
-    background-color:#feaf39;
-    border-color:#feaa2d
+    background-color:#1F4283;
+    border-color:#1F4283
   }
   .btn-check:focus+.btn-primary,
   .btn-primary:focus {
     color:#000;
-    background-color:#feaf39;
-    border-color:#feaa2d;
+    background-color:#1F4283;
+    border-color:#1F4283;
     box-shadow:0 0 0 .25rem rgba(216,137,19,0.5)
   }
   .btn-check:checked+.btn-primary,
@@ -2558,8 +2563,8 @@
   .btn-primary:disabled,
   .btn-primary.disabled {
     color:#000;
-    background-color:#FEA116;
-    border-color:#FEA116
+    background-color:#1F4283;
+    border-color:#1F4283
   }
   .btn-secondary {
     color:#fff;
@@ -4220,7 +4225,7 @@
   .page-link {
     position:relative;
     display:block;
-    color:#FEA116;
+    color:#1F4283;
     background-color:#fff;
     border:1px solid #dee2e6;
     transition:color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out
@@ -4249,8 +4254,8 @@
   .page-item.active .page-link {
     z-index:3;
     color:#fff;
-    background-color:#FEA116;
-    border-color:#FEA116
+    background-color:#1F4283;
+    border-color:#1F4283
   }
   .page-item.disabled .page-link {
     color:#6c757d;

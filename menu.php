@@ -1,35 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-<meta charset="utf-8">
-    <title>QuickMeal</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Libraries Stylesheet -->
-    <link href="assets/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Template Stylesheet -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    
-</head>
-
+<?php include("menu/link_css.php");?>
 <body>
-
-
         <!-- Navbar & Hero Start -->
         <div class="container-xxl position-relative p-0">
         <?php include("menu/navbar.php");?>
@@ -64,13 +34,14 @@
 
             </div>
         </div>
+        </div>
         
         <!-- Navbar & Hero End -->
         <?php include_once("controllers.php");?>
         <!-- Menu Start -->
         <div class="container-xxl position-relative p-0">
         <div class="container">
-    <div class="row">
+         <div class="row">
         <?php
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 8;
@@ -91,20 +62,23 @@
 
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="card-title mb-0"><?= htmlspecialchars($meal['meal_name']); ?></h6>
-                            <p class="card-text mb-0"><?= htmlspecialchars($meal['price']); ?> FCFA</p>
+                            <h6 class="card-title mb-0 fw-bold"><?= htmlspecialchars($meal['meal_name']); ?></h6>
+                            <p class="card-text mb-0 fw-bold"><?= htmlspecialchars($meal['price']); ?> FCFA</p>
                         </div>
                         <p class="card-text text-truncate"><?= htmlspecialchars($meal['description']); ?></p>
                         <div class="d-flex align-items-center justify-content-between">
                         <div class="mr-auto">
-                            <input type="number" class="form-control shadow-none quantity-input" min="1" value="1" size="3">
+                            <input type="number" class="form-control shadow-none quantity-input" min="1" value="1" size="2">
                         </div>
                         <div class="ml-auto">
-                            <a href="#" class="btn btn-primary shadow-none orderButton" data-meal-id="<?= htmlspecialchars($meal['meal_uuid']); ?>">
-                                Commander
-                            </a>
-                        </div>
+                            <a href="#" class="btn btn-primary w-100 shadow-none orderButton" data-meal-id="<?= htmlspecialchars($meal['meal_uuid']); ?>">
+                                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+
+                                </a>
+                            </div>
                     </div>
+
+
 
                     </div>
                 </div>
@@ -119,7 +93,7 @@
             $totalPages = ceil($totalMeals / $limit);
             for ($i = 1; $i <= $totalPages; $i++): ?>
                 <li class="page-item <?= ($i === $page) ? 'active' : ''; ?>">
-                    <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                    <a class="page-link shadow-none mx-2" href="?page=<?= $i; ?>"><?= $i; ?></a>
                 </li>
             <?php endfor; ?>
         </ul>

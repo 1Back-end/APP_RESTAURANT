@@ -86,7 +86,7 @@ $orders = get_order_pending($connexion); // Appel de la fonction
                                             class='rounded-circle me-2 img-thumbnail' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
                                     <?php else: ?>
                                         <img src="https://i.pinimg.com/736x/77/44/9b/77449b6a5b56eafbfb2166b2b67516a8.jpg" 
-                                            alt="Photo par défaut" 
+                                            alt="Photo de <?php echo htmlspecialchars($livreur['firstname'] . ' ' . $livreur['lastname']); ?>" 
                                             class='rounded-circle  me-2 img-thumbnail' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
                                     <?php endif; ?>
                                 </td>

@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+body {
+    font-family: "Rubik", system-ui;
+}
+textarea{
+    resize: none !important;
+    font-family: "Rubik", system-ui;
+    font-size: 12px;
+}

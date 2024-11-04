@@ -14,8 +14,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link rel="stylesheet" type="text/css" href="../vendors/styles/core.css">
 	<link rel="stylesheet" type="text/css" href="../vendors/styles/icon-font.min.css">
-	<link rel="stylesheet" type="text/css" href="../src/plugins/datatables/css/dataTables.bootstrap4.min.css">
-	<link rel="stylesheet" type="text/css" href="../src/plugins/datatables/css/responsive.bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="../vendors/styles/style.css">
 	<link rel="stylesheet" type="text/css" href="../vendors/styles/main.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -47,8 +45,8 @@
 			</div>
 			<?php include("../login/session_user.php");?>
 			<div class="user-info-dropdown">
-				<div class="dropdown">
-					<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+				<div class="dropdown text-success">
+					<a class="dropdown-toggle text-success" href="#" role="button" data-toggle="dropdown">
 					<span class="user-icon shadow-none">
 					<?php
 					$avatar_path = "../uploads/";
@@ -98,8 +96,55 @@
 						<span class="micon fas fa-tachometer-alt"></span><span class="mtext">Tableau de bord</span>
 					</a>
 				</li>
-				
-				
+
+				<!-- <li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon fas fa-receipt"></span><span class="mtext">Commandes</span>
+					</a>
+					<ul class="submenu">
+						<li><a href="../admin/toutes_commandes.php">Toutes les commandes</a></li>
+					</ul>
+				</li> -->
+
+				<li>
+					<a href="../admin/toutes_commandes.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-shopping-bag"></span><span class="mtext">Commandes</span>
+					</a>
+				</li>
+				<li>
+					<a href="../admin/reservations.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-cart-plus"></span><span class="mtext">Reservations</span>
+					</a>
+				</li>
+				<li>
+					<a href="../admin/livraisons_disponibles.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
+					</a>
+				</li>
+				<li>
+					<a href="../admin/historique_paiements.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-credit-card"></span><span class="mtext">Paiements</span>
+					</a>
+				</li>
+<!-- 
+				<li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon fas fa-receipt"></span><span class="mtext">Reservations</span>
+					</a>
+					<ul class="submenu">
+						<li><a href="../admin/toutes_commandes.php">Toutes les commandes</a></li>
+					</ul>
+				</li> -->
+
+				<!-- <li class="dropdown">
+					<a href="javascript:;" class="dropdown-toggle">
+						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
+					</a>
+					<ul class="submenu">
+						<li><a href="../admin/livraisons_disponibles.php">Livraisons disponibles</a></li>
+					</ul>
+				</li> -->
+
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-utensils"></span><span class="mtext">Repas</span>
@@ -113,25 +158,7 @@
 
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-receipt"></span><span class="mtext">Commandes</span>
-					</a>
-					<ul class="submenu">
-						<li><a href="../admin/toutes_commandes.php">Toutes les commandes</a></li>
-					</ul>
-				</li>
-
-				<li class="dropdown">
-					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
-					</a>
-					<ul class="submenu">
-						<li><a href="../admin/livraisons_disponibles.php">Livraisons disponibles</a></li>
-					</ul>
-				</li>
-
-				<li class="dropdown">
-					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-users"></span><span class="mtext">Livreurs</span>
+						<span class="micon fas fa-user-plus"></span><span class="mtext">Livreurs</span>
 					</a>
 					<ul class="submenu">
 						<li><a href="../admin/liste_livreurs.php">Liste des livreurs</a></li>
@@ -139,7 +166,7 @@
 					</ul>
 				</li>
 
-				<li class="dropdown">
+				<!-- <li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-credit-card"></span><span class="mtext">Paiements</span>
 					</a>
@@ -148,7 +175,7 @@
 						<li><a href="../admin/statut_paiements.php">Statut des paiements</a></li>
 						<li><a href="../admin/methodes_paiement.php">Méthodes de paiement</a></li>
 					</ul>
-				</li>
+				</li> -->
 
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
@@ -160,6 +187,7 @@
 						<li><a href="../admin/notificactions.php">Notifications</a></li>
 					</ul>
 				</li>
+				
 				<!-- <li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-cloud-upload"></span><span class="mtext">CMS</span>
@@ -182,11 +210,6 @@
 	<script src="../vendors/scripts/script.min.js"></script>
 	<script src="../vendors/scripts/process.js"></script>
 	<script src="../vendors/scripts/layout-settings.js"></script>
-	<script src="../src/plugins/apexcharts/apexcharts.min.js"></script>
-	<script src="../src/plugins/datatables/js/jquery.dataTables.min.js"></script>
-	<script src="../src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
-	<script src="../src/plugins/datatables/js/dataTables.responsive.min.js"></script>
-	<script src="../src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 	<script src="../vendors/scripts/dashboard.js"></script>
 </body>
 </html>

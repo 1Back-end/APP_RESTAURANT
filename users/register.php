@@ -20,6 +20,9 @@
     -webkit-box-shadow: 0 0 28px rgba(0,0,0,.08);
     box-shadow: 0 0 28px rgba(0,0,0,.08);
   }
+  small{
+    font-size: 10px;
+}
 </style>
     
 <?php include ("process_create_users.php")?>
@@ -73,16 +76,19 @@
                                      <?php endif; ?>
 								</div>
 
-								<div class="d-grid gap-2 mb-3">
-									<button type="submit" name="submit" class="btn btn-primary btn-block shadow-none btn-lg text-uppercase">
-                                        <i class="fas fa-plus-circle"></i> 
-										Créer	
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="mr-auto">
+									<button type="submit" name="submit" class="btn btn-primary ms-auto shadow-none">
+										Créer
 									</button>
-                                    <a href="../index.php" class="btn btn-secondary shadow-none text-uppercase  btn-lg">
-                                        <i class="fas fa-backward"></i>
+									</div>
+									<div class="ml-auto">
+									<a href="../index.php" class="btn btn-secondary shadow-none">
                                         Retour
                                     </a>
 
+									</div>
+                           
 								</div>
 							</form>
 						</div>

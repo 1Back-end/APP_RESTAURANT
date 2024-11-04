@@ -3,7 +3,7 @@
 
 <div class="main-container mt-3 pb-5">
 
-    <div class="col-md-12 col-sm-12  mb-3">
+    <div class="col-lg-12 col-sm-12  mb-3">
       <div class="card-box text-center text-uppercase p-3">
             <h4>Ajouter un repas</h4>
       </div>
@@ -24,7 +24,7 @@
             <?php endif; ?>
     </div>
 
-    <div class="col-md-12 col-sm-12 mb-3">
+    <div class="col-lg-12 col-sm-12 mb-3">
     <div class="card-box p-3">
         <form action="" method="post" enctype="multipart/form-data"> <!-- Ajout de enctype pour le téléchargement de fichiers -->
             <div class="row">

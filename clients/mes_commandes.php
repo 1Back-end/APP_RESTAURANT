@@ -20,13 +20,13 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
 <div class="main-container mt-3 pb-5">
     <div class="col-md-12 col-sm-12 mb-3">
         <div class="card-box p-3">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="mr-auto">
-                    <h6 class="text-uppercase font-16">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                <div class="mb-2 mb-md-0 mr-md-auto w-100">
+                    <h6 class="text-uppercase font-14">
                         Mes commandes (<?= count($deliveries); ?>)
                     </h6>
                 </div>
-                <div class="ml-auto">
+                <div class="ml-md-auto w-100">
                     <h6 class="font-16"><?php echo $today; ?></h6>       
                 </div>
             </div>

@@ -28,7 +28,7 @@ if (isset($_GET['user_uuid'], $_GET['meal_uuid'], $_GET['quantity'], $_GET['pric
     ];
     
     // Redirige l'utilisateur vers la page du menu avec un message de succès
-    header('Location: menu.php?message=' . urlencode('Article ajouté au panier !'));
+    header('Location: menu.php?message=' . urlencode('Repas ajouté au panier !'));
     exit(); // Termine l'exécution du script
 } else {
     // Redirige l'utilisateur vers le menu avec un message d'erreur si les données sont manquantes

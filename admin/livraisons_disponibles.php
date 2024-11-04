@@ -54,8 +54,8 @@
         <?php foreach ($deliveries as $index => $delivery): ?>
             <tr>
                 <td><?php echo ($index + 1); ?></td>
-                <td><?php echo htmlspecialchars($delivery['order_date']); ?></td>
-                <td><?php echo htmlspecialchars($delivery['delivery_time']); ?></td>
+                <td><?php echo date('d-m-Y H:i:s',strtotime($delivery['order_date'])); ?></td>
+                <td><?php echo date('d-m-Y H:i:s',strtotime($delivery['delivery_time'])); ?></td>
                 <td><?php echo htmlspecialchars($delivery['total_amount']); ?> FCFA</td>
                 <td><?php echo htmlspecialchars($delivery['firstname'] . ' ' . $delivery['lastname']); ?></td>
                 <td>

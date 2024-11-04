@@ -177,7 +177,7 @@ $totalPages = ceil($totalMeals / $limit);
             <ul class="pagination">
                 <?php if ($page > 1): ?>
                     <li class="page-item mx-2">
-                        <a class="page-link" href="?page=<?= $page - 1 ?>">Précédent</a>
+                        <a class="page-link w-100" href="?page=<?= $page - 1 ?>">Précédent</a>
                     </li>
                 <?php endif; ?>
 
@@ -189,7 +189,7 @@ $totalPages = ceil($totalMeals / $limit);
 
                 <?php if ($page < $totalPages): ?>
                     <li class="page-item mx-2">
-                        <a class="page-link" href="?page=<?= $page + 1 ?>">Suivant</a>
+                        <a class="page-link w-100" href="?page=<?= $page + 1 ?>">Suivant</a>
                     </li>
                 <?php endif; ?>
             </ul>

@@ -3,7 +3,7 @@ include_once("../database/connexion.php"); // Assurez-vous d'utiliser une connex
 
 
 function getCurrentDateTime() {
-    return date("d-m-Y H:i:s"); // Renvoie la date et l'heure actuelles au format "AAAA-MM-JJ HH:MM:SS"
+    return date("d/m/Y H:i:s"); // Renvoie la date et l'heure actuelles au format "AAAA-MM-JJ HH:MM:SS"
 }
 $today = getCurrentDateTime();
 

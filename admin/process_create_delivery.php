@@ -2,7 +2,7 @@
 // session_start(); // Assurez-vous que la session est démarrée
 include_once("../database/connexion.php"); // Connexion à la base de données
 include_once("../fonction/fonction.php");
-
+    
 $erreur_champ = "";
 $erreur = "";
 $success = "";

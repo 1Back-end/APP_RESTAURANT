@@ -72,13 +72,13 @@ function countMeals() {
     $query = "SELECT COUNT(*) as total FROM meals WHERE is_deleted = 0";
     $stmt = $connexion->prepare($query);
     $stmt->execute();
-
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['total'];
 }
 
 function get_agency_delivery($connexion, $limit, $offset) {
-    $query = "SELECT * FROM delivery_agents WHERE is_deleted = 0 ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+    $query = "SELECT * FROM delivery_agents WHERE is_deleted = 0 
+    ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
     $stmt = $connexion->prepare($query);
     
     // Liaison des valeurs pour la pagination
@@ -88,12 +88,14 @@ function get_agency_delivery($connexion, $limit, $offset) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 function count_agency_delivery($connexion) {
     $query = "SELECT COUNT(*) FROM delivery_agents WHERE is_deleted = 0";
     $stmt = $connexion->prepare($query);
     $stmt->execute();
     return $stmt->fetchColumn();
 }
+
 function search_delivery_agents($connexion, $searchTerm) {
     $query = "SELECT * FROM delivery_agents WHERE is_deleted = 0 
               AND (firstname LIKE :searchTerm OR 
@@ -106,12 +108,14 @@ function search_delivery_agents($connexion, $searchTerm) {
     $stmt->execute([':searchTerm' => '%' . $searchTerm . '%']);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 function get_count_meals($connexion){
     $query = "SELECT COUNT(*) as total FROM meals WHERE is_deleted = 0";
     $stmt = $connexion->prepare($query);
     $stmt->execute();
     return $stmt->fetchColumn();
 }
+
 $total_meals = get_count_meals($connexion);
 
 
@@ -121,6 +125,7 @@ function get_count_meals_categories($connexion){
     $stmt->execute();
     return $stmt->fetchColumn();
 }
+
 $total_category = get_count_meals_categories($connexion);
 
 function get_count_delivery($connexion){
@@ -129,6 +134,7 @@ function get_count_delivery($connexion){
     $stmt->execute();
     return $stmt->fetchColumn();
 }
+
 $total_delivery = get_count_delivery($connexion);
 
 
@@ -138,6 +144,7 @@ function get_count_customer($connexion){
     $stmt->execute();
     return $stmt->fetchColumn();
 }
+
 $total_customer = get_count_customer($connexion);
 
 
@@ -160,6 +167,7 @@ function get_orders_with_usernames($connexion, $offset, $limit) {
     // Récupérer toutes les commandes
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
 function count_total_orders($connexion) {
     $stmt = $connexion->prepare("SELECT COUNT(*) FROM orders");
     $stmt->execute();
@@ -178,6 +186,7 @@ function get_order_pending($connexion) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner les résultats
 }
+
 function getDeliveries($connexion) {
     $query = "
         SELECT 
@@ -195,7 +204,7 @@ function getDeliveries($connexion) {
         JOIN 
             delivery_agents u ON d.agent_uuid = u.agent_uuid 
         WHERE 
-            d.is_deleted = 0
+            d.is_deleted = 0 ORDER BY d.delivery_time DESC
     ";
 
     $stmt = $connexion->prepare($query);
@@ -207,7 +216,9 @@ function getDeliveries($connexion) {
 $deliveries = getDeliveries($connexion);
 
 function getDeliveryAgents($connexion) {
-    $query = "SELECT agent_uuid, firstname, lastname FROM delivery_agents WHERE is_deleted = 0 AND available = 0";
+    $query = "SELECT agent_uuid, firstname, 
+    lastname FROM delivery_agents WHERE is_deleted = 0 
+    AND available = 1 ORDER BY created_at DESC";
     $stmt = $connexion->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

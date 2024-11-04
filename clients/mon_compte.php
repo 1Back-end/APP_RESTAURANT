@@ -15,14 +15,14 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
 <div class="main-container mt-3 pb-5">
     <div class="col-md-12 col-sm-12 mb-3">
         <div class="card-box p-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="mr-auto">
-                <h6 class="text-uppercase font-16">
-                    Modifier les informations de mon compte
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+            <div class="mb-2 mb-md-0 mr-md-auto w-100">
+                <h6 class="text-uppercase font-14">
+                   les informations de  Mon compte
                 </h6>
             </div>
-            <div class="ml-auto">
-                <h6 class="font-16"><?php echo $today;?></h6>       
+            <div class="ml-md-auto w-100">
+                <h6 class="font-14"><?php echo $today;?></h6>       
             </div>
         </div>
         </div>
@@ -65,7 +65,8 @@ $user_info = get_info_users($connexion, $user_uuid);
                     <input type="tel" class="form-control shadow-none" id="telephone" name="telephone" value="<?php echo htmlspecialchars($user_info['phone_number']); ?>">
                 </div>
                 <div class="col-md-12 col-sm-12 mb-3">
-                    <button class="btn btn-customize text-white btn-responsive">
+                    <button class="btn btn-customize text-white text-uppercase font-14 btn-responsive">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
                         Modifier les informations
                     </button>
                 </div>

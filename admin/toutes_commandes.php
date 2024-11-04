@@ -79,17 +79,17 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                             <tr>
                                 <td><?php echo ($offset + $index + 1); ?></td>
                                 <td><?= htmlspecialchars($order['username']); ?></td>
-                                <td><?= htmlspecialchars($order['order_date']); ?></td>
+                                <td><?= date('d/m/Y H:i:s',strtotime($order['order_date'])); ?></td>
                                 <td><?= htmlspecialchars($order['total_amount']); ?> FCFA</td>
                                 <td>
                                             <?php if ($order['status'] === 'pending'): ?>
-                                                <span class="badge badge-warning text-white">En Attente</span>
+                                                <span class="badge badge-warning text-white">En attente</span>
                                             <?php elseif ($order['status'] === 'Canceled'): ?>
                                                 <span class="badge badge-danger">Annulé</span>
                                             <?php elseif ($order['status'] === 'Delivered'): ?>
                                                 <span class="badge badge-success">Livré</span>
                                             <?php elseif ($order['status'] === 'in_progress'): ?> <!-- Modifié le statut "en cours" -->
-                                                <span class="badge badge-info">En Cours</span>
+                                                <span class="badge badge-info">En cours</span>
                                             <?php elseif ($order['status'] === 'paid'): ?> <!-- Ajout du statut "Payé" -->
                                                 <span class="badge badge-primary">Payé</span>
                                             <?php else: ?>
@@ -105,16 +105,16 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                                                 <a class="dropdown-item text-info" href="details_commande.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
                                                     <i class="fas fa-eye"></i> Détails
                                                 </a>
-                                                <a class="dropdown-item text-warning" href="cancel.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
+                                                <a class="dropdown-item text-warning" href="cancel_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
                                                     <i class="fas fa-ban"></i> Annuler
                                                 </a>
-                                                <a class="dropdown-item text-danger" href="delete.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
+                                                <a class="dropdown-item text-danger" href="delete_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
                                                     <i class="fas fa-trash-alt"></i> Supprimer
                                                 </a>
                                                 <!-- Option pour affecter un livreur -->
                                                 <?php if ($order['status'] === 'pending'): ?>
                                                     <a class="dropdown-item text-success" href="#" data-toggle="modal" data-target="#assignDeliveryModal" data-order="<?= htmlspecialchars($order['order_uuid']); ?>">
-                                                        <i class="fas fa-user-plus"></i> Affecter à un livreur
+                                                        <i class="fas fa-share"></i> Affecter à un livreur
                                                     </a>
                                                 <?php endif; ?>
 
@@ -169,8 +169,7 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
             <form action="assign_delivery.php" method="POST">
                 <div class="modal-body">
                     <input type="hidden" name="order_uuid" class="form-control" id="modalOrderUuid">
-                    <div class="form-group">
-                        <label for="agent_uuid">Sélectionner un livreur</label>
+                    <div class="form-group">    
                         <select class="form-control form-control select-custom shadow-none" name="agent_uuid" id="agent_uuid" required>
                             <option value="" disabled selected>-- Choisissez un livreur --</option>
                             <?php foreach ($agents as $agent): ?>
@@ -179,6 +178,10 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Entrer la date de livraison</label>
+                        <input type="date" class="form-control shadow-none">
                     </div>
                 </div>
                 <div class="modal-footer">

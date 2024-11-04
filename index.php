@@ -1,29 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>QuickMeal</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Libraries Stylesheet -->
-    <link href="assets/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Template Stylesheet -->
-    <link href="assets/css/style.css" rel="stylesheet">
-</head>
-
+<?php include("menu/link_css.php");?>
 <body>
     <div class="container-xxl bg-white p-0">
         <!-- Navbar & Hero Start -->
@@ -35,7 +10,7 @@
                         <div class="col-lg-6 text-center text-lg-start">
                             <h1 class="display-3 text-white animated slideInLeft">Savourez notre<br>Délicieux Repas</h1>
                             <p class="text-white animated slideInLeft mb-4 pb-2">Offrez-vous un moment de plaisir culinaire avec notre sélection de plats faits maison, préparés avec des ingrédients frais et de qualité. Chaque bouchée est une invitation à découvrir des saveurs authentiques et un régal pour vos papilles.</p>
-                            <a href="" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft shadow-none">Réserver une Table</a>
+                            <a href="make_reservation.php" class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft shadow-none">Réserver une Table</a>
                         </div>
                         <div class="col-lg-6 text-center text-lg-end overflow-hidden">
                             <img class="img-fluid" src="assets/img/hero.png" alt="">

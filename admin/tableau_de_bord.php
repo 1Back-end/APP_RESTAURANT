@@ -19,10 +19,6 @@
     </div>
 
 
-
-
-
-
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="row">
         
@@ -77,8 +73,6 @@
     </div>
 </div>
 
-
-
 <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
     <div class="card-box p-3 text-center h-100">
         <h6 class="mb-3 font-14 text-uppercase">Total des clients</h6>
@@ -96,33 +90,106 @@
 </div>
 
 
-<div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-    <div class="card-box p-3 h-100">
-        <h6 class="mb-3 font-14 text-uppercase">Nombre de commandes par jour</h6>
-        <canvas id="ordersChart"></canvas>
+<div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+    <div class="card-box p-3 text-center h-100">
+        <h6 class="mb-3 font-14 text-uppercase">Total des livraisons</h6>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <span class="icon-pending text-white font-weight-bold">
+                    <i class="fas fa-truck fs-3"></i> <!-- Icône d'ustensiles -->
+                </span>
+            </div>
+            <h6 class="fs-3" id="customerCount">
+                0
+            </h6>
+        </div>
     </div>
 </div>
 
 
-<div class="col-lg-6 col-md-12 col-sm-12 mb-3">
-    <div class="card-box p-3 h-100">
+<div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+    <div class="card-box p-3 text-center h-100">
+        <h6 class="mb-3 font-14 text-uppercase">Total des commandes</h6>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <span class="icon-pending text-white font-weight-bold">
+                    <i class="fas fa-shopping-bag fs-3"></i> <!-- Icône d'ustensiles -->
+                </span>
+            </div>
+            <h6 class="fs-3" id="customerCount">
+                0
+            </h6>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+    <div class="card-box p-3 text-center h-100">
+        <h6 class="mb-3 font-14 text-uppercase">Total des reservations</h6>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <span class="icon-pending text-white font-weight-bold">
+                    <i class="fas fa-cart-plus fs-3"></i> <!-- Icône d'ustensiles -->
+                </span>
+            </div>
+            <h6 class="fs-3" id="customerCount">
+                0
+            </h6>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-lg-3 col-md-12 col-sm-12 mb-3">
+    <div class="card-box p-3 text-center h-100">
+        <h6 class="mb-3 font-14 text-uppercase">Total des utilisateurs</h6>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <span class="icon-pending text-white font-weight-bold">
+                    <i class="fas fa-user-plus fs-3"></i> <!-- Icône d'ustensiles -->
+                </span>
+            </div>
+            <h6 class="fs-3" id="customerCount">
+                0
+            </h6>
+        </div>
+    </div>
+</div>
+
+    
+</div>
+</div>
+
+<div class="col-lg-12 col-sm-12 mb-3">
+    <div class="row">
+        
+        <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+            <div class="card-box p-3 h-100">
+                <h6 class="mb-3 font-14 text-uppercase">Nombre de commandes par jour</h6>
+                <canvas id="ordersChart"></canvas>
+            </div>
+        </div>
+
+
+        <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+        <div class="card-box p-3 h-100">
         <h6 class="mb-3 font-14 text-uppercase">Montant Total des Commandes par Jour</h6>
         <canvas id="totalAmountChart"></canvas>
+        </div>
+    </div>
+
+
+
     </div>
 </div>
 
-        
-    </div>
-</div>
 
 
 
 
-
-
-
-
-
+    
 
 </div>
 

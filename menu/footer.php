@@ -3,7 +3,7 @@
             <div class="container py-5">
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
-                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Company</h4>
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">QuickMeal</h4>
                         <a class="btn btn-link" href="">À propos de nous</a>
                         <a class="btn btn-link" href="">Contactez-nous</a>
                         <a class="btn btn-link" href="">Réservation</a>
