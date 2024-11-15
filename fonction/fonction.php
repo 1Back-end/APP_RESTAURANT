@@ -162,6 +162,14 @@ function get_count_users($connexion){
 }
 $total_users = get_count_users($connexion);
 
+function get_sum_deliveries($connexion){
+    $query = "SELECT SUM(total_amount) as total_amount FROM orders WHERE is_deleted = 0";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+$total_sum_order = get_sum_deliveries($connexion);
+
 function get_count_customer($connexion){
     $query = "SELECT COUNT(*) as total FROM users WHERE is_deleted = 0";
     $stmt = $connexion->prepare($query);
@@ -175,9 +183,9 @@ $total_customer = get_count_customer($connexion);
 function get_orders_with_usernames($connexion, $offset, $limit) {
     // Préparer la requête pour récupérer toutes les commandes avec les noms d'utilisateur
     $stmt = $connexion->prepare("
-        SELECT o.order_uuid , o.user_uuid , o.order_date, o.total_amount, o.status, u.username
+        SELECT o.order_uuid,o.num_order , o.user_uuid , o.order_date,o.is_deleted, o.total_amount, o.status, u.username
         FROM orders o
-        JOIN users u ON o.user_uuid = u.user_uuid ORDER BY o.order_date DESC
+        JOIN users u ON o.user_uuid = u.user_uuid WHERE o.is_deleted=0 ORDER BY o.order_date DESC
         LIMIT :limit OFFSET :offset 
     ");
 
@@ -338,7 +346,58 @@ function recupererMenus($connexion) {
         return [];
     }
 }
+function get_all_users($connexion){
+    $query = "SELECT * FROM admin_users WHERE is_deleted = 0  ORDER BY created_at DESC";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+}
+$all_users = get_all_users($connexion);
+
+function get_info_users($connexion, $uuid_admin){
+    global $_SESSION; // Déclare $_SESSION comme globale
+    $query = "SELECT * FROM admin_users WHERE admin_uuid = :admin_uuid";
+    $stmt = $connexion->prepare($query);
+    $stmt->bindParam(':admin_uuid', $_SESSION['admin_uuid']);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getAllPayments($page = 1, $limit = 10) {
+    global $connexion;
+
+    // Calcul de l'offset pour la pagination
+    $offset = ($page - 1) * $limit;
+
+    // Requête SQL pour récupérer tous les paiements, commandes et utilisateurs associés
+    $query = "
+        SELECT p.payment_uuid, p.amount, p.payment_method, p.payment_status, p.payment_date, o.num_order, o.order_uuid, o.order_date, u.username
+        FROM payments p
+        INNER JOIN orders o ON p.order_uuid = o.order_uuid
+        INNER JOIN users u ON p.added_by = u.user_uuid
+        ORDER BY p.payment_date DESC
+        LIMIT :limit OFFSET :offset
+    ";
+
+    $stmt = $connexion->prepare($query);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Fonction pour compter le nombre total de paiements
+function getTotalPayments() {
+    global $connexion;
+    $query = "
+        SELECT COUNT(*) FROM payments p
+        INNER JOIN orders o ON p.order_uuid = o.order_uuid
+    ";
+    $stmt = $connexion->query($query);
+    return $stmt->fetchColumn();
+}
 
 
 function generateUUID() {
@@ -465,7 +524,7 @@ function generateAgentCode() {
     $formattedRandomNumber = str_pad($randomNumber, 2, '0', STR_PAD_LEFT); // Formater le nombre pour qu'il ait toujours deux chiffres
     
     // Combiner le préfixe, l'année, et le nombre aléatoire
-    $AgencyCode = 'AGT-' . $year . $formattedRandomNumber;
+    $AgencyCode = 'LIV' . $year . $formattedRandomNumber;
     
     return $AgencyCode;
 }

@@ -17,7 +17,7 @@ if (isset($_GET['order_id'])) {
 
 // Fonction pour récupérer les détails de la commande, y compris le nom de l'utilisateur
 function get_order_details($connexion, $order_id) {
-    $query = "SELECT o.order_uuid, o.user_uuid, o.order_date, o.total_amount, o.status, 
+    $query = "SELECT o.order_uuid,o.num_order, o.user_uuid, o.order_date, o.total_amount, o.status, 
                      m.meal_uuid, m.name, m.price, oi.quantity, m.image, 
                      u.username  -- ajout du nom d'utilisateur
               FROM orders o
@@ -41,7 +41,7 @@ function get_order_details($connexion, $order_id) {
         <div class="table-responsive">
     <?php if (!empty($orderDetails)): ?>
         <div class="card-header mb-3 w-100">
-            <h6 class="font-14 text-uppercase">Détails de la commande de monsieur :   <?= htmlspecialchars($orderDetails[0]['username']); ?></h6>
+            <h6 class="font-14 text-uppercase">Détails de la commande N° :   <?= htmlspecialchars($orderDetails[0]['num_order']); ?></h6>
         </div>
         <table class="table table-striped table-bordered">
             <thead>
@@ -76,7 +76,7 @@ function get_order_details($connexion, $order_id) {
                         <td><?= htmlspecialchars($detail['quantity']); ?></td>
                         <td><?= htmlspecialchars($detail['price']); ?> FCFA</td>
                         <td><?= htmlspecialchars($detail['quantity'] * $detail['price']); ?> FCFA</td>
-                        <td><?= htmlspecialchars($detail['order_date']); ?></td>
+                        <td><?= date('d-m-Y H:i:s',strtotime($detail['order_date'])); ?></td>
                         <td>
                             <?php if ($detail['status'] === 'pending'): ?>
                                 <span class="badge badge-warning text-white">En Attente</span>

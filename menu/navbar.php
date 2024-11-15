@@ -26,7 +26,7 @@ session_start(); // S'assurer que la session est démarrée
 
             <div class="d-flex align-items-center">
                 <button class="btn btn-primary dropdown-toggle py-2 px-4 shadow-none" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    Bonjour, <?= htmlspecialchars($_SESSION['user_name']); ?>
+                    Salut , <?= htmlspecialchars($_SESSION['user_name']); ?>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                     <li>

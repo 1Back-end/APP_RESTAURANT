@@ -26,12 +26,22 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
                         Mes commandes (<?= count($deliveries); ?>)
                     </h6>
                 </div>
-                <div class="ml-md-auto w-100">
-                    <h6 class="font-16"><?php echo $today; ?></h6>       
-                </div>
+                
             </div>
         </div>
     </div>
+<div class="col-md-12 col-sm-12 mb-3">
+<?php
+if (isset($_GET['status']) && isset($_GET['message'])) {
+    $status = htmlspecialchars($_GET['status']);
+    $message = htmlspecialchars($_GET['message']);
+    $alertType = $status === 'success' ? 'alert-success' : 'alert-danger';
+
+    echo "<div class='alert text-center $alertType' role='alert'>$message</div>";
+}
+?>
+
+</div>
 
     <div class="col-md-12 col-sm-12 mb-3">
         <div class="card-box p-3">
@@ -77,11 +87,13 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
                                             <?php endif; ?>
                                         </td>
 
-                                    <td>
-                                        <a href="view_order.php?pay_order.php?order_uuid=<?= htmlspecialchars($delivery['order_uuid']); ?>" class="btn btn-success btn-sm btn-xs">
-                                            <i class="fas fa-credit-card mr-1"></i> Payé
-                                        </a>
-                                    </td>
+                                        <td>
+                                            <a href="pay_order.php?order_uuid=<?= htmlspecialchars($delivery['order_uuid']); ?>" 
+                                            class="btn btn-success btn-sm btn-xs">
+                                                <i class="fas fa-credit-card mr-1"></i> Payé
+                                            </a>
+                                        </td>
+
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>

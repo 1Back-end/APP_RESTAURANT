@@ -57,14 +57,13 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
 }
 $grandTotal = 0;
 ?>
-
 <div class="container-xxl position-relative p-0">
     <div class="container">
         <div class="row">
             <!-- Section Informations Personnelles -->
             <div class="col-lg-6 col-sm-12 mb-3">
-               <div class="card shadow-sm border-light h-100 p-3">
-                    <h3 class="my-2">Informations Personnelles</h3>
+                <div class="card shadow-sm border-light p-3">
+                    <h5 class="my-2 font-16">Mes informations personnelles</h5>
                     <form action="process_checkout.php" method="POST" id="payment-form">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nom Complet</label>
@@ -88,12 +87,13 @@ $grandTotal = 0;
                             <button type="submit" class="btn btn-primary shadow-none">Valider la commande</button> 
                         </div>
                     </form>
-               </div>
+                </div>
             </div>
 
             <!-- Section Panier -->
             <div class="col-lg-6 col-sm-12 mb-3">
                 <div class="card shadow-sm border-light p-3">
+                    <h5 class="my-2">Ma commande</h5>
                     <div class="table-responsive">
                         <?php if (!empty($meals)): ?>
                             <table class="table table-striped table-bordered table-hover">
@@ -109,7 +109,6 @@ $grandTotal = 0;
                                     <?php 
                                     $grandTotal = 0; // Initialisation du total général
                                     foreach ($meals as $meal):
-                                        // Trouver la quantité du repas dans le panier
                                         $mealInCart = array_filter($_SESSION['cart'], function($item) use ($meal) {
                                             return $item['meal_uuid'] === $meal['meal_uuid'];
                                         });
@@ -146,11 +145,12 @@ $grandTotal = 0;
                         <?php endif; ?>
                     </div>
                 </div>
+
+                
             </div>
         </div>
     </div>
 </div>
-
 
         <!-- Menu End -->
         <?php include_once("menu/footer.php");?>

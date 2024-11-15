@@ -21,9 +21,7 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
                    les informations de  Mon compte
                 </h6>
             </div>
-            <div class="ml-md-auto w-100">
-                <h6 class="font-14"><?php echo $today;?></h6>       
-            </div>
+            
         </div>
         </div>
 </div>

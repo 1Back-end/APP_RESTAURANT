@@ -65,7 +65,7 @@ h5,h6{
   font-size: 18px;
 }
 
-input[type="text"], input[type="email"], input[type="date"], input[type="password"] input[type="tel"] {
+input[type="text"], input[type="email"], input[type="date"], input[type="password"] input[type="tel"] input[type="datetime-local"]{
     font-family: "Rubik", system-ui;
     font-size: 12px;
 }

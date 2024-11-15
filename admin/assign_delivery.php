@@ -11,8 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les valeurs du formulaire
     $order_uuid = $_POST['order_uuid'] ?? null; // ID de la commande sélectionnée
     $agent_uuid = $_POST['agent_uuid'] ?? null; // ID de l'agent sélectionné
+    $delivery_time = $_POST['delivery_time'] ?? null; //
 
-    if ($order_uuid && $agent_uuid) {
+    if ($order_uuid && $agent_uuid && $delivery_time) {
         try {
             // Commencer une transaction
             $connexion->beginTransaction();
@@ -30,13 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Insérer une nouvelle entrée dans la table deliveries
             $stmt = $connexion->prepare("
-                INSERT INTO deliveries (delivery_uuid, order_uuid, agent_uuid, delivery_status) 
-                VALUES (:delivery_uuid, :order_uuid, :agent_uuid, 'en attente')
+                INSERT INTO deliveries (delivery_uuid, order_uuid, agent_uuid, delivery_status,delivery_time) 
+                VALUES (:delivery_uuid, :order_uuid, :agent_uuid,:delivery_time, 'en attente')
             ");
             $stmt->execute([
                 ':delivery_uuid' => $delivery_uuid,
                 ':order_uuid' => $order_uuid,
-                ':agent_uuid' => $agent_uuid
+                ':agent_uuid' => $agent_uuid,
+                ':delivery_time' => $delivery_time
             ]);
 
             // Mettre à jour la disponibilité de l'agent de livraison

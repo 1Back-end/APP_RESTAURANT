@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad910a2dc4a5d8e8868719775336e56f",
+    "content-hash": "c38f8c1b5a9044268e203c7cc164860d",
     "packages": [
         {
             "name": "phpmailer/phpmailer",
@@ -89,16 +89,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v16.1.1",
+            "version": "v16.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "524ae42483d7434dfaecb0076e32e5cb521f6bb7"
+                "reference": "813ae4961755af28a13bda451689f7a6ed6498cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/524ae42483d7434dfaecb0076e32e5cb521f6bb7",
-                "reference": "524ae42483d7434dfaecb0076e32e5cb521f6bb7",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/813ae4961755af28a13bda451689f7a6ed6498cb",
+                "reference": "813ae4961755af28a13bda451689f7a6ed6498cb",
                 "shasum": ""
             },
             "require": {
@@ -142,9 +142,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v16.1.1"
+                "source": "https://github.com/stripe/stripe-php/tree/v16.2.0"
             },
-            "time": "2024-10-18T18:42:52+00:00"
+            "time": "2024-10-29T21:15:53+00:00"
         },
         {
             "name": "twilio/sdk",

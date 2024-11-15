@@ -17,7 +17,7 @@
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
                 <?php if (!empty($erreur)) : ?>
-            <div class="alert alert-danger text-center" role="alert">
+           			 <div class="alert alert-danger text-center" role="alert">
                 <?= $erreur ?>
                     </div>
                 <?php endif; ?>
@@ -47,7 +47,7 @@
 
 								<div class="form-group">
 									<div class="custom-checkbox custom-control">
-										<input type="checkbox" name="remember" id="remember" class="custom-control-input shadow-none">
+										<input type="checkbox" name="remember_me" id="remember" class="custom-control-input shadow-none">
 										<label for="remember" class="custom-control-label">Se souvenir de moi</label>
 									</div>
 								</div>

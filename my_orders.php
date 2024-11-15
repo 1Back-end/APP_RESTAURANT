@@ -98,7 +98,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                         <td><?= $totalPrice; ?> FCFA</td>
                         <td>
                             <a href="?remove=<?= htmlspecialchars($meal['meal_uuid']); ?>" class="btn btn-danger btn-sm btn-xs">
-                            <i class="bi bi-trash3-fill"></i>
+                                Supprimer
                             </a>
                         </td>
                     </tr>
@@ -112,7 +112,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
         </table>
         <div class="d-flex justify-content-end mt-3">
             <!-- Bouton Aller à la caisse -->
-            <a href="checkout.php" class="btn btn-success shadow-none">Aller à la caisse</a>
+            <a href="checkout.php" class="btn btn-primary shadow-none">Aller à la caisse</a>
         </div>
         </div>
         </div>

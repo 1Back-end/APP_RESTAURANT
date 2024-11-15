@@ -59,15 +59,15 @@
                 <td><?php echo htmlspecialchars($delivery['total_amount']); ?> FCFA</td>
                 <td><?php echo htmlspecialchars($delivery['firstname'] . ' ' . $delivery['lastname']); ?></td>
                 <td>
-                    <?php if ($delivery['delivery_status'] == 'en attente'): ?>
+                    <?php if ($delivery['delivery_status'] == 'pending'): ?>
                         <span class="badge bg-warning text-white">
                             <i class="fas fa-clock"></i> En attente
                         </span>
-                    <?php elseif ($delivery['delivery_status'] == 'en route'): ?>
+                    <?php elseif ($delivery['delivery_status'] == 'in_progress'): ?>
                         <span class="badge bg-info text-white">
                             <i class="fas fa-truck"></i> En route
                         </span>
-                    <?php elseif ($delivery['delivery_status'] == 'livré'): ?>
+                    <?php elseif ($delivery['delivery_status'] == 'Delivered'): ?>
                         <span class="badge bg-success text-white">
                             <i class="fas fa-check-circle"></i> Livré
                         </span>
@@ -84,20 +84,20 @@
                 Actions
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<?= $delivery['delivery_uuid']; ?>">
-                <?php if ($delivery['delivery_status'] == 'en attente'): ?>
+                <?php if ($delivery['delivery_status'] == 'pending'): ?>
                     <li>
-                        <a class="dropdown-item text-warning" href="update_delivery_status.php?delivery_uuid=<?php echo htmlspecialchars($delivery['delivery_uuid']); ?>&delivery_status=en route">
+                        <a class="dropdown-item text-warning" href="update_delivery_status.php?delivery_uuid=<?php echo htmlspecialchars($delivery['delivery_uuid']); ?>&delivery_status=in_progress">
                             <i class="fas fa-truck"></i> En route
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item text-success" href="update_delivery_status.php?delivery_uuid=<?php echo htmlspecialchars($delivery['delivery_uuid']); ?>&delivery_status=livré">
+                        <a class="dropdown-item text-success" href="update_delivery_status.php?delivery_uuid=<?php echo htmlspecialchars($delivery['delivery_uuid']); ?>&delivery_status=Delivered">
                             <i class="fas fa-check-circle"></i> Livré
                         </a>
                     </li>
-                <?php elseif ($delivery['delivery_status'] == 'en route'): ?>
+                <?php elseif ($delivery['delivery_status'] == 'in_progress'): ?>
                     <li>
-                        <a class="dropdown-item text-success" href="update_delivery_status.php?delivery_uuid=<?php echo htmlspecialchars($delivery['delivery_uuid']); ?>&delivery_status=livré">
+                        <a class="dropdown-item text-success" href="update_delivery_status.php?delivery_uuid=<?php echo htmlspecialchars($delivery['delivery_uuid']); ?>&delivery_status=Delivered">
                             <i class="fas fa-check-circle"></i> Livré
                         </a>
                     </li>

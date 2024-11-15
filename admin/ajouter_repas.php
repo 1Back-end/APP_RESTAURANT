@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Fait le <span class="text-danger">*</span></label>
                         <input type="date" class="form-control shadow-none" id="date" name="date" value="<?= htmlspecialchars($date); ?>">
                         <?php if(isset($erreur_champ) && empty($_POST['date'])): ?>
                                 <small class="text-danger"><?= htmlspecialchars($erreur_champ) ?></small>

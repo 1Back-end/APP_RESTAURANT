@@ -69,7 +69,7 @@
 	
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="dashboard.php">
+			<a href="../index.php">
 				<h3 class="text-uppercase text-white">
 					QuickMeal
 				</h3>

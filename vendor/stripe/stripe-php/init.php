@@ -88,7 +88,7 @@ require __DIR__ . '/lib/StripeClient.php';
 
 // The beginning of the section generated from our OpenAPI spec
 require __DIR__ . '/lib/Account.php';
-require __DIR__ . '/lib/Accountlink_css.php';
+require __DIR__ . '/lib/AccountLink.php';
 require __DIR__ . '/lib/AccountSession.php';
 require __DIR__ . '/lib/ApplePayDomain.php';
 require __DIR__ . '/lib/Application.php';
@@ -141,7 +141,7 @@ require __DIR__ . '/lib/Events/V1BillingMeterNoMeterFoundEvent.php';
 require __DIR__ . '/lib/Exception/TemporarySessionExpiredException.php';
 require __DIR__ . '/lib/ExchangeRate.php';
 require __DIR__ . '/lib/File.php';
-require __DIR__ . '/lib/Filelink_css.php';
+require __DIR__ . '/lib/FileLink.php';
 require __DIR__ . '/lib/FinancialConnections/Account.php';
 require __DIR__ . '/lib/FinancialConnections/AccountOwner.php';
 require __DIR__ . '/lib/FinancialConnections/AccountOwnership.php';
@@ -164,10 +164,10 @@ require __DIR__ . '/lib/Issuing/PhysicalBundle.php';
 require __DIR__ . '/lib/Issuing/Token.php';
 require __DIR__ . '/lib/Issuing/Transaction.php';
 require __DIR__ . '/lib/LineItem.php';
-require __DIR__ . '/lib/Loginlink_css.php';
+require __DIR__ . '/lib/LoginLink.php';
 require __DIR__ . '/lib/Mandate.php';
 require __DIR__ . '/lib/PaymentIntent.php';
-require __DIR__ . '/lib/Paymentlink_css.php';
+require __DIR__ . '/lib/PaymentLink.php';
 require __DIR__ . '/lib/PaymentMethod.php';
 require __DIR__ . '/lib/PaymentMethodConfiguration.php';
 require __DIR__ . '/lib/PaymentMethodDomain.php';
@@ -332,6 +332,7 @@ require __DIR__ . '/lib/Service/V2/Billing/MeterEventService.php';
 require __DIR__ . '/lib/Service/V2/Billing/MeterEventSessionService.php';
 require __DIR__ . '/lib/Service/V2/Billing/MeterEventStreamService.php';
 require __DIR__ . '/lib/Service/V2/Core/CoreServiceFactory.php';
+require __DIR__ . '/lib/Service/V2/Core/EventDestinationService.php';
 require __DIR__ . '/lib/Service/V2/Core/EventService.php';
 require __DIR__ . '/lib/Service/V2/V2ServiceFactory.php';
 require __DIR__ . '/lib/Service/WebhookEndpointService.php';
@@ -380,6 +381,7 @@ require __DIR__ . '/lib/UsageRecordSummary.php';
 require __DIR__ . '/lib/V2/Billing/MeterEvent.php';
 require __DIR__ . '/lib/V2/Billing/MeterEventAdjustment.php';
 require __DIR__ . '/lib/V2/Billing/MeterEventSession.php';
+require __DIR__ . '/lib/V2/EventDestination.php';
 require __DIR__ . '/lib/WebhookEndpoint.php';
 
 // The end of the section generated from our OpenAPI spec

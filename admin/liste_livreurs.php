@@ -83,11 +83,11 @@ $orders = get_order_pending($connexion); // Appel de la fonction
                                     <?php if (!empty($livreur['photo'])): ?>
                                         <img src="../uploads/<?php echo htmlspecialchars($livreur['photo']); ?>" 
                                             alt="Photo de <?php echo htmlspecialchars($livreur['firstname'] . ' ' . $livreur['lastname']); ?>" 
-                                            class='rounded-circle me-2 img-thumbnail' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
+                                            class='rounded-circle me-2 img-thumbnail' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
                                     <?php else: ?>
-                                        <img src="https://i.pinimg.com/736x/77/44/9b/77449b6a5b56eafbfb2166b2b67516a8.jpg" 
+                                        <img src="https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg" 
                                             alt="Photo de <?php echo htmlspecialchars($livreur['firstname'] . ' ' . $livreur['lastname']); ?>" 
-                                            class='rounded-circle  me-2 img-thumbnail' width='40' height='40' style='object-fit: cover; width: 40px; height: 40px; max-width: 40px; max-height: 40px;'>
+                                            class='rounded-circle  me-2 img-thumbnail' width='50' height='50' style='object-fit: cover; width:50px; height: 50px; max-width: 50px; max-height: 50px;'>
                                     <?php endif; ?>
                                 </td>
 
@@ -96,7 +96,7 @@ $orders = get_order_pending($connexion); // Appel de la fonction
                                 <td><?php echo htmlspecialchars($livreur['cni_number']); ?></td>
                                 <td>
                                     <span class="badge <?php echo $livreur['available'] ? 'badge-success' : 'badge-danger'; ?>">
-                                        <?php echo $livreur['available'] ? 'Actif' : 'Inactif'; ?>
+                                        <?php echo $livreur['available'] ? 'Libre' : 'Occupé'; ?>
                                     </span>
                                 </td>
                                 <td><?php echo htmlspecialchars($livreur['availability_schedule']); ?></td>
@@ -111,28 +111,31 @@ $orders = get_order_pending($connexion); // Appel de la fonction
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton<?php echo $livreur['agent_uuid']; ?>">
                                         <li>
-                                                <a class="dropdown-item text-danger" href="#" 
-                                                data-toggle="modal" 
-                                                data-target="#modalSupprimerLivreur" 
-                                                data-meal-id="<?php echo $livreur['agent_uuid']; ?>">
-                                                    <i class="fa fa-trash-o"></i> Supprimer
-                                                </a>
-                                            </li>
-                                            <?php if ($livreur['available'] == 1): ?>
-                                                <a class="dropdown-item text-success" 
-                                                    href="#" 
-                                                    data-toggle="modal" 
-                                                    data-target="#assignDeliveryModal" 
-                                                    data-agent-uuid="<?php echo $livreur['agent_uuid']; ?>"> <!-- Vérifiez ici -->
-                                                        <i class="fas fa-truck"></i> Affecter à une livraison
-                                                    </a>
-                                            <?php endif; ?>
-                                            <?php if ($livreur['available'] == 0): ?>
-                                                <a class="dropdown-item text-success" 
-                                                   href="mark_available.php?id=<?php echo $livreur['agent_uuid']; ?>">
-                                                    <i class="fas fa-check-circle"></i> Marquer comme disponible
-                                                </a>
-                                            <?php endif; ?>
+                                            <a class="dropdown-item text-danger" href="#" 
+                                            data-toggle="modal" 
+                                            data-target="#modalSupprimerLivreur" 
+                                            data-agent-uuid="<?php echo $livreur['agent_uuid']; ?>">
+                                                <i class="fa fa-trash-o"></i> Supprimer
+                                            </a>
+                                        </li>
+
+                                        <?php if ($livreur['available'] == 1): ?>
+                                            <a class="dropdown-item text-success" 
+                                            href="#" 
+                                            data-toggle="modal" 
+                                            data-target="#assignDeliveryModal" 
+                                            data-agent-uuid="<?php echo $livreur['agent_uuid']; ?>"> <!-- Vérifiez ici -->
+                                                <i class="fas fa-truck"></i> Affecter à une livraison
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <?php if ($livreur['available'] == 0): ?>
+                                            <a class="dropdown-item text-success" 
+                                            href="mark_available.php?id=<?php echo $livreur['agent_uuid']; ?>">
+                                                <i class="fas fa-check-circle"></i> Marquer comme disponible
+                                            </a>
+                                        <?php endif; ?>
+
                                         </div>
                                     </div>
                                 </td>
@@ -181,85 +184,71 @@ $orders = get_order_pending($connexion); // Appel de la fonction
         </div>
     </div>
 </div>
-<!-- Boîte Modale -->
-<div class="modal fade" id="assignDeliveryModal" tabindex="-1" role="dialog" aria-labelledby="assignDeliveryModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="assignDeliveryModalLabel">Sélectionnez une commande</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="assignDeliveryForm" method="POST" action="assign_delivery.php">
-                    <!-- Champ caché pour agent_uuid -->
-                    <input type="hidden" name="agent_uuid" id="hidden_agent_uuid" value="">
-                    <div class="form-group">
-                        <label for="order_uuid">Choisissez une commande :</label>
-                        <select class="form-control select-custom shadow-none" name="order_uuid" id="order_uuid" required>
-                            <option value="" disabled selected>Sélectionnez une commande</option>
-                            <?php
-                                $i = 1; // Compteur pour le numéro auto-incrémenté
-                                foreach ($orders as $order) {
-                                    // Afficher les informations nécessaires dans l'option
-                                    echo '<option value="' . $order['order_uuid'] . '">' . 
-                                        $i . '. ' . $order['username'] . ' - ' . $order['order_date'] . ' - ' . 
-                                        $order['total_amount'] . ' FCFA</option>';
-                                    $i++; // Incrémenter le compteur
-                                }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm btn-xs shadow-none" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-customize text-white btn-sm btn-xs shadow-none">Assigner Livraison</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+
+<!-- Modal pour supprimer un livreur -->
+<div class="modal fade" id="modalSupprimerLivreur" tabindex="-1" aria-labelledby="modalSupprimerLivreurLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSupprimerLivreurLabel">Supprimer un livreur</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer ce livreur ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm btn-xs" data-bs-dismiss="modal">Annuler</button>
+        <form id="formDeleteLivreur" method="POST" action="deleteLivreur.php">
+          <input type="hidden" id="agent_uuid" name="agent_uuid" value="">
+          <button type="submit" class="btn btn-danger btn-sm btn-xs">Supprimer</button>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+
+
+<!-- Modal pour affecter un livreur à une livraison -->
+<div class="modal fade" id="assignDeliveryModal" tabindex="-1" aria-labelledby="assignDeliveryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="assignDeliveryModalLabel">Affecter à une livraison</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir affecter ce livreur à une livraison ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm btn-xs" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary btn-sm btn-xs">Affecter</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-    $(document).ready(function() {
-        // Script pour mettre à jour l'agent_uuid caché lorsque le modal s'ouvre
+    // Quand la modale de suppression s'ouvre
+        $('#modalSupprimerLivreur').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Bouton cliqué
+            var agentUuid = button.data('agent-uuid'); // Récupérer l'UUID de l'agent depuis le bouton
+
+            // Placer l'UUID dans le champ caché de la modale
+            var modal = $(this);
+            modal.find('#agent_uuid').val(agentUuid); // Mettre à jour l'input caché avec l'UUID
+        });
+
+        // Quand la modale d'affectation s'ouvre
         $('#assignDeliveryModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); 
-            var agentUuid = button.data('agent-uuid'); // Assurez-vous que cet attribut est correct
-            $('#hidden_agent_uuid').val(agentUuid); // Mettre à jour le champ caché
+            var button = $(event.relatedTarget); // Bouton cliqué
+            var agentUuid = button.data('agent-uuid'); // Récupérer l'UUID de l'agent depuis le bouton
+
+            // Vous pouvez également utiliser agentUuid pour effectuer d'autres actions, si nécessaire
+            console.log(agentUuid); // Vérifier que l'UUID est bien récupéré
         });
-    });
+
 </script>
-<script>
-    // Script pour mettre à jour l'agent_uuid caché lorsque le modal s'ouvre
-    $('#assignDeliveryModal').on('show.bs.modal', function (event) {
-        // Récupérer l'élément qui a déclenché le modal (ex: un bouton)
-        var button = $(event.relatedTarget); 
-        var agentUuid = button.data('agent-uuid'); // Assurez-vous d'avoir cet attribut dans votre bouton
-
-        // Mettre à jour la valeur du champ caché
-        $('#hidden_agent_uuid').val(agentUuid);
-    });
-</script>
-
-
-<script>
-    $(document).ready(function() {
-        // Événement d'ouverture de la modale
-        $('#modalSupprimerLivreur').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget); // Bouton qui a déclenché la modale
-            var mealId = button.data('meal-id'); // Récupérer l'ID du repas
-
-            // Mettre à jour le lien de confirmation de suppression
-            var deleteUrl = 'process_delete_delivery.php?id=' + mealId;
-            $('#confirmDelete').attr('href', deleteUrl);
-        });
-    });
-</script>
-
-
-
 
 
 

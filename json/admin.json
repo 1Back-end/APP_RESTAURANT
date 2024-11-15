@@ -12,6 +12,12 @@
   
   {
     "name": "John Deo",
-    "email": "jeandupont@gmail.com",
+    "email": "jeandupont@gmail.com,dev@gmail.com,expert@gmail.com,john@gmail.com",
     "password": "securePassword123"
   }
+  
+  {
+    "name": "DevFullstack",
+    "email": "devfullstack@gmail.com",
+    "password": "securePassword123"
+  }laurentExpert@gmail.com

@@ -24,7 +24,7 @@
         
     <div class="col-lg-3 col-md-12 col-sm-12 mb-3">
     <div class="card-box p-3 text-center h-100">
-        <h6 class="mb-3 font-16 text-uppercase">Total des repas</h6>
+        <h6 class="mb-3 font-14 text-uppercase">Total des repas</h6>
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
                 <span class="icon-pending text-white font-weight-bold">
@@ -135,7 +135,7 @@
                 </span>
             </div>
             <h6 class="fs-3" id="customerCount">
-                0
+                <?php echo $total_sum_order;?> FCFA
             </h6>
         </div>
     </div>

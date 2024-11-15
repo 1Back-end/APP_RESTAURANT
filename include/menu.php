@@ -96,16 +96,6 @@
 						<span class="micon fas fa-tachometer-alt"></span><span class="mtext">Tableau de bord</span>
 					</a>
 				</li>
-
-				<!-- <li class="dropdown">
-					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-receipt"></span><span class="mtext">Commandes</span>
-					</a>
-					<ul class="submenu">
-						<li><a href="../admin/toutes_commandes.php">Toutes les commandes</a></li>
-					</ul>
-				</li> -->
-
 				<li>
 					<a href="../admin/toutes_commandes.php" class="dropdown-toggle no-arrow">
 						<span class="micon fas fa-shopping-bag"></span><span class="mtext">Commandes</span>
@@ -126,24 +116,12 @@
 						<span class="micon fas fa-credit-card"></span><span class="mtext">Paiements</span>
 					</a>
 				</li>
-<!-- 
-				<li class="dropdown">
-					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-receipt"></span><span class="mtext">Reservations</span>
-					</a>
-					<ul class="submenu">
-						<li><a href="../admin/toutes_commandes.php">Toutes les commandes</a></li>
-					</ul>
-				</li> -->
 
-				<!-- <li class="dropdown">
-					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-truck"></span><span class="mtext">Livraisons</span>
+				<li>
+					<a href="../admin/liste_users.php" class="dropdown-toggle no-arrow">
+						<span class="micon fas fa-users"></span><span class="mtext">Utilisateurs</span>
 					</a>
-					<ul class="submenu">
-						<li><a href="../admin/livraisons_disponibles.php">Livraisons disponibles</a></li>
-					</ul>
-				</li> -->
+				</li>
 
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
@@ -166,25 +144,15 @@
 					</ul>
 				</li>
 
-				<!-- <li class="dropdown">
-					<a href="javascript:;" class="dropdown-toggle">
-						<span class="micon fas fa-credit-card"></span><span class="mtext">Paiements</span>
-					</a>
-					<ul class="submenu">
-						<li><a href="../admin/historique_paiements.php">Historique des paiements</a></li>
-						<li><a href="../admin/statut_paiements.php">Statut des paiements</a></li>
-						<li><a href="../admin/methodes_paiement.php">Méthodes de paiement</a></li>
-					</ul>
-				</li> -->
-
+			
 				<li class="dropdown">
 					<a href="javascript:;" class="dropdown-toggle">
 						<span class="micon fas fa-cog"></span><span class="mtext">Paramètres</span>
 					</a>
 					<ul class="submenu">
 						<li><a href="../admin/mon_compte.php">Mon compte</a></li>
-						<li><a href="../admin/parametres_site.php">Paramètres du site</a></li>
-						<li><a href="../admin/notificactions.php">Notifications</a></li>
+						<!-- <li><a href="../admin/liste_users.php">Mes utilisateurs</a></li>
+						<li><a href="../admin/notificactions.php">Notifications</a></li> -->
 					</ul>
 				</li>
 				

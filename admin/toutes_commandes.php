@@ -1,15 +1,20 @@
 <?php include_once('../include/menu.php');?>
 <?php include_once('../fonction/fonction.php');?>
+<style>
+    input[type="datetime-local"]{
+    font-family: "Rubik", system-ui;
+    font-size: 12px;
+}
+</style>
 
 <div class="main-container mt-3 pb-5">
 
 <div class="col-md-12 col-sm-12 mb-3">
-    <div class="card-box text-center text-uppercase p-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="mr-auto">
-                <h3 class="text-uppercase">Liste des commandes</h3>
+    <div class="card-box text-center text-uppercase p-2 d-flex flex-column flex-md-row align-items-center justify-content-between">
+            <div class="mr-auto mb-3">
+                <h6 class="text-uppercase">Liste des commandes</h6>
             </div>
-            <div class="ml-auto">
+            <div class="ml-auto mb-3">
                 <div class="form-inline">
                     <input type="text" class="form-control shadow-none mr-2" id="searchLivreur" placeholder="Rechercher une commande...">
                     <button type="button" class="btn btn-customize text-white shadow-none" onclick="rechercherLivreur()">
@@ -18,7 +23,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 <div class="col-md-12 col-sm-12 mb-3">
 <?php
@@ -60,6 +64,7 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
 
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box p-3">
+        <div class="table-responsive">
             <?php
             // Vérifier si des commandes existent
             if (!empty($orders)): ?>
@@ -67,6 +72,7 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>N° Commande</th>
                             <th>Client</th>
                             <th>Date de Commande</th>
                             <th>Montant Total</th>
@@ -78,22 +84,23 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                         <?php foreach ($orders as $index => $order): ?>
                             <tr>
                                 <td><?php echo ($offset + $index + 1); ?></td>
+                                <td><?= htmlspecialchars($order['num_order']); ?></td>
                                 <td><?= htmlspecialchars($order['username']); ?></td>
                                 <td><?= date('d/m/Y H:i:s',strtotime($order['order_date'])); ?></td>
                                 <td><?= htmlspecialchars($order['total_amount']); ?> FCFA</td>
                                 <td>
                                             <?php if ($order['status'] === 'pending'): ?>
-                                                <span class="badge badge-warning text-white">En attente</span>
+                                                <span class="badge badge-warning text-white disabled">En attente</span>
                                             <?php elseif ($order['status'] === 'Canceled'): ?>
-                                                <span class="badge badge-danger">Annulé</span>
+                                                <span class="badge badge-danger disabled">Annulée</span>
                                             <?php elseif ($order['status'] === 'Delivered'): ?>
-                                                <span class="badge badge-success">Livré</span>
+                                                <span class="badge badge-success disabled">Livrée</span>
                                             <?php elseif ($order['status'] === 'in_progress'): ?> <!-- Modifié le statut "en cours" -->
-                                                <span class="badge badge-info">En cours</span>
+                                                <span class="badge badge-info disabled">En cours</span>
                                             <?php elseif ($order['status'] === 'paid'): ?> <!-- Ajout du statut "Payé" -->
-                                                <span class="badge badge-primary">Payé</span>
+                                                <span class="badge badge-primary disabled">Payé</span>
                                             <?php else: ?>
-                                                <span class="badge badge-light">Inconnu</span>
+                                                <span class="badge badge-light disabled">Inconnu</span>
                                             <?php endif; ?>
                                         </td>
                                         <td>
@@ -105,9 +112,21 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                                                 <a class="dropdown-item text-info" href="details_commande.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
                                                     <i class="fas fa-eye"></i> Détails
                                                 </a>
-                                                <a class="dropdown-item text-warning" href="cancel_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
-                                                    <i class="fas fa-ban"></i> Annuler
-                                                </a>
+                                                <?php if ($order["status"] === 'Canceled'): ?>
+                                                    <a class="dropdown-item text-secondary disabled" href="cancel_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
+                                                        <i class="fas fa-check-circle"></i> Commande annulée
+                                                    </a>
+                                                <?php elseif ($order["status"] === 'paid'): ?>
+                                                    <a class="dropdown-item text-secondary disabled" href="cancel_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
+                                                        <i class="fas fa-check-circle"></i> Commande payée
+                                                    </a>
+                                                <?php else: ?>
+                                                    <a class="dropdown-item text-warning" href="cancel_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>">
+                                                        <i class="fas fa-ban"></i> Annuler
+                                                    </a>
+                                                <?php endif; ?>
+
+
                                                 <a class="dropdown-item text-danger" href="delete_order.php?order_id=<?= htmlspecialchars($order['order_uuid']); ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');">
                                                     <i class="fas fa-trash-alt"></i> Supprimer
                                                 </a>
@@ -157,6 +176,7 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
         </div>
     </div>
 </div>
+</div>
 <div class="modal fade" id="assignDeliveryModal" tabindex="-1" role="dialog" aria-labelledby="assignDeliveryModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -181,7 +201,8 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                     </div>
                     <div class="form-group">
                         <label for="">Entrer la date de livraison</label>
-                        <input type="date" class="form-control shadow-none">
+                        <input type="datetime-local" name="delivery_time" class="form-control shadow-none">
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
