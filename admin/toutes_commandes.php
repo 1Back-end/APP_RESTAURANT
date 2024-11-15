@@ -12,7 +12,7 @@
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box text-center text-uppercase p-2 d-flex flex-column flex-md-row align-items-center justify-content-between">
             <div class="mr-auto mb-3">
-                <h6 class="text-uppercase">Liste des commandes</h6>
+                <h6 class="text-uppercase">Liste des commandes (<?php echo $total_orders;?>)</h6>
             </div>
             <div class="ml-auto mb-3">
                 <div class="form-inline">
@@ -199,11 +199,11 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="">Entrer la date de livraison</label>
-                        <input type="datetime-local" name="delivery_time" class="form-control shadow-none">
+                        <input type="date" name="delivery_time" class="form-control shadow-none">
                         
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm btn-xs" data-dismiss="modal">Annuler</button>

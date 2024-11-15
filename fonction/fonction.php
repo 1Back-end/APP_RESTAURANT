@@ -137,6 +137,7 @@ function get_count_delivery($connexion){
 
 $total_delivery = get_count_delivery($connexion);
 
+
 function get_count_deliveries($connexion){
     $query = "SELECT COUNT(*) as total FROM deliveries WHERE is_deleted = 0";
     $stmt = $connexion->prepare($query);
@@ -246,6 +247,8 @@ function getDeliveries($connexion) {
 
 // Appel de la fonction pour récupérer les livraisons
 $deliveries = getDeliveries($connexion);
+
+
 
 function getDeliveryAgents($connexion) {
     $query = "SELECT agent_uuid, firstname, 
@@ -372,7 +375,7 @@ function getAllPayments($page = 1, $limit = 10) {
 
     // Requête SQL pour récupérer tous les paiements, commandes et utilisateurs associés
     $query = "
-        SELECT p.payment_uuid, p.amount, p.payment_method, p.payment_status, p.payment_date, o.num_order, o.order_uuid, o.order_date, u.username
+        SELECT p.payment_uuid, p.amount, p.payment_method, p.payment_status, p.payment_date, o.num_order, o.order_uuid, o.order_date, u.username,u.photo
         FROM payments p
         INNER JOIN orders o ON p.order_uuid = o.order_uuid
         INNER JOIN users u ON p.added_by = u.user_uuid

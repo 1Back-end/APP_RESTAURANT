@@ -78,18 +78,32 @@ function get_order_details($connexion, $order_id) {
                         <td><?= htmlspecialchars($detail['quantity'] * $detail['price']); ?> FCFA</td>
                         <td><?= date('d-m-Y H:i:s',strtotime($detail['order_date'])); ?></td>
                         <td>
-                            <?php if ($detail['status'] === 'pending'): ?>
-                                <span class="badge badge-warning text-white">En Attente</span>
-                            <?php elseif ($detail['status'] === 'Canceled'): ?>
-                                <span class="badge badge-danger">Annulé</span>
-                            <?php elseif ($detail['status'] === 'Delivered'): ?>
-                                <span class="badge badge-success">Livré</span>
-                            <?php elseif ($detail['status'] === 'in_progress'): ?> <!-- Ajout du statut "En cours" -->
-                                <span class="badge badge-info">En Cours</span>
-                            <?php else: ?>
-                                <span class="badge badge-light">Inconnu</span>
-                            <?php endif; ?>
-                        </td>
+                        <?php if ($detail['status'] === 'pending'): ?>
+                            <span class="badge badge-warning text-white disabled">
+                                <i class="fas fa-clock"></i> En Attente
+                            </span>
+                        <?php elseif ($detail['status'] === 'Canceled'): ?>
+                            <span class="badge badge-danger disabled">
+                                <i class="fas fa-times-circle"></i> Annulé
+                            </span>
+                        <?php elseif ($detail['status'] === 'Delivered'): ?>
+                            <span class="badge badge-success disabled">
+                                <i class="fas fa-check-circle"></i> Livré
+                            </span>
+                        <?php elseif ($detail['status'] === 'paid'): ?>
+                            <span class="badge badge-success disabled">
+                                <i class="fas fa-credit-card"></i> Payé
+                            </span>
+                        <?php elseif ($detail['status'] === 'in_progress'): ?> <!-- Ajout du statut "En cours" -->
+                            <span class="badge badge-info disabled">
+                                <i class="fas fa-spinner"></i> En Cours
+                            </span>
+                        <?php else: ?>
+                            <span class="badge badge-light disabled">
+                                <i class="fas fa-question-circle"></i> Inconnu
+                            </span>
+                        <?php endif; ?>
+                    </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

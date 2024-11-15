@@ -31,12 +31,12 @@ $totalPages = ceil($totalPayments / $limit);
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Numéro Commande</th>
+                        <th>N° Commande</th>
+                        <th>Client</th>
                         <th>Montant</th>
                         <th>Méthode</th>
                         <th>Statut</th>
                         <th>Date Paiement</th>
-                        <th>Client</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +45,18 @@ $totalPages = ceil($totalPayments / $limit);
                             <tr>
                                 <td><?= $index + 1 ?></td>
                                 <td><?= htmlspecialchars($payment['num_order']) ?></td>
+                                <td class="text-nowrap" style="max-width: 150px; overflow: hidden;">
+                                <div class="d-flex align-items-center">
+                                    <?php if (!empty($payment['photo'])) : ?>
+                                    <img src="../uploads/<?= $payment['photo'] ?>" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                                    <?php else : ?>
+                                                <img src="https://media.istockphoto.com/id/1059836202/photo/male-chef-laughing-and-chatting-with-hand-on-shoulder-of-male-customer.jpg?s=612x612&w=0&k=20&c=9SgssX6AVTfEqYL7H4IxI3U1oDwwSznjpaM9dmCvFC0=" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                                    <?php endif; ?>
+                                    <div class="ms-3">
+                                    <span class="mx-2 text-truncate"><?= htmlspecialchars($payment['username']) ?></span>
+                                </div>
+                                </div>
+                            </td>
                                 <td><?= number_format(round($payment['amount'], -2), 0) ?> FCFA</td>
 
                                 <td><?= htmlspecialchars($payment['payment_method']) ?></td>
@@ -60,7 +72,6 @@ $totalPages = ceil($totalPayments / $limit);
                                     ?>
                                 </td>
                                 <td><?= date('d-m-Y H:i', strtotime($payment['payment_date'])) ?></td>
-                                <td><?= htmlspecialchars($payment['username']) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>

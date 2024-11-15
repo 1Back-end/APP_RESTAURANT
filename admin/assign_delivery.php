@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once("../database/connexion.php"); // Assurez-vous d'utiliser une connexion PDO
 include_once("../fonction/fonction.php");
 
@@ -11,9 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les valeurs du formulaire
     $order_uuid = $_POST['order_uuid'] ?? null; // ID de la commande sélectionnée
     $agent_uuid = $_POST['agent_uuid'] ?? null; // ID de l'agent sélectionné
-    $delivery_time = $_POST['delivery_time'] ?? null; //
-
-    if ($order_uuid && $agent_uuid && $delivery_time) {
+    $added_by = $_SESSION['admin_uuid'] ?? null; //
+    if ($order_uuid && $agent_uuid && $added_by) {
         try {
             // Commencer une transaction
             $connexion->beginTransaction();
@@ -31,14 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Insérer une nouvelle entrée dans la table deliveries
             $stmt = $connexion->prepare("
-                INSERT INTO deliveries (delivery_uuid, order_uuid, agent_uuid, delivery_status,delivery_time) 
-                VALUES (:delivery_uuid, :order_uuid, :agent_uuid,:delivery_time, 'en attente')
+                INSERT INTO deliveries (delivery_uuid, order_uuid, agent_uuid, delivery_status,added_by) 
+                VALUES (:delivery_uuid, :order_uuid, :agent_uuid, 'pending', :added_by)
             ");
             $stmt->execute([
                 ':delivery_uuid' => $delivery_uuid,
                 ':order_uuid' => $order_uuid,
                 ':agent_uuid' => $agent_uuid,
-                ':delivery_time' => $delivery_time
+                ':added_by' => $added_by,
             ]);
 
             // Mettre à jour la disponibilité de l'agent de livraison
