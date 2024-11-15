@@ -38,11 +38,11 @@ function get_order_details($connexion, $order_id) {
 
 <div class="main-container mt-5 pb-5">
     <div class="card-box p-3">
-        <div class="table-responsive">
     <?php if (!empty($orderDetails)): ?>
         <div class="card-header mb-3 w-100">
             <h6 class="font-14 text-uppercase">Détails de la commande N° :   <?= htmlspecialchars($orderDetails[0]['num_order']); ?></h6>
         </div>
+        <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -108,7 +108,9 @@ function get_order_details($connexion, $order_id) {
                 <?php endforeach; ?>
             </tbody>
         </table>
-        
+        </div>
+
+
         <div class="card-footer">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="mr-auto">
@@ -119,6 +121,8 @@ function get_order_details($connexion, $order_id) {
                 </div>
             </div>
         </div>
+        
+        
     <?php else: ?>
         <div class="alert alert-warning" role="alert">Aucun détail de commande trouvé.</div>
     <?php endif; ?>

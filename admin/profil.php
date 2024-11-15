@@ -1,5 +1,15 @@
 <?php include_once('../include/menu.php');?>
 <?php include_once('../fonction/fonction.php');?>
+<style>
+    
+  .img-account-profile {
+    width: 150px; /* Taille de l'image */
+    height: 150px; /* Taille de l'image */
+    border-radius: 50%; /* Pour arrondir l'image */
+    object-fit: cover; /* Pour que l'image conserve ses proportions et remplisse le conteneur */
+    cursor: pointer; /* Curseur pointer pour indiquer que l'image est cliquable */
+}
+</style>
 <div class="main-container mt-3 pb-5">
     <div class="col-md-10 col-sm-12 mb-3">
         <div class="card-box p-3">
@@ -10,48 +20,83 @@
     // Supposons que $connexion est votre connexion PDO et que $_SESSION['admin_uuid'] est défini
     $admin_info = get_info_users($connexion, $_SESSION['admin_uuid']);
     ?>
-    <div class="col-md-12 col-sm-12 mb-3">
-        <form action="" method="post">
-            <div class="row">
-                <div class="col-md-4 col-sm-12 mb-3">
-                    <div class="card-box p-3 text-center rounded-2">
+    <?php include_once('process_update_profil.php'); ?>
+    <div class="col-md-10 col-sm-12 mb-3">
+        <!-- Affichage des messages d'erreur ou de succès -->
+        <?php if ($erreur != ""): ?>
+            <div class="alert alert-danger">
+                <?php echo htmlspecialchars($erreur); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($success != ""): ?>
+            <div class="alert alert-success">
+                <?php echo htmlspecialchars($success); ?>
+            </div>
+        <?php endif; ?>
+
+    </div>
+   <div class="col-md-12 col-sm-12 mb-3">
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 mb-3">
+                <div class="card-box p-3 text-center rounded-2">
+                    <!-- Affichage de l'image actuelle -->
                     <?php if (!empty($admin_info['photo'])): ?>
-                        <img src="../uploads/<?php echo htmlspecialchars($admin_info['photo']); ?>" 
+                        <img id="profile-img" src="../uploads/<?php echo htmlspecialchars($admin_info['photo']); ?>" 
                             alt="Photo de <?php echo htmlspecialchars($admin_info['username']); ?>" 
-                            class="rounded-circle img-thumbnail" style="object-fit: cover; width: 200px; height: 250px;">
+                            class="rounded-circle img-thumbnail img-account-profile">
                     <?php else: ?>
-                        <img src="https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg" 
+                        <img id="profile-img" src="https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg" 
                             alt="Photo de <?php echo htmlspecialchars($admin_info['username']); ?>" 
-                            class="rounded-circle img-thumbnail" style="object-fit: cover; width: 200px; height: auto;">
+                            class="rounded-circle img-thumbnail img-account-profile">
                     <?php endif; ?>
-                    <button class="btn btn-customize btn-sm btn-xs text-white py-2 mt-2">Télécharger une nouvelle photo</button>
-                    </div>
+
+                    <!-- Champ de saisie pour télécharger une nouvelle photo -->
+                    <input type="file" class="form-control mt-2 text-center" name="new_photo" accept="image/*" onchange="previewImage(event)" id="file-input" style="display: block;">
                 </div>
-                <div class="col-md-6">
-                   <div class="card-box p-3">
-                   <div class="col-md-12 col-sm-12 mb-3">
+            </div>
+            <div class="col-md-6">
+                <div class="card-box p-3">
+                    <!-- Formulaire pour les autres informations de l'utilisateur -->
+                    <div class="col-md-12 col-sm-12 mb-3">
                         <label for="nom">Nom <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control shadow-none" id="nom" value="<?php echo htmlspecialchars($admin_info['username']); ?>" name="nom">
+                        <input type="text" class="form-control shadow-none" id="nom" value="<?php echo htmlspecialchars($admin_info['username']); ?>" name="username">
                     </div>
-                    <input type="hidden" class="form-control shadow-none" id="user_uuid" value="<?php echo htmlspecialchars($admin_info['admin_uuid']); ?>" name="user_uuid">
+                    <input type="hidden" class="form-control shadow-none" id="admin_uuid" value="<?php echo htmlspecialchars($admin_info['admin_uuid']); ?>" name="admin_uuid">
                     <div class="col-md-12 col-sm-12 mb-3">
                         <label for="email">Email <span class="text-danger">*</span></label>
                         <input type="email" class="form-control shadow-none" id="email" name="email" value="<?php echo htmlspecialchars($admin_info['email']); ?>">
                     </div>
                     <div class="col-md-12 col-sm-12 mb-3">
                         <label for="adresse">Adresse <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control shadow-none" id="adresse" name="adresse" value="<?php echo htmlspecialchars($admin_info['address']); ?>">
+                        <input type="text" class="form-control shadow-none" id="address" name="address" value="<?php echo htmlspecialchars($admin_info['address']); ?>">
                     </div>
                     <div class="col-md-12 col-sm-12 mb-3">
-                        <label for="adresse">Numéro de téléphone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control shadow-none" id="adresse" name="adresse" value="<?php echo htmlspecialchars($admin_info['phone_number']); ?>">
+                        <label for="telephone">Numéro de téléphone <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control shadow-none" id="phone_number" name="phone_number" value="<?php echo htmlspecialchars($admin_info['phone_number']); ?>">
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-customize text-white">Enregistrer les modifications</button>
+                        <button type="submit" name="submit" class="btn btn-customize btn-responsive text-white">Enregistrer les modifications</button>
                     </div>
-                   </div>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
+
+<script>
+    // Fonction JavaScript pour afficher l'image sélectionnée
+    function previewImage(event) {
+        // Récupérer le fichier sélectionné
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Afficher l'image dans le tag img une fois qu'elle est chargée
+                document.getElementById('profile-img').src = e.target.result;
+            };
+            reader.readAsDataURL(file);  // Lire l'image en tant que Data URL (base64)
+        }
+    }
+</script>
