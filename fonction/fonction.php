@@ -181,6 +181,111 @@ function get_count_customer($connexion){
 $total_customer = get_count_customer($connexion);
 
 
+function get_total_amount_today($connexion) {
+    // Préparer la requête SQL pour obtenir la somme des montants des commandes d'aujourd'hui
+    $sql = "SELECT SUM(total_amount) AS total_amount_today FROM orders WHERE DATE(order_date) = CURDATE() AND is_deleted = 0";
+    
+    // Exécuter la requête
+    $stmt = $connexion->query($sql);
+    
+    // Récupérer le résultat
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Si aucun montant n'a été trouvé, définir le montant total à 0
+    $total_amount_today = $result['total_amount_today'] ?? 0;
+    
+    // Retourner le montant total des commandes d'aujourd'hui ou 0 si aucune commande
+    return $total_amount_today;
+}
+
+// Appeler la fonction et obtenir le montant total
+$total_amount_today = get_total_amount_today($connexion);
+
+
+
+
+// Appeler la fonction et obtenir le montant total
+$total_amount_today = get_total_amount_today($connexion);
+
+function get_count_reservation_today($connexion) {
+    // Préparer la requête SQL
+    $sql = "SELECT COUNT(*) AS total_reservations_today FROM reservations WHERE DATE(reservation_date) = CURDATE() AND is_deleted = 0";
+    
+    // Exécuter la requête
+    $stmt = $connexion->query($sql);
+    
+    // Récupérer le résultat
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Retourner le total des réservations
+    return $result['total_reservations_today'];
+}
+$total_reservations_today = get_count_reservation_today($connexion);
+
+
+function get_deliveries_delivered_today($connexion) {
+    // Préparer la requête SQL pour obtenir les livraisons dont le statut est 'Delivered' et qui sont effectuées aujourd'hui
+    $sql = "SELECT COUNT(*) AS total_deliveries_delivered_today 
+            FROM deliveries 
+            WHERE delivery_status = 'Delivered' 
+            AND is_deleted = 0 
+            AND DATE(delivery_time) = CURDATE()";  // Filtre par date d'aujourd'hui
+    
+    // Exécuter la requête
+    $stmt = $connexion->query($sql);
+    
+    // Récupérer le résultat sous forme de tableau associatif
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Retourner le total des livraisons livrées aujourd'hui
+    return $result['total_deliveries_delivered_today'];
+}
+
+// Exemple d'utilisation de la fonction
+$deliveries_delivered_today = get_deliveries_delivered_today($connexion);
+// Fonction pour récupérer les commandes par statut
+function get_order_counts_by_status($connexion) {
+    $sql = "SELECT status, COUNT(*) AS count FROM orders WHERE is_deleted = 0 GROUP BY status";
+    $stmt = $connexion->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$order_counts = get_order_counts_by_status($connexion);
+
+// Créez un tableau associatif pour traduire les statuts en français
+$status_translation = [
+    'pending' => 'En attente',
+    'Canceled' => 'Annulée',
+    'Delivered' => 'Livrée',
+    'in_progress' => 'En cours',
+    'paid' => 'Payée'
+];
+
+// Transformation des clés de statut en français
+$translated_statuses = [];
+foreach ($order_counts as $order) {
+    $translated_statuses[] = $status_translation[$order['status']] ?? $order['status'];
+}
+
+// Définition des couleurs en fonction du statut
+$status_colors = [
+    'En attente' => '#ffc107',  // Couleur pour "En attente"
+    'Annulée' => '#dc3545',     // Couleur pour "Annulée"
+    'Livrée' => '#28a745',      // Couleur pour "Livrée" (ajoutée une couleur par défaut)
+    'En cours' => '#1F4283',    // Couleur pour "En cours"
+    'Payée' => '#198754'       // Couleur pour "Payée"
+];
+
+$data_counts = array_column($order_counts, 'count');
+$background_colors = array_map(function($status) use ($status_colors) {
+    return $status_colors[$status] ?? '#000000'; // Valeur par défaut si non trouvé
+}, $translated_statuses);
+
+
+
+
+
+
 function get_orders_with_usernames($connexion, $offset, $limit) {
     // Préparer la requête pour récupérer toutes les commandes avec les noms d'utilisateur
     $stmt = $connexion->prepare("
@@ -401,6 +506,7 @@ function getTotalPayments() {
     $stmt = $connexion->query($query);
     return $stmt->fetchColumn();
 }
+
 
 
 function generateUUID() {

@@ -83,15 +83,15 @@
             </div>
             <div class="mb-3">
                         <label for="photo" class="form-label">Photo (JPEG/PNG, max 5MB)</label>
-                        <input type="file" class="form-control shadow-none" name="photo">
+                        <input type="file" class="form-control shadow-none" name="photo" accept="image/*">
                 
             </div>
             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
-                <button type="submit" name="submit" class="btn btn-customize text-white shadow-none text-uppercase">
+                <button type="submit" name="submit" class="btn btn-customize text-white shadow-none text-uppercase mb-3 btn-responsive">
                     <i class="fas fa-plus"></i>
                     Ajouter
                 </button>
-                <a href="liste_livreurs.php" class="btn btn-outline-secondary shadow-none text-uppercase">
+                <a href="liste_livreurs.php" class="btn btn-secondary shadow-none text-uppercase mb-3 btn-responsive">
                     <i class="fas fa-backward"></i>
                     Retour
                 </a>

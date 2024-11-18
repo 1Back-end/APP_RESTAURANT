@@ -5,12 +5,12 @@
 
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box text-center text-uppercase p-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="mr-auto">
+        <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between">
+            <div class="mr-auto mb-3 mb-sm-0">
                 <h5 class="text-uppercase">Liste des Livraisons (<?php echo $total_deliveries;?>)</h5>
             </div>
-            <div class="ml-auto">
-                <div class="form-inline">
+            <div class="ml-auto d-flex flex-column flex-sm-row align-items-center">
+                <div class="form-inline mb-3 mb-sm-0">
                     <input type="text" class="form-control shadow-none mr-2" id="searchLivreur" placeholder="Rechercher un livraison...">
                     <button type="button" class="btn btn-customize text-white shadow-none" onclick="rechercherLivreur()">
                         Rechercher
@@ -61,7 +61,18 @@
                                 <td><?php echo date('d-m-Y H:i:s', strtotime($delivery['order_date'])); ?></td>
                                 <td><?php echo date('d-m-Y H:i:s', strtotime($delivery['delivery_time'])); ?></td>
                                 <td><?php echo htmlspecialchars($delivery['total_amount']); ?> FCFA</td>
-                                <td><?php echo htmlspecialchars($delivery['firstname'] . ' ' . $delivery['lastname']); ?></td>
+                                <td class="text-nowrap" style="max-width: 150px; overflow: hidden;">
+                                <div class="d-flex align-items-center">
+                                    <?php if (!empty($delivery['photo'])) : ?>
+                                    <img src="../uploads/<?= $delivery['photo'] ?>" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                                    <?php else : ?>
+                                        <img src="https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                                    <?php endif; ?>
+                                    <div class="ms-3">
+                                    <span class="mx-2 text-truncate"><?php echo htmlspecialchars($delivery['firstname'] . ' ' . $delivery['lastname']); ?></span>
+                                </div>
+                                </div>
+                            </td>
                                 <td>
                                     <?php if ($delivery['delivery_status'] == 'pending'): ?>
                                         <span class="badge bg-warning text-white">

@@ -5,7 +5,7 @@
     <div class="col-md-12 col-sm-12 mb-3">
         <div class="card-box p-3 text-center">
             <div class="text-center">
-                <h6 class="text-uppercase font-18">Liste des paiements des  commandes </h6>
+                <h6 class="text-uppercase font-16">Liste des paiements des  commandes </h6>
             </div>
         </div>
     
@@ -52,7 +52,7 @@ $totalPages = ceil($totalPayments / $limit);
                                     <?php if (!empty($payment['photo'])) : ?>
                                     <img src="../uploads/<?= $payment['photo'] ?>" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
                                     <?php else : ?>
-                                                <img src="https://media.istockphoto.com/id/1059836202/photo/male-chef-laughing-and-chatting-with-hand-on-shoulder-of-male-customer.jpg?s=612x612&w=0&k=20&c=9SgssX6AVTfEqYL7H4IxI3U1oDwwSznjpaM9dmCvFC0=" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                                        <img src="https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
                                     <?php endif; ?>
                                     <div class="ms-3">
                                     <span class="mx-2 text-truncate"><?= htmlspecialchars($payment['username']) ?></span>
@@ -109,3 +109,4 @@ $totalPages = ceil($totalPayments / $limit);
         </ul>
     </nav>
 </div>
+

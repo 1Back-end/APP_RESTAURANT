@@ -24,8 +24,8 @@ try {
 
     // Enregistrement du paiement dans la base de données
     $stmt = $connexion->prepare("
-        INSERT INTO payments (payment_uuid, order_uuid, amount, payment_method, payment_status, added_by)
-        VALUES (:payment_uuid, :order_uuid, :amount, 'carte', 'payé', :added_by,num_payments)
+        INSERT INTO payments (payment_uuid, order_uuid, amount, payment_method, payment_status, added_by,num_payments)
+        VALUES (:payment_uuid, :order_uuid, :amount, 'carte', 'payé', :added_by,:num_payments)
     ");
     $stmt->execute([
         'payment_uuid' => generateUUID(),

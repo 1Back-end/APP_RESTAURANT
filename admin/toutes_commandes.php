@@ -1,22 +1,17 @@
 <?php include_once('../include/menu.php');?>
 <?php include_once('../fonction/fonction.php');?>
-<style>
-    input[type="datetime-local"]{
-    font-family: "Rubik", system-ui;
-    font-size: 12px;
-}
-</style>
+
 
 <div class="main-container mt-3 pb-5">
 
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box text-center text-uppercase p-3">
-    <div class="d-flex align-items-center justify-content-between">
-            <div class="mr-auto">
-                <h5 class="text-uppercase">Liste des commandes (<?php echo $total_orders;?>)</h5>
+        <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between">
+            <div class="mr-auto mb-3 mb-sm-0">
+                <h5 class="text-uppercase">Liste des commandes (<?php echo $total_orders; ?>)</h5>
             </div>
-            <div class="ml-auto">
-                <div class="form-inline">
+            <div class="ml-auto d-flex flex-column flex-sm-row align-items-center">
+                <div class="form-inline mb-3 mb-sm-0">
                     <input type="text" class="form-control shadow-none mr-2" id="searchLivreur" placeholder="Rechercher une commande...">
                     <button type="button" class="btn btn-customize text-white shadow-none" onclick="rechercherLivreur()">
                         Rechercher
@@ -24,8 +19,9 @@
                 </div>
             </div>
         </div>
+    </div>
 </div>
-</div>
+
 <div class="col-md-12 col-sm-12 mb-3">
 <?php
 if (isset($_GET['success']) && !empty($_GET['success'])) {
@@ -43,7 +39,7 @@ if (isset($_GET['error']) && !empty($_GET['error'])) {
 include_once("../database/connexion.php");
 
 // Définir le nombre d'ordres par page
-$ordersPerPage = 10; // Par exemple, vous pouvez définir cela à 10
+$ordersPerPage = 5; // Par exemple, vous pouvez définir cela à 10
 
 // Récupérer le nombre total de commandes
 $totalOrders = count_total_orders($connexion);
@@ -91,20 +87,33 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                                 <td><?= date('d/m/Y H:i:s',strtotime($order['order_date'])); ?></td>
                                 <td><?= htmlspecialchars($order['total_amount']); ?> FCFA</td>
                                 <td>
-                                            <?php if ($order['status'] === 'pending'): ?>
-                                                <span class="badge badge-warning text-white disabled">En attente</span>
-                                            <?php elseif ($order['status'] === 'Canceled'): ?>
-                                                <span class="badge badge-danger disabled">Annulée</span>
-                                            <?php elseif ($order['status'] === 'Delivered'): ?>
-                                                <span class="badge badge-success disabled">Livrée</span>
-                                            <?php elseif ($order['status'] === 'in_progress'): ?> <!-- Modifié le statut "en cours" -->
-                                                <span class="badge badge-info disabled">En cours</span>
-                                            <?php elseif ($order['status'] === 'paid'): ?> <!-- Ajout du statut "Payé" -->
-                                                <span class="badge badge-primary disabled">Payé</span>
-                                            <?php else: ?>
-                                                <span class="badge badge-light disabled">Inconnu</span>
-                                            <?php endif; ?>
-                                        </td>
+                                        <?php if ($order['status'] === 'pending'): ?>
+                                            <span class="badge badge-warning text-white disabled">
+                                                <i class="fas fa-spinner fa-spin mr-2"></i>En attente
+                                            </span>
+                                        <?php elseif ($order['status'] === 'Canceled'): ?>
+                                            <span class="badge badge-danger disabled">
+                                                <i class="fas fa-times-circle mr-2"></i>Annulée
+                                            </span>
+                                        <?php elseif ($order['status'] === 'Delivered'): ?>
+                                            <span class="badge badge-success disabled">
+                                                <i class="fas fa-check-circle mr-2"></i>Livrée
+                                            </span>
+                                        <?php elseif ($order['status'] === 'in_progress'): ?>
+                                            <span class="badge badge-info disabled">
+                                                <i class="fas fa-hourglass-half fa-spin mr-2"></i>En cours
+                                            </span>
+                                        <?php elseif ($order['status'] === 'paid'): ?>
+                                            <span class="badge badge-success disabled">
+                                                <i class="fas fa-check-circle mr-2"></i>Déjà payée
+                                            </span>
+                                        <?php else: ?>
+                                            <span class="badge badge-light disabled">
+                                                <i class="fas fa-question-circle mr-2"></i>Inconnu
+                                            </span>
+                                        <?php endif; ?>
+                                    </td>
+
                                         <td>
                                         <div class="dropdown">
                                             <button class="btn btn-customize text-white btn-rounded btn-sm dropdown-toggle" type="button" id="dropdownMenuButton<?= htmlspecialchars($order['order_uuid']); ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -155,19 +164,19 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
                     <ul class="pagination justify-content-center">
                         <?php if ($currentPage > 1): ?>
                             <li class="page-item">
-                                <a class="page-link" href="?page=<?= $currentPage - 1; ?>">Précédent</a>
+                                <a class="page-link mr-2 w-100" href="?page=<?= $currentPage - 1; ?>">Précédent</a>
                             </li>
                         <?php endif; ?>
                         
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                             <li class="page-item <?= ($i === $currentPage) ? 'active' : ''; ?>">
-                                <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                                <a class="page-link mr-2 w-100" href="?page=<?= $i; ?>"><?= $i; ?></a>
                             </li>
                         <?php endfor; ?>
 
                         <?php if ($currentPage < $totalPages): ?>
                             <li class="page-item">
-                                <a class="page-link" href="?page=<?= $currentPage + 1; ?>">Suivant</a>
+                                <a class="page-link mr-2 w-100" href="?page=<?= $currentPage + 1; ?>">Suivant</a>
                             </li>
                         <?php endif; ?>
                     </ul>
@@ -223,3 +232,4 @@ $orders = get_orders_with_usernames($connexion, $offset, $ordersPerPage);
         });
     });
 </script>
+

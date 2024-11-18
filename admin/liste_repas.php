@@ -5,12 +5,12 @@
 
 <div class="col-md-12 col-sm-12 mb-3">
     <div class="card-box text-center text-uppercase p-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="mr-auto">
+        <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between">
+            <div class="mr-auto mb-3 mb-sm-0">
                 <h5 class="text-uppercase">Liste des repas (<?php echo $total_meals; // Récupération du nombre de repas?>)</h5>
             </div>
-            <div class="ml-auto">
-                <div class="form-inline">
+            <div class="ml-auto d-flex flex-column flex-sm-row align-items-center">
+                <div class="form-inline mb-3 mb-sm-0">
                     <input type="text" class="form-control shadow-none mr-2" id="searchRepas" placeholder="Rechercher un repas...">
                     <button type="button" class="btn btn-customize text-white shadow-none" onclick="rechercherRepas()">
                         Rechercher

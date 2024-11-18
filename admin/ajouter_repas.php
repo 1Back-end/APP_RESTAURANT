@@ -5,7 +5,7 @@
 
     <div class="col-lg-12 col-sm-12  mb-3">
       <div class="card-box text-center text-uppercase p-3">
-            <h4>Ajouter un repas</h4>
+            <h5>Ajouter un repas</h5>
       </div>
     </div>
 
@@ -90,7 +90,7 @@
             </div>
 
             <div class="mb-3">
-                <button type="submit" name="submit" class="btn btn-customize text-white">
+                <button type="submit" name="submit" class="btn btn-customize text-white btn-responsive">
                     <i class="fas fa-save mr-1"></i>
                     Enregistrer
                 </button>

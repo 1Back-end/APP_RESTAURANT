@@ -2,6 +2,7 @@
     "require": {
         "phpmailer/phpmailer": "^6.9",
         "twilio/sdk": "^8.3",
-        "stripe/stripe-php": "^16.2"
+        "stripe/stripe-php": "^16.2",
+        "google/apiclient": "2.0"
     }
 }
