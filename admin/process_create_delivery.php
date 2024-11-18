@@ -1,4 +1,5 @@
 <?php
+ob_start();
 // session_start(); // Assurez-vous que la session est démarrée
 include_once("../database/connexion.php"); // Connexion à la base de données
 include_once("../fonction/fonction.php");
@@ -76,11 +77,12 @@ if (isset($_POST['submit'])) {
             if ($stmt->execute()) {
                 $success = "Agent de livraison enregistré avec succès !";
                 // header("Refresh:2; url=liste_livreurs.php");
-                // exit; // Assurez-vous d'ajouter un exit après header
+                // exit(); // Assurez-vous d'ajouter un exit après header
             } else {
                 $erreur = "Erreur lors de l'enregistrement des données : " . implode(", ", $stmt->errorInfo());
             }
         }
     }
 }
+ob_end_flush();
 ?>

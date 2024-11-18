@@ -10,11 +10,12 @@
 <div class="main-container mt-3 pb-5">
 
 <div class="col-md-12 col-sm-12 mb-3">
-    <div class="card-box text-center text-uppercase p-2 d-flex flex-column flex-md-row align-items-center justify-content-between">
-            <div class="mr-auto mb-3">
-                <h6 class="text-uppercase">Liste des commandes (<?php echo $total_orders;?>)</h6>
+    <div class="card-box text-center text-uppercase p-3">
+    <div class="d-flex align-items-center justify-content-between">
+            <div class="mr-auto">
+                <h5 class="text-uppercase">Liste des commandes (<?php echo $total_orders;?>)</h5>
             </div>
-            <div class="ml-auto mb-3">
+            <div class="ml-auto">
                 <div class="form-inline">
                     <input type="text" class="form-control shadow-none mr-2" id="searchLivreur" placeholder="Rechercher une commande...">
                     <button type="button" class="btn btn-customize text-white shadow-none" onclick="rechercherLivreur()">
@@ -23,6 +24,7 @@
                 </div>
             </div>
         </div>
+</div>
 </div>
 <div class="col-md-12 col-sm-12 mb-3">
 <?php

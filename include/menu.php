@@ -43,27 +43,33 @@
 					</div>
 				</div>
 			</div>
-			<?php include("../login/session_user.php");?>
+			<?php
+			session_start();
+			if (!isset($_SESSION["admin_uuid"])) {
+				header("Location: ../login/login.php");
+				exit();
+			}
+			?>
 			<div class="user-info-dropdown">
-				<div class="dropdown text-success">
+				<div class="dropdown text-success" id="userInfo">
 					<a class="dropdown-toggle text-success" href="#" role="button" data-toggle="dropdown">
 					<span class="user-icon shadow-none">
 					<?php
-					$avatar_path = "../uploads/";
-					$default_avatar = "https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg";
-					$avatar = isset($_SESSION['photo']) && !empty($_SESSION['photo']) && file_exists($avatar_path . $_SESSION['photo'])
-							? $avatar_path . $_SESSION['photo'] 
-							: $default_avatar;
+						$avatar_path = "../uploads/";
+						$default_avatar = "https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg";
+						$avatar = isset($_SESSION['photo']) && !empty($_SESSION['photo']) && file_exists($avatar_path . $_SESSION['photo'])
+								? $avatar_path . $_SESSION['photo'] 
+								: $default_avatar;
 
-					echo "<img src='$avatar' width='50' height='50' class='rounded-circle' style='border-radius: 50%; object-fit: cover; aspect-ratio: 1/1;'>";
-					?>
-					<!-- <span class="online-indicator"></span> -->
-				</span>
+						$username = ucfirst(strtolower($_SESSION['username'] ?? 'Utilisateur Lamda')); // Gestion du cas où la session est vide
+						?>
+						<img id="userPhoto" src="<?= htmlspecialchars($avatar) ?>" width="50" height="50" class="rounded-circle" 
+						style="border-radius: 50%; object-fit: cover; aspect-ratio: 1/1;">
+					</span>
 
-				<small class="user-name fw-bold font-14" style="color: #28a745;">
-					<?php echo ucfirst(strtolower($_SESSION['username'])); ?>
-				</small>
-
+					<small id="userName" class="user-name fw-bold font-14 text-capitalize" style="color: #28a745;">
+						<?= htmlspecialchars($username) ?>
+					</small>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 						<a class="dropdown-item" href="../admin/profil.php"><i class="fas fa-user"></i> Profil</a>

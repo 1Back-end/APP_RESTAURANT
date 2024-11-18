@@ -61,7 +61,7 @@ if (isset($_POST["submit"])) {
             // Convertir le tableau des chemins d'images en chaîne pour l'enregistrement
             $images_string = implode(',', $images_path);
             $query = "INSERT INTO meals (meal_uuid, name, description, price, image, added_at, category_uuid, created_at, added_by, is_deleted) 
-                      VALUES (:meal_uuid, :name, :description, :price, :image, :added_at, :category_uuid, NOW(), :added_by, 0)";
+                      VALUES (:meal_uuid, :name, :description, :price, :image, :added_at,:category_uuid, NOW(), :added_by, 0)";
             
             $stmt = $connexion->prepare($query);
             $stmt->bindParam(':meal_uuid', $meal_uuid);

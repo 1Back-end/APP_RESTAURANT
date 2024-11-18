@@ -25,13 +25,14 @@ try {
     // Enregistrement du paiement dans la base de données
     $stmt = $connexion->prepare("
         INSERT INTO payments (payment_uuid, order_uuid, amount, payment_method, payment_status, added_by)
-        VALUES (:payment_uuid, :order_uuid, :amount, 'carte', 'payé', :added_by)
+        VALUES (:payment_uuid, :order_uuid, :amount, 'carte', 'payé', :added_by,num_payments)
     ");
     $stmt->execute([
         'payment_uuid' => generateUUID(),
         'order_uuid' => $order_uuid,
         'amount' => $amount_frcfa,
         'added_by' => $added_by,
+        'num_payments'=>num_payment(),
     ]);
 
     // Mise à jour du statut de la commande

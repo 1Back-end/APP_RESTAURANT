@@ -46,8 +46,6 @@ if (isset($_POST["submit"])) {
                     // Créer un cookie pour mémoriser l'utilisateur
                     setcookie('remember_me', $rememberToken, time() + (86400 * 30), "/"); // 30 jours de validité
                 }
-
-                // Rediriger vers le tableau de bord
                 header("Location: ../admin/tableau_de_bord.php");
                 exit;
             } else {
@@ -77,8 +75,6 @@ if (isset($_COOKIE['remember_me'])) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['photo'] = $user['photo'];
-
-        // Rediriger vers le tableau de bord
         header("Location: ../admin/tableau_de_bord.php");
         exit;
     }

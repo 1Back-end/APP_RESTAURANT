@@ -7,7 +7,7 @@
     <div class="card-box text-center text-uppercase p-3">
         <div class="d-flex align-items-center justify-content-between">
             <div class="mr-auto">
-                <h3 class="text-uppercase">Liste des repas</h3>
+                <h5 class="text-uppercase">Liste des repas (<?php echo $total_meals; // Récupération du nombre de repas?>)</h5>
             </div>
             <div class="ml-auto">
                 <div class="form-inline">

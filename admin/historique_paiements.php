@@ -5,7 +5,7 @@
     <div class="col-md-12 col-sm-12 mb-3">
         <div class="card-box p-3 text-center">
             <div class="text-center">
-                <h6 class="text-uppercase font-18">Liste des commandes payées</h6>
+                <h6 class="text-uppercase font-18">Liste des paiements des  commandes </h6>
             </div>
         </div>
     
@@ -31,6 +31,7 @@ $totalPages = ceil($totalPayments / $limit);
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>N° paiement</th>
                         <th>N° Commande</th>
                         <th>Client</th>
                         <th>Montant</th>
@@ -44,6 +45,7 @@ $totalPages = ceil($totalPayments / $limit);
                         <?php foreach ($payments as $index => $payment): ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
+                                <td><?= htmlspecialchars($payment['num_payments']) ?></td>
                                 <td><?= htmlspecialchars($payment['num_order']) ?></td>
                                 <td class="text-nowrap" style="max-width: 150px; overflow: hidden;">
                                 <div class="d-flex align-items-center">

@@ -155,13 +155,13 @@ function get_count_orders($connexion){
 }
 $total_orders = get_count_orders($connexion);
 
-function get_count_users($connexion){
-    $query="SELECT COUNT(*) as total FROM users WHERE is_deleted =0";
+function get_count_admin($connexion){
+    $query="SELECT COUNT(*) as total FROM admin_users WHERE is_deleted =0";
     $stmt = $connexion->prepare($query);
     $stmt->execute();
     return $stmt->fetchColumn();
 }
-$total_users = get_count_users($connexion);
+$total_users = get_count_admin($connexion);
 
 function get_sum_deliveries($connexion){
     $query = "SELECT SUM(total_amount) as total_amount FROM orders WHERE is_deleted = 0";
@@ -375,7 +375,7 @@ function getAllPayments($page = 1, $limit = 10) {
 
     // Requête SQL pour récupérer tous les paiements, commandes et utilisateurs associés
     $query = "
-        SELECT p.payment_uuid, p.amount, p.payment_method, p.payment_status, p.payment_date, o.num_order, o.order_uuid, o.order_date, u.username,u.photo
+        SELECT p.payment_uuid, p.amount, p.payment_method, p.payment_status,p.num_payments, p.payment_date, o.num_order, o.order_uuid, o.order_date, u.username,u.photo
         FROM payments p
         INNER JOIN orders o ON p.order_uuid = o.order_uuid
         INNER JOIN users u ON p.added_by = u.user_uuid
@@ -419,6 +419,16 @@ function generateOrderReference() {
     $dateTime = date('YmdHis'); // Format : AAAAMMJJHHMMSS
     // Combiner le tout pour créer une référence de commande unique
     return 'CMD-' . $dateTime . '-' . substr($uuid, 0, 8); // Exemple : CMD-20231022123000-123e4567
+}
+
+function num_payment($prefix = 'PAYMENT') {
+    // Obtenir l'année actuelle
+    $year = date('Y');
+    // Générer un nombre aléatoire à 6 chiffres
+    $randomDigits = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
+    // Combiner le préfixe, l'année et les chiffres aléatoires pour former le code final
+    $code = $prefix . $year . $randomDigits;
+    return $code;
 }
 
 function generateDeliveryReference() {

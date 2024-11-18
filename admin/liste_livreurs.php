@@ -7,7 +7,7 @@
     <div class="card-box text-center text-uppercase p-3">
         <div class="d-flex align-items-center justify-content-between">
             <div class="mr-auto">
-                <h3 class="text-uppercase">Liste des Livreurs</h3>
+                <h5 class="text-uppercase">Liste des Livreurs (<?php echo $total_delivery;?>)</h5>
             </div>
             <div class="ml-auto">
                 <div class="form-inline">
@@ -19,19 +19,26 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-<div class="col-md-12 col-sm-12 mb-3">
-<?php
-if (isset($_GET['success']) && !empty($_GET['success'])) {
-    echo '<div class="alert alert-success text-center">' . htmlspecialchars($_GET['success']) . '</div>';
-}
+    <div class="col-md-12 col-sm-12 mb-3">
+    <?php if (!empty($_GET["msg"])): ?>
+        <?php $msg = htmlspecialchars($_GET["msg"], ENT_QUOTES, 'UTF-8'); ?>
+        <?php if (!empty($msg)): ?>
+            <div id="alertMsg" class="alert alert-info alert-dismissible text-center">
+                <?= $msg; ?>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
 
-if (isset($_GET['error']) && !empty($_GET['error'])) {
-    echo '<div class="alert alert-danger text-center">' . htmlspecialchars($_GET['error']) . '</div>';
-}
-?>
-
+    <?php if (!empty($_GET["message"])): ?>
+        <?php $message = htmlspecialchars($_GET["message"], ENT_QUOTES, 'UTF-8'); ?>
+        <?php if (!empty($message)): ?>
+            <div id="alertMsg" class="alert alert-info alert-dismissible text-center">
+                <?= $message; ?>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
 </div>
 
 <?php
@@ -101,37 +108,19 @@ $orders = get_order_pending($connexion); // Appel de la fonction
                                 </td>
                                 <td><?php echo htmlspecialchars($livreur['availability_schedule']); ?></td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-customize text-white btn-rounded btn-sm dropdown-toggle" type="button" 
-                                                id="dropdownMenuButton<?php echo $livreur['agent_uuid']; ?>" 
-                                                data-toggle="dropdown" 
-                                                aria-haspopup="true" 
-                                                aria-expanded="false">
-                                            Actions
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton<?php echo $livreur['agent_uuid']; ?>">
+                                <div class="dropdown">
+                                <button class="btn btn-customize text-white btn-rounded dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <!-- Détails -->
                                         <li>
-                                            <a class="dropdown-item text-danger" href="#" 
-                                            data-toggle="modal" 
-                                            data-target="#modalSupprimerLivreur" 
-                                            data-agent-uuid="<?php echo $livreur['agent_uuid']; ?>">
+                                            <a class="dropdown-item text-danger" href="process_delete_delivery.php?agent_uuid=<?php echo htmlspecialchars($livreur['agent_uuid']); ?>">
                                                 <i class="fa fa-trash-o"></i> Supprimer
                                             </a>
                                         </li>
-
-                                        <?php if ($livreur['available'] == 1): ?>
-                                            <a class="dropdown-item text-success" 
-                                            href="#" 
-                                            data-toggle="modal" 
-                                            data-target="#assignDeliveryModal" 
-                                            data-agent-uuid="<?php echo $livreur['agent_uuid']; ?>"> <!-- Vérifiez ici -->
-                                                <i class="fas fa-truck"></i> Affecter à une livraison
-                                            </a>
-                                        <?php endif; ?>
-
                                         <?php if ($livreur['available'] == 0): ?>
-                                            <a class="dropdown-item text-success" 
-                                            href="mark_available.php?id=<?php echo $livreur['agent_uuid']; ?>">
+                                            <a class="dropdown-item text-success" href="process_mark_available.php?agent_uuid=<?php echo $livreur['agent_uuid']; ?>">
                                                 <i class="fas fa-check-circle"></i> Marquer comme disponible
                                             </a>
                                         <?php endif; ?>
@@ -162,93 +151,6 @@ $orders = get_order_pending($connexion); // Appel de la fonction
     </div>
 </div>
 
-
-<!-- Boîte modale pour la suppression du repas -->
-<div class="modal fade" id="modalSupprimerRepas" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Supprimer le livreur</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Êtes-vous sûr de vouloir supprimer ce livreur ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-xs btn-sm shadow-none" data-dismiss="modal">Annuler</button>
-                <!-- Lien de confirmation de la suppression -->
-                <a href="#" id="confirmDelete" class="btn btn-danger btn-xs btn-sm shadow-none">Confirmer</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal pour supprimer un livreur -->
-<div class="modal fade" id="modalSupprimerLivreur" tabindex="-1" aria-labelledby="modalSupprimerLivreurLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalSupprimerLivreurLabel">Supprimer un livreur</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer ce livreur ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm btn-xs" data-bs-dismiss="modal">Annuler</button>
-        <form id="formDeleteLivreur" method="POST" action="deleteLivreur.php">
-          <input type="hidden" id="agent_uuid" name="agent_uuid" value="">
-          <button type="submit" class="btn btn-danger btn-sm btn-xs">Supprimer</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal pour affecter un livreur à une livraison -->
-<div class="modal fade" id="assignDeliveryModal" tabindex="-1" aria-labelledby="assignDeliveryModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="assignDeliveryModalLabel">Affecter à une livraison</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Êtes-vous sûr de vouloir affecter ce livreur à une livraison ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary btn-sm btn-xs" data-bs-dismiss="modal">Annuler</button>
-        <button type="button" class="btn btn-primary btn-sm btn-xs">Affecter</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-    // Quand la modale de suppression s'ouvre
-        $('#modalSupprimerLivreur').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Bouton cliqué
-            var agentUuid = button.data('agent-uuid'); // Récupérer l'UUID de l'agent depuis le bouton
-
-            // Placer l'UUID dans le champ caché de la modale
-            var modal = $(this);
-            modal.find('#agent_uuid').val(agentUuid); // Mettre à jour l'input caché avec l'UUID
-        });
-
-        // Quand la modale d'affectation s'ouvre
-        $('#assignDeliveryModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Bouton cliqué
-            var agentUuid = button.data('agent-uuid'); // Récupérer l'UUID de l'agent depuis le bouton
-
-            // Vous pouvez également utiliser agentUuid pour effectuer d'autres actions, si nécessaire
-            console.log(agentUuid); // Vérifier que l'UUID est bien récupéré
-        });
-
-</script>
 
 
 

@@ -54,7 +54,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
                             <th>Livreur</th>
                             <th>Montant</th>
                             <th>Statut</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +73,7 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
                                     <td><?= htmlspecialchars($delivery['total_amount']); ?> FCFA</td>
                                     <td>
                                             <?php if ($delivery['delivery_status'] === 'pending'): ?>
-                                                <span class="badge badge-warning text-white">En Attente</span>
+                                                <span class="badge badge-warning text-white">En attente</span>
                                             <?php elseif ($delivery['delivery_status'] === 'Canceled'): ?>
                                                 <span class="badge badge-danger">Annulé</span>
                                             <?php elseif ($delivery['delivery_status'] === 'Delivered'): ?>
@@ -88,10 +88,15 @@ if (isset($_GET['status']) && isset($_GET['message'])) {
                                         </td>
 
                                         <td>
-                                            <a href="pay_order.php?order_uuid=<?= htmlspecialchars($delivery['order_uuid']); ?>" 
-                                            class="btn btn-success btn-sm btn-xs">
-                                                <i class="fas fa-credit-card mr-1"></i> Payé
+                                           <div class="d-flex align-items-center justify-content-center">
+                                            <a href="info_order.php?order_uuid=<?= htmlspecialchars($delivery['order_uuid']); ?>" class="btn-primary btn-sm btn-xs text-white mx-2 shadow-none border-0">
+                                            <i class="fas fa-info-circle mr-1"></i>Détails
                                             </a>
+                                            <a href="pay_order.php?order_uuid=<?= htmlspecialchars($delivery['order_uuid']); ?>" 
+                                                class="btn btn-success btn-sm btn-xs shadow-none border-0">
+                                                    <i class="fas fa-credit-card mr-1"></i> Payé
+                                            </a>
+                                           </div>
                                         </td>
 
                                 </tr>

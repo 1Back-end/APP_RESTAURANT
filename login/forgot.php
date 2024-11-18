@@ -4,27 +4,35 @@
 	<meta charset="utf-8">
 	<meta name="author" content="Kodinger">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>My Login Page</title>
+	<title><?php echo strtoupper(ucfirst(str_replace(".php", "", basename($_SERVER['PHP_SELF']))));?></title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/my-login.css">
 </head>
-
+<?php include ("process_forgot_password.php")?>
 <body class="my-login-page">
 	<section class="h-100">
 		<div class="container h-100 mt-5 pb-5">
 			<div class="row justify-content-md-center h-100">
 				<div class="card-wrapper">
+					<div class="mb-3">
+					<?php if (!empty($erreur)): ?>
+						<div class="alert alert-danger text-center"><?= htmlspecialchars($erreur) ?></div>
+					<?php endif; ?>
+					</div>
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Mot de passe oublié</h4>
-							<form method="POST">
+							<form method="POST" action="">
 								<div class="form-group">
 									<label for="email">Adresse Email</label>
-									<input id="email" type="email" class="form-control shadow-none" name="email"  autofocus>
+									<input type="email" class="form-control shadow-none py-2" name="email" id="email" value="<?= htmlspecialchars($email ?? '') ?>">
+									<?php if (!empty($erreur_champ)): ?>
+										<small class="text-danger"><?= htmlspecialchars($erreur_champ) ?></small>
+									<?php endif; ?>
 								</div>
 
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block shadow-none">
+									<button type="submit" name="submit" class="btn btn-primary btn-block shadow-none">
 										Soumettre
 									</button>
 								</div>

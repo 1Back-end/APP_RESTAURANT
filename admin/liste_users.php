@@ -6,7 +6,7 @@
         <div class="card-box p-3">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="mr-auto">
-                    <h5 class="text-uppercase">Liste des utilisateurs</h5>
+                    <h5 class="text-uppercase">Liste des utilisateurs (<?php echo $total_users;?>)</h5>
                 </div>
                 <div class="ml-auto">
                     <a href="ajouter_utilisateur.php" class="btn btn-customize border-0 text-white text-uppercase">

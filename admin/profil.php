@@ -22,22 +22,20 @@
     ?>
     <?php include_once('process_update_profil.php'); ?>
     <div class="col-md-10 col-sm-12 mb-3">
-        <!-- Affichage des messages d'erreur ou de succès -->
-        <?php if ($erreur != ""): ?>
-            <div class="alert alert-danger">
-                <?php echo htmlspecialchars($erreur); ?>
-            </div>
-        <?php endif; ?>
+            <?php if (!empty($erreur)) : ?>
+                <div id="error-message" class="alert alert-danger text-center" role="alert">
+                    <?= $erreur ?>
+                </div>
+            <?php endif; ?>
 
-        <?php if ($success != ""): ?>
-            <div class="alert alert-success">
-                <?php echo htmlspecialchars($success); ?>
-            </div>
-        <?php endif; ?>
-
+            <?php if (!empty($success)) : ?>
+                <div id="success-message" class="alert alert-success text-center" role="alert">
+                    <?= $success ?>
+                </div>
+            <?php endif; ?>
     </div>
    <div class="col-md-12 col-sm-12 mb-3">
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action=""  method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-4 col-sm-12 mb-3">
                 <div class="card-box p-3 text-center rounded-2">
@@ -100,3 +98,14 @@
         }
     }
 </script>
+<script>
+    if (window.location.search.includes('success') || window.location.search.includes('error')) {
+        // Retirer les paramètres de l'URL après chargement
+        const url = new URL(window.location.href);
+        url.searchParams.delete('success');
+        url.searchParams.delete('error');
+        window.history.replaceState({}, document.title, url.toString());
+    }
+</script>
+
+
