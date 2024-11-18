@@ -15,6 +15,7 @@ session_start(); // S'assurer que la session est démarrée
             <a href="index.php" class="nav-item nav-link">Accueil</a>
             <a href="about.php" class="nav-item nav-link">À propos</a>
             <a href="menu.php" class="nav-item nav-link active">Menu</a>
+            <a href="reservation.php" class="nav-item nav-link">Reservation</a>
             <a href="contact.php" class="nav-item nav-link">Contact</a>
         </div>
                 <?php 
