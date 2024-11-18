@@ -185,6 +185,129 @@
                 </div>
             </div>
         </div>
+
+        <?php
+// Inclure la connexion PDO
+include_once("database/connexion.php");
+
+// Récupération des commentaires depuis la base de données
+$query = "SELECT * FROM commentaires WHERE is_deleted = FALSE ORDER BY created_at DESC";
+$stmt = $connexion->prepare($query);
+$stmt->execute();
+$commentaires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Fonction pour calculer le temps écoulé (en heures, minutes, etc.)
+function timeAgo($timestamp) {
+    $time_ago = strtotime($timestamp);
+    $current_time = time();
+    $time_difference = $current_time - $time_ago;
+    $seconds = $time_difference;
+    $minutes      = round($seconds / 60);           // value 60 is seconds
+    $hours        = round($seconds / 3600);         // value 3600 is 60 minutes * 60 sec
+    $days         = round($seconds / 86400);        // value 86400 is 24 hours * 60 minutes * 60 sec
+    $weeks        = round($seconds / 604800);       // value 604800 is 7 days * 24 hours * 60 minutes * 60 sec
+    $months       = round($seconds / 2629440);      // value 2629440 is ((365+365+365+365)/4/12) days * 24 hours * 60 minutes * 60 sec
+    $years        = round($seconds / 31553280);     // value 31553280 is (365+365+365+365)/4 days * 24 hours * 60 minutes * 60 sec
+
+    if ($seconds <= 60) {
+        return "Juste maintenant";
+    } else if ($minutes <= 60) {
+        if ($minutes == 1) {
+            return "Il y a une minute";
+        } else {
+            return "Il y a $minutes minutes";
+        }
+    } else if ($hours <= 24) {
+        if ($hours == 1) {
+            return "Il y a une heure";
+        } else {
+            return "Il y a $hours heures";
+        }
+    } else if ($days <= 7) {
+        if ($days == 1) {
+            return "Hier";
+        } else {
+            return "Il y a $days jours";
+        }
+    } else if ($weeks <= 4.3) { // 4.3 == 30/7
+        if ($weeks == 1) {
+            return "Il y a une semaine";
+        } else {
+            return "Il y a $weeks semaines";
+        }
+    } else if ($months <= 12) {
+        if ($months == 1) {
+            return "Il y a un mois";
+        } else {
+            return "Il y a $months mois";
+        }
+    } else {
+        if ($years == 1) {
+            return "Il y a un an";
+        } else {
+            return "Il y a $years ans";
+        }
+    }
+}
+?>
+
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="text-center">
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Testimonial</h5>
+            <h1 class="mb-5 text-white">Ce que disent nos clients !!!</h1> <!-- Ajout de la classe text-white pour le titre -->
+        </div>
+        <div class="owl-carousel testimonial-carousel">
+            <?php foreach ($commentaires as $commentaire): ?>
+                <div class="testimonial-item bg-dark border rounded p-4 h-100 mx-2 text-white"> <!-- Ajout de text-white ici -->
+                    <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                    <p><?= htmlspecialchars($commentaire['commentaire']) ?></p>
+                    <div class="d-flex align-items-center">
+                        <img class="img-fluid flex-shrink-0 rounded-circle" src="assets/img/testimonial-1.jpg" style="width: 50px; height: 50px;">
+                        <div class="ps-3">
+                            <!-- Remplacez uuid par le nom de l'utilisateur si vous avez ce champ -->
+                            <small class="text-white">Profession</small> <!-- Ajout de text-white ici -->
+                            <div class="text-white"><?= timeAgo($commentaire['created_at']) ?></div> <!-- Ajout de text-white ici -->
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+
+       <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+        <?php include 'process_add_request.php'; ?>
+        <div class="col-md-12 col-sm-12 mb-3">
+            <?php if (!empty($erreur)): ?>
+                <div class="alert alert-danger"><?php echo $erreur; ?></div>
+            <?php endif; ?>
+
+            <?php if (!empty($success)): ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php endif; ?>
+        </div>
+
+        <div class="col-md-12">
+            <form action="" method="post">
+                <div class="mb-3">
+                    <label for="commentaire" class="form-label font-16 font-weight-bold">Votre commentaire <span class="text-danger">*</span></label>
+                    <textarea class="form-control shadow-none" id="commentaire" name="commentaire" rows="5"></textarea>
+                    <?php if (isset($erreur_champ) && empty($_POST['commentaire'])): ?>
+                        <small class="text-danger"><?= htmlspecialchars($erreur_champ) ?></small>
+                    <?php endif; ?>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" name="submit" class="btn btn-primary">Soumettre</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+        <!-- Testimonial End -->
         <!-- Team End -->
         <?php include_once("menu/footer.php");?>
         <!-- Footer End -->
