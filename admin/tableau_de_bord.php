@@ -22,7 +22,7 @@
         <div class="col-lg-3 col-sm-12 mb-3">
             <div class="card-box p-3 h-100 text-center">
                 <div class="mb-3">
-                    <h6 class="text-uppercase font-12">Total des commandes | Ajourd'hui</h6>
+                    <h6 class="text-uppercase font-12">commandes | Ajourd'hui</h6>
                 </div>
                 <div class="mb-3">
                     <div class="d-flex align-items-center justify-content-between">
@@ -43,7 +43,7 @@
         <div class="col-lg-3 col-sm-12 mb-3">
             <div class="card-box p-3 h-100 text-center">
                 <div class="mb-3">
-                    <h6 class="text-uppercase font-12">Total des reservations | Ajourd'hui</h6>
+                    <h6 class="text-uppercase font-12">reservations | Ajourd'hui</h6>
                 </div>
                 <div class="mb-3">
                     <div class="d-flex align-items-center justify-content-between">
@@ -65,7 +65,7 @@
         <div class="col-lg-3 col-sm-12 mb-3">
             <div class="card-box p-3 h-100 text-center">
                 <div class="mb-3">
-                    <h6 class="text-uppercase font-12">Total des livraisons | Ajourd'hui</h6>
+                    <h6 class="text-uppercase font-12">livraisons | Ajourd'hui</h6>
                 </div>
                 <div class="mb-3">
                     <div class="d-flex align-items-center justify-content-between">
