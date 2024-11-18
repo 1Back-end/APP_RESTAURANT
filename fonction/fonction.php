@@ -223,6 +223,23 @@ function get_count_reservation_today($connexion) {
 $total_reservations_today = get_count_reservation_today($connexion);
 
 
+function get_all_reservation($connexion) {
+    // Préparer la requête SQL
+    $sql = "SELECT COUNT(*) AS total_reservations FROM reservations WHERE  is_deleted = 0";
+    
+    // Exécuter la requête
+    $stmt = $connexion->query($sql);
+    
+    // Récupérer le résultat
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Retourner le total des réservations
+    return $result['total_reservations'];
+}
+$total_reservations = get_all_reservation($connexion);
+
+
+
 function get_deliveries_delivered_today($connexion) {
     // Préparer la requête SQL pour obtenir les livraisons dont le statut est 'Delivered' et qui sont effectuées aujourd'hui
     $sql = "SELECT COUNT(*) AS total_deliveries_delivered_today 
@@ -281,9 +298,38 @@ $background_colors = array_map(function($status) use ($status_colors) {
     return $status_colors[$status] ?? '#000000'; // Valeur par défaut si non trouvé
 }, $translated_statuses);
 
+function get_reservation($connexion, $limit = 10, $page = 1) {
+    // Calculer l'offset
+    $offset = ($page - 1) * $limit;
 
+    // Récupérer le nombre total de réservations
+    $totalQuery = $connexion->query("SELECT COUNT(*) AS total FROM reservations WHERE is_deleted = 0");
+    $totalResult = $totalQuery->fetch();
+    $totalReservations = $totalResult['total'];
 
+    // Récupérer les réservations avec la limite et l'offset
+    $stmt = $connexion->prepare("
+        SELECT reservation_uuid, customer_name, customer_email, customer_phone, reservation_date, number_of_people, status 
+        FROM reservations 
+        WHERE is_deleted = 0 
+        ORDER BY created_at DESC 
+        LIMIT :limit OFFSET :offset
+    ");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // Calculer le nombre total de pages
+    $totalPages = ceil($totalReservations / $limit);
+
+    // Retourner les données
+    return [
+        'reservations' => $reservations,
+        'total_pages' => $totalPages,
+        'current_page' => $page
+    ];
+}
 
 
 function get_orders_with_usernames($connexion, $offset, $limit) {
