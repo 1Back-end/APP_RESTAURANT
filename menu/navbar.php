@@ -41,11 +41,6 @@ session_start(); // S'assurer que la session est démarrée
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="profile.php">
-                            <i class="fas fa-user"></i> Mon profil
-                        </a>
-                    </li>
-                    <li>
                         <a class="dropdown-item" href="users/logout.php">
                             <i class="fas fa-sign-out-alt"></i> Déconnexion
                         </a>

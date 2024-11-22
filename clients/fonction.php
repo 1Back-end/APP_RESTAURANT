@@ -44,4 +44,39 @@ function get_info_users($connexion,$user_uuid){
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_count_payments_by_user_uuid($connexion,$user_uuid){
+    $query = "SELECT COUNT(*)  as payment FROM payments where added_by = :user_uuid";
+    $stmt = $connexion->prepare($query);
+    $stmt->bindParam(':user_uuid', $user_uuid);
+    $stmt->execute();
+    return $stmt->fetchColumn();
+    
+}
+$total_payment_by_user_uuid = get_count_payments_by_user_uuid($connexion,$user_uuid);
+
+
+function get_all_payments_by_user_uuid($connexion, $user_uuid) {
+    $query = "
+        SELECT 
+            p.payment_uuid, p.added_by, p.amount, p.payment_method, p.payment_status, 
+            p.num_payments, p.payment_date, o.num_order, o.order_uuid, o.order_date, 
+            u.user_uuid
+        FROM 
+            payments p
+        INNER JOIN 
+            orders o ON p.order_uuid = o.order_uuid
+        INNER JOIN 
+            users u ON p.added_by = u.user_uuid
+        WHERE 
+            p.added_by = :user_uuid 
+        ORDER BY 
+            p.payment_date DESC
+    ";
+    $stmt = $connexion->prepare($query);
+    $stmt->bindParam(':user_uuid', $user_uuid);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner un tableau associatif
+}
+$all_payments_by_user_uuid = get_all_payments_by_user_uuid($connexion, $user_uuid);
+
 ?>

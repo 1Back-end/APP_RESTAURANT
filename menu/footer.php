@@ -4,11 +4,12 @@
                 <div class="row g-5">
                     <div class="col-lg-3 col-md-6">
                         <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">QuickMeal</h4>
-                        <a class="btn btn-link" href="">À propos de nous</a>
-                        <a class="btn btn-link" href="">Contactez-nous</a>
-                        <a class="btn btn-link" href="">Réservation</a>
+                        <a class="btn btn-link" href="about.php">À propos de nous</a>
+                        <a class="btn btn-link" href="contact.php">Contactez-nous</a>
+                        <a class="btn btn-link" href="reservation.php">Réservation</a>
                         <a class="btn btn-link" href="">Politique de confidentialité</a>
                         <a class="btn btn-link" href="">Termes et conditions</a>
+                        <a class="btn btn-link" href="login/login.php">Tableau de bord</a>
 
                     </div>
                     <div class="col-lg-3 col-md-6">

@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
+--zIRzlSw4Ym!
 -- Structure de la table `admin_users`
 --
 

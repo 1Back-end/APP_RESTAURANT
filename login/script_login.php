@@ -11,7 +11,7 @@ if (isset($_POST["submit"])) {
 
     // Vérifier si les champs sont vides
     if (empty($emailOrUsername) || empty($password)) {
-        $erreur_champ = "Tous les champs doivent être remplis";
+        $erreur_champ = "Ce champ est requis !";
     } else {
         // Préparer la requête pour récupérer les informations de l'utilisateur
         $query = "SELECT * FROM admin_users WHERE (email = :emailOrUsername OR username = :emailOrUsername) AND is_deleted = 0";

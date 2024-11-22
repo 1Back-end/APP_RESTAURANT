@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
 
 
 <div class="main-container mt-3 pb-5">
-    <div class="col-md-12 col-sm-12 mb-3">
+    <div class="col-lg-8 col-sm-12 mb-3">
         <div class="card-box p-3">
         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
             <div class="mb-2 mb-md-0 mr-md-auto w-100">
@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_uuid']) || !isset($_SESSION['user_name'])) {
 // Supposons que $connexion est votre connexion PDO et que $user_uuid est l'UUID du user connecté
 $user_info = get_info_users($connexion, $user_uuid);
 ?>
-<div class="col-md-12 col-sm-12 mb-3">
+<div class="col-lg-8 col-sm-12 mb-3">
     <!-- Affichage des messages de succès et d'erreur -->
     <?php include_once("process_update_profil.php");?>
     <?php if (!empty($succes)) : ?>
@@ -39,7 +39,7 @@ $user_info = get_info_users($connexion, $user_uuid);
     <?php endif; ?>
 </div>
 
-<div class="col-md-12 col-sm-12 mb-3">
+<div class="col-lg-8 col-sm-12 mb-3">
     <div class="card-box p-3">
         <!-- Formulaire de mise à jour du profil -->
         <form action="" method="post">
