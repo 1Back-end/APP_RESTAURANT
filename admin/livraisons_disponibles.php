@@ -66,7 +66,7 @@
                                     <?php if (!empty($delivery['photo'])) : ?>
                                     <img src="../uploads/<?= $delivery['photo'] ?>" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
                                     <?php else : ?>
-                                        <img src="https://i.pinimg.com/564x/07/01/e5/0701e5a1cd4f91681f76cf3691176680.jpg" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCZlRnM-rdsKFyEyys5cWZz_ShIRQ7Ba1lIjgHOCXUw6rSTPAcdgd5AeDf66mAzrvHj8Q&usqp=CAU" class='rounded-circle img-fluid me-2' width='50' height='50' style='object-fit: cover; width: 50px; height: 50px; max-width: 50px; max-height: 50px;'>
                                     <?php endif; ?>
                                     <div class="ms-3">
                                     <span class="mx-2 text-truncate"><?php echo htmlspecialchars($delivery['firstname'] . ' ' . $delivery['lastname']); ?></span>

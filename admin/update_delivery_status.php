@@ -10,7 +10,7 @@ if (isset($_GET['delivery_uuid']) && isset($_GET['delivery_status'])) {
     $new_status = $_GET['delivery_status'];
 
     // Vérification que le nouveau statut est valide
-    $valid_statuses = ['en attente', 'en route', 'livré'];
+    $valid_statuses = ['in_progress', 'Delivered'];
     if (!in_array($new_status, $valid_statuses)) {
         $erreur = "Statut invalide sélectionné.";
     } else {

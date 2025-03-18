@@ -1,7 +1,7 @@
 <?php
 // Paramètres de connexion
 $host = 'localhost';
-$dbname = 'app_restaurant';
+$dbname = 'app_restaurant_system';
 $username = 'root';
 $password = '';
 

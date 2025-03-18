@@ -122,6 +122,7 @@
 
 </html>
 <script>
+    
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.orderButton').forEach(button => {
         button.addEventListener('click', function(event) {
